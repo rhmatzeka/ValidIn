@@ -1,0 +1,25 @@
+{
+  "name": "validin-blockchain",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:sepolia": "hardhat run scripts/deploy.ts --network sepolia",
+    "issuer:add": "hardhat run scripts/authorizeIssuer.ts --network sepolia",
+    "doc:register": "hardhat run scripts/registerDocument.ts --network sepolia",
+    "doc:verify": "hardhat run scripts/verifyDocument.ts --network sepolia",
+    "doc:revoke": "hardhat run scripts/revokeDocument.ts --network sepolia",
+    "admin:server": "node scripts/adminServer.cjs",
+    "hash": "node scripts/hashFile.cjs"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@types/node": "^22.10.1",
+    "dotenv": "^16.4.7",
+    "ethers": "^6.13.4",
+    "hardhat": "^2.22.17",
+    "typescript": "^5.7.2"
+  }
+}
