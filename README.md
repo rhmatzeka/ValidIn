@@ -21,6 +21,8 @@ NIM      : 231011402890
 Password : Rahmat123
 ```
 
+Pilih role `Mahasiswa` untuk verifikasi dokumen. Pilih role `Admin` untuk menerbitkan dokumen baru ke registry.
+
 ## Struktur Project
 
 ```text
@@ -68,7 +70,7 @@ SEPOLIA_RPC_URL=
 PRIVATE_KEY=
 VALIDIN_CONTRACT_ADDRESS=
 VALIDIN_DEFAULT_ISSUER=
-VALIDIN_ADMIN_API_URL=http://YOUR_SERVER_IP:8787
+VALIDIN_ADMIN_API_URL=http://10.0.2.2:8787
 VALIDIN_ADMIN_API_PORT=8787
 ```
 
@@ -109,6 +111,8 @@ Untuk mendaftarkan dokumen baru dari aplikasi mobile, jalankan admin API di lapt
 cd blockchain
 npm run admin:server
 ```
+
+Mahasiswa tidak melihat menu Admin. Menu Admin hanya muncul saat login dengan role `Admin`.
 
 Isi `VALIDIN_ADMIN_API_URL` di `.env` Android ke alamat server tersebut. Jika emulator Android berjalan di komputer yang sama, biasanya bisa memakai:
 

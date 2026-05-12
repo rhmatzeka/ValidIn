@@ -1,6 +1,7 @@
 package id.rahmat.newsin
 
 import android.graphics.Bitmap
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -39,6 +40,8 @@ class MainActivity : ComponentActivity() {
     private lateinit var loginPasswordInput: EditText
     private lateinit var loginErrorText: TextView
     private lateinit var loginButton: Button
+    private lateinit var roleStudentButton: Button
+    private lateinit var roleAdminButton: Button
     private lateinit var mainTitleText: TextView
     private lateinit var mainSubtitleText: TextView
     private lateinit var userBadgeText: TextView
@@ -84,6 +87,8 @@ class MainActivity : ComponentActivity() {
     private var adminFileName: String = ""
     private var userName: String = ""
     private var userId: String = ""
+    private var selectedRole: String = ROLE_STUDENT
+    private var activeRole: String = ROLE_STUDENT
     private var validCount = 0
     private var reviewCount = 0
     private val historyEntries = mutableListOf<String>()
@@ -93,6 +98,8 @@ class MainActivity : ComponentActivity() {
         const val VALID_NIM = "231011402890"
         const val VALID_PASSWORD = "Rahmat123"
         const val VALID_NAME = "Rahmat Zeka"
+        const val ROLE_STUDENT = "student"
+        const val ROLE_ADMIN = "admin"
     }
 
     private val documentPicker = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
@@ -169,6 +176,8 @@ class MainActivity : ComponentActivity() {
         loginPasswordInput = findViewById(R.id.loginPasswordInput)
         loginErrorText = findViewById(R.id.loginErrorText)
         loginButton = findViewById(R.id.loginButton)
+        roleStudentButton = findViewById(R.id.roleStudentButton)
+        roleAdminButton = findViewById(R.id.roleAdminButton)
         mainTitleText = findViewById(R.id.mainTitleText)
         mainSubtitleText = findViewById(R.id.mainSubtitleText)
         userBadgeText = findViewById(R.id.userBadgeText)
@@ -209,6 +218,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun bindActions() {
+        roleStudentButton.setOnClickListener { selectRole(ROLE_STUDENT) }
+        roleAdminButton.setOnClickListener { selectRole(ROLE_ADMIN) }
         loginButton.setOnClickListener { login() }
         quickVerifyButton.setOnClickListener {
             bottomNavigation.selectedItemId = R.id.nav_verify
@@ -234,6 +245,9 @@ class MainActivity : ComponentActivity() {
         logoutButton.setOnClickListener {
             getPreferences(MODE_PRIVATE).edit().clear().apply()
             selectedHash = null
+            selectedRole = ROLE_STUDENT
+            activeRole = ROLE_STUDENT
+            updateRoleButtons()
             loginContainer.visibility = View.VISIBLE
             appContainer.visibility = View.GONE
         }
@@ -247,6 +261,9 @@ class MainActivity : ComponentActivity() {
         val prefs = getPreferences(MODE_PRIVATE)
         userName = prefs.getString("name", "") ?: ""
         userId = prefs.getString("id", "") ?: ""
+        activeRole = prefs.getString("role", ROLE_STUDENT) ?: ROLE_STUDENT
+        selectedRole = activeRole
+        updateRoleButtons()
 
         if (userName.isNotBlank() && userId.isNotBlank()) {
             showApp()
@@ -268,9 +285,11 @@ class MainActivity : ComponentActivity() {
 
         userName = VALID_NAME
         userId = id
+        activeRole = selectedRole
         getPreferences(MODE_PRIVATE).edit()
             .putString("name", userName)
             .putString("id", userId)
+            .putString("role", activeRole)
             .apply()
 
         loginErrorText.visibility = View.GONE
@@ -280,17 +299,41 @@ class MainActivity : ComponentActivity() {
     private fun showApp() {
         loginContainer.visibility = View.GONE
         appContainer.visibility = View.VISIBLE
+        bottomNavigation.menu.findItem(R.id.nav_admin).isVisible = activeRole == ROLE_ADMIN
         userBadgeText.text = initials(userName)
         profileNameText.text = userName
-        profileIdText.text = "NIM/NPM $userId"
+        profileIdText.text = if (activeRole == ROLE_ADMIN) "Admin kampus - $userId" else "Mahasiswa - $userId"
         registryStatusText.text = if (registryConfigured()) {
             "Registry kampus aktif dan siap digunakan"
         } else {
             "Registry belum dikonfigurasi"
         }
         updateHome()
-        bottomNavigation.selectedItemId = R.id.nav_home
-        showPage(R.id.nav_home)
+        val firstPage = if (activeRole == ROLE_ADMIN) R.id.nav_admin else R.id.nav_home
+        bottomNavigation.selectedItemId = firstPage
+        showPage(firstPage)
+    }
+
+    private fun selectRole(role: String) {
+        selectedRole = role
+        updateRoleButtons()
+    }
+
+    private fun updateRoleButtons() {
+        val selectedColor = ColorStateList.valueOf(getColor(R.color.validin_primary))
+        val unselectedColor = ColorStateList.valueOf(getColor(R.color.validin_border))
+
+        roleStudentButton.backgroundTintList =
+            if (selectedRole == ROLE_STUDENT) selectedColor else unselectedColor
+        roleStudentButton.setTextColor(
+            getColor(if (selectedRole == ROLE_STUDENT) R.color.white else R.color.validin_text)
+        )
+
+        roleAdminButton.backgroundTintList =
+            if (selectedRole == ROLE_ADMIN) selectedColor else unselectedColor
+        roleAdminButton.setTextColor(
+            getColor(if (selectedRole == ROLE_ADMIN) R.color.white else R.color.validin_text)
+        )
     }
 
     private fun showPage(itemId: Int) {
@@ -417,7 +460,7 @@ class MainActivity : ComponentActivity() {
         val hash = adminHash
         val docType = adminDocTypeInput.text.toString().trim().ifBlank { "Dokumen Kampus" }
         val subject = adminSubjectInput.text.toString().trim().ifBlank { "$userId $userName" }
-        val apiUrl = BuildConfig.VALIDIN_ADMIN_API_URL.trim().trimEnd('/')
+        val apiUrl = adminApiUrl()
 
         if (hash == null) {
             adminResultText.text = "Pilih atau scan dokumen dulu."
@@ -425,7 +468,7 @@ class MainActivity : ComponentActivity() {
         }
 
         if (!apiUrl.startsWith("http")) {
-            adminResultText.text = "Admin API belum dikonfigurasi. Jalankan server admin dan isi VALIDIN_ADMIN_API_URL di .env."
+            adminResultText.text = "Server admin belum siap. Jalankan `npm run admin:server` di laptop/server admin."
             return
         }
 
@@ -598,6 +641,11 @@ class MainActivity : ComponentActivity() {
     private fun registryConfigured(): Boolean {
         return BuildConfig.VALIDIN_RPC_URL.startsWith("http") &&
             BuildConfig.VALIDIN_CONTRACT_ADDRESS.matches(Regex("^0x[0-9a-fA-F]{40}$"))
+    }
+
+    private fun adminApiUrl(): String {
+        val configured = BuildConfig.VALIDIN_ADMIN_API_URL.trim().trimEnd('/')
+        return configured.ifBlank { "http://10.0.2.2:8787" }
     }
 
     private fun initials(name: String): String {

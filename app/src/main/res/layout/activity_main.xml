@@ -104,10 +104,45 @@
                     android:textColor="@color/validin_muted"
                     android:textSize="14sp" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="22dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/roleStudentButton"
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_marginRight="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_primary_button"
+                        android:backgroundTint="@color/validin_primary"
+                        android:text="Mahasiswa"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/roleAdminButton"
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_primary_button"
+                        android:backgroundTint="@color/validin_border"
+                        android:text="Admin"
+                        android:textAllCaps="false"
+                        android:textColor="@color/validin_text"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="20dp"
                     android:text="NIM"
                     android:textColor="@color/validin_muted"
                     android:textSize="14sp"
