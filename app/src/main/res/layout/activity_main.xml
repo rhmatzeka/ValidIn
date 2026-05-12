@@ -50,18 +50,6 @@
                         android:textColor="@color/validin_primary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_login_dark_chip"
-                        android:gravity="center"
-                        android:text="Campus Document Trust"
-                        android:textColor="@color/white"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <TextView
@@ -80,19 +68,6 @@
                     android:text="Dokumen kampus, AI OCR, dan registry digital dalam satu aplikasi."
                     android:textColor="@color/white"
                     android:textSize="17sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="18dp"
-                    android:background="@drawable/bg_yellow_chip"
-                    android:gravity="center"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:text="AI + Blockchain Verification"
-                    android:textColor="@color/validin_primary_dark"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
