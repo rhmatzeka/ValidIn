@@ -22,36 +22,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="22dp"
-            android:paddingTop="28dp"
+            android:paddingTop="18dp"
             android:paddingRight="22dp"
             android:paddingBottom="42dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="4dp"
-                android:paddingTop="4dp"
-                android:paddingRight="4dp"
-                android:paddingBottom="22dp">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:background="@drawable/bg_login_glass_card"
                 android:elevation="10dp"
                 android:orientation="vertical"
-                android:padding="26dp">
+                android:padding="22dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Masuk"
                     android:textColor="@color/validin_text"
-                    android:textSize="32sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -64,14 +52,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:layout_marginTop="22dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="18dp"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/roleStudentButton"
                         android:layout_width="0dp"
-                        android:layout_height="54dp"
+                        android:layout_height="48dp"
                         android:layout_marginRight="7dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
@@ -84,7 +72,7 @@
                     <Button
                         android:id="@+id/roleAdminButton"
                         android:layout_width="0dp"
-                        android:layout_height="54dp"
+                        android:layout_height="48dp"
                         android:layout_marginLeft="7dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
@@ -98,7 +86,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="16dp"
                     android:text="NIM"
                     android:textColor="@color/validin_muted"
                     android:textStyle="bold" />
@@ -106,7 +94,7 @@
                 <EditText
                     android:id="@+id/loginIdInput"
                     android:layout_width="match_parent"
-                    android:layout_height="58dp"
+                    android:layout_height="52dp"
                     android:layout_marginTop="8dp"
                     android:autofillHints="username"
                     android:background="@drawable/bg_input_modern"
@@ -119,7 +107,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="14dp"
                     android:text="Password"
                     android:textColor="@color/validin_muted"
                     android:textStyle="bold" />
@@ -127,7 +115,7 @@
                 <EditText
                     android:id="@+id/loginPasswordInput"
                     android:layout_width="match_parent"
-                    android:layout_height="58dp"
+                    android:layout_height="52dp"
                     android:layout_marginTop="8dp"
                     android:autofillHints="password"
                     android:background="@drawable/bg_input_modern"
@@ -149,8 +137,8 @@
                 <Button
                     android:id="@+id/loginButton"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="18dp"
                     android:background="@drawable/bg_login_yellow_button"
                     android:backgroundTint="@color/validin_yellow"
                     android:text="Masuk"
@@ -333,20 +321,21 @@
                             android:orientation="horizontal">
 
                             <LinearLayout
+                                android:id="@+id/categoryCertificate"
                                 android:layout_width="86dp"
                                 android:layout_height="74dp"
                                 android:gravity="center"
                                 android:orientation="vertical">
 
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="40dp"
-                                    android:gravity="center"
-                                    android:text="▣"
-                                    android:textColor="@color/validin_text"
-                                    android:textSize="28sp" />
+                                <ImageView
+                                    android:id="@+id/categoryCertificateIcon"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ic_doc_cert"
+                                    android:tint="@color/validin_text" />
 
                                 <TextView
+                                    android:id="@+id/categoryCertificateLabel"
                                     android:layout_width="match_parent"
                                     android:layout_height="24dp"
                                     android:gravity="center"
@@ -356,37 +345,107 @@
                                     android:textStyle="bold" />
 
                                 <View
+                                    android:id="@+id/categoryCertificateUnderline"
                                     android:layout_width="56dp"
                                     android:layout_height="3dp"
                                     android:background="@color/validin_text" />
                             </LinearLayout>
 
-                            <TextView
+                            <LinearLayout
+                                android:id="@+id/categoryLetter"
                                 android:layout_width="96dp"
                                 android:layout_height="70dp"
                                 android:gravity="center"
-                                android:text="▤\nSurat"
-                                android:textColor="@color/validin_muted"
-                                android:textSize="13sp"
-                                android:textStyle="bold" />
+                                android:orientation="vertical">
 
-                            <TextView
+                                <ImageView
+                                    android:id="@+id/categoryLetterIcon"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ic_doc_letter"
+                                    android:tint="@color/validin_muted" />
+
+                                <TextView
+                                    android:id="@+id/categoryLetterLabel"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="24dp"
+                                    android:gravity="center"
+                                    android:text="Surat"
+                                    android:textColor="@color/validin_muted"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:id="@+id/categoryLetterUnderline"
+                                    android:layout_width="56dp"
+                                    android:layout_height="3dp"
+                                    android:background="@color/validin_text"
+                                    android:visibility="invisible" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/categoryLogbook"
                                 android:layout_width="104dp"
                                 android:layout_height="70dp"
                                 android:gravity="center"
-                                android:text="◷\nLogbook"
-                                android:textColor="@color/validin_muted"
-                                android:textSize="13sp"
-                                android:textStyle="bold" />
+                                android:orientation="vertical">
 
-                            <TextView
+                                <ImageView
+                                    android:id="@+id/categoryLogbookIcon"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ic_doc_logbook"
+                                    android:tint="@color/validin_muted" />
+
+                                <TextView
+                                    android:id="@+id/categoryLogbookLabel"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="24dp"
+                                    android:gravity="center"
+                                    android:text="Logbook"
+                                    android:textColor="@color/validin_muted"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:id="@+id/categoryLogbookUnderline"
+                                    android:layout_width="56dp"
+                                    android:layout_height="3dp"
+                                    android:background="@color/validin_text"
+                                    android:visibility="invisible" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/categoryTranscript"
                                 android:layout_width="104dp"
                                 android:layout_height="70dp"
                                 android:gravity="center"
-                                android:text="◇\nTranskrip"
-                                android:textColor="@color/validin_muted"
-                                android:textSize="13sp"
-                                android:textStyle="bold" />
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/categoryTranscriptIcon"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ic_doc_transcript"
+                                    android:tint="@color/validin_muted" />
+
+                                <TextView
+                                    android:id="@+id/categoryTranscriptLabel"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="24dp"
+                                    android:gravity="center"
+                                    android:text="Transkrip"
+                                    android:textColor="@color/validin_muted"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:id="@+id/categoryTranscriptUnderline"
+                                    android:layout_width="56dp"
+                                    android:layout_height="3dp"
+                                    android:background="@color/validin_text"
+                                    android:visibility="invisible" />
+                            </LinearLayout>
                         </LinearLayout>
                     </HorizontalScrollView>
 
@@ -400,6 +459,7 @@
                         android:padding="24dp">
 
                         <TextView
+                            android:id="@+id/homeHeroTitleText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="ValidIn Registry"
@@ -408,6 +468,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/homeHeroSubtitleText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"

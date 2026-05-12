@@ -8,6 +8,8 @@ import android.provider.OpenableColumns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
@@ -55,6 +57,8 @@ class MainActivity : ComponentActivity() {
     private lateinit var historyPage: ScrollView
     private lateinit var profilePage: ScrollView
     private lateinit var homeGreetingText: TextView
+    private lateinit var homeHeroTitleText: TextView
+    private lateinit var homeHeroSubtitleText: TextView
     private lateinit var statVerifiedText: TextView
     private lateinit var statReviewText: TextView
     private lateinit var homeLastStatusText: TextView
@@ -82,6 +86,22 @@ class MainActivity : ComponentActivity() {
     private lateinit var adminSubjectInput: EditText
     private lateinit var adminResultText: TextView
     private lateinit var adminProgressBar: ProgressBar
+    private lateinit var categoryCertificate: LinearLayout
+    private lateinit var categoryLetter: LinearLayout
+    private lateinit var categoryLogbook: LinearLayout
+    private lateinit var categoryTranscript: LinearLayout
+    private lateinit var categoryCertificateIcon: ImageView
+    private lateinit var categoryLetterIcon: ImageView
+    private lateinit var categoryLogbookIcon: ImageView
+    private lateinit var categoryTranscriptIcon: ImageView
+    private lateinit var categoryCertificateLabel: TextView
+    private lateinit var categoryLetterLabel: TextView
+    private lateinit var categoryLogbookLabel: TextView
+    private lateinit var categoryTranscriptLabel: TextView
+    private lateinit var categoryCertificateUnderline: View
+    private lateinit var categoryLetterUnderline: View
+    private lateinit var categoryLogbookUnderline: View
+    private lateinit var categoryTranscriptUnderline: View
 
     private var selectedUri: Uri? = null
     private var selectedHash: String? = null
@@ -96,6 +116,13 @@ class MainActivity : ComponentActivity() {
     private var reviewCount = 0
     private val historyEntries = mutableListOf<String>()
     private val idLocale: Locale = Locale.forLanguageTag("id-ID")
+
+    private enum class HomeCategory {
+        CERTIFICATE,
+        LETTER,
+        LOGBOOK,
+        TRANSCRIPT
+    }
 
     private companion object {
         const val VALID_NIM = "231011402890"
@@ -194,6 +221,8 @@ class MainActivity : ComponentActivity() {
         historyPage = findViewById(R.id.historyPage)
         profilePage = findViewById(R.id.profilePage)
         homeGreetingText = findViewById(R.id.homeGreetingText)
+        homeHeroTitleText = findViewById(R.id.homeHeroTitleText)
+        homeHeroSubtitleText = findViewById(R.id.homeHeroSubtitleText)
         statVerifiedText = findViewById(R.id.statVerifiedText)
         statReviewText = findViewById(R.id.statReviewText)
         homeLastStatusText = findViewById(R.id.homeLastStatusText)
@@ -221,11 +250,29 @@ class MainActivity : ComponentActivity() {
         adminSubjectInput = findViewById(R.id.adminSubjectInput)
         adminResultText = findViewById(R.id.adminResultText)
         adminProgressBar = findViewById(R.id.adminProgressBar)
+        categoryCertificate = findViewById(R.id.categoryCertificate)
+        categoryLetter = findViewById(R.id.categoryLetter)
+        categoryLogbook = findViewById(R.id.categoryLogbook)
+        categoryTranscript = findViewById(R.id.categoryTranscript)
+        categoryCertificateIcon = findViewById(R.id.categoryCertificateIcon)
+        categoryLetterIcon = findViewById(R.id.categoryLetterIcon)
+        categoryLogbookIcon = findViewById(R.id.categoryLogbookIcon)
+        categoryTranscriptIcon = findViewById(R.id.categoryTranscriptIcon)
+        categoryCertificateLabel = findViewById(R.id.categoryCertificateLabel)
+        categoryLetterLabel = findViewById(R.id.categoryLetterLabel)
+        categoryLogbookLabel = findViewById(R.id.categoryLogbookLabel)
+        categoryTranscriptLabel = findViewById(R.id.categoryTranscriptLabel)
+        categoryCertificateUnderline = findViewById(R.id.categoryCertificateUnderline)
+        categoryLetterUnderline = findViewById(R.id.categoryLetterUnderline)
+        categoryLogbookUnderline = findViewById(R.id.categoryLogbookUnderline)
+        categoryTranscriptUnderline = findViewById(R.id.categoryTranscriptUnderline)
     }
 
     private fun bindActions() {
         roleStudentButton.setOnClickListener { selectRole(ROLE_STUDENT) }
         roleAdminButton.setOnClickListener { selectRole(ROLE_ADMIN) }
+        loginIdInput.setOnFocusChangeListener { view, hasFocus -> if (hasFocus) scrollLoginTo(view) }
+        loginPasswordInput.setOnFocusChangeListener { view, hasFocus -> if (hasFocus) scrollLoginTo(view) }
         loginButton.setOnClickListener { login() }
         quickVerifyButton.setOnClickListener {
             bottomNavigation.selectedItemId = R.id.nav_verify
@@ -248,6 +295,10 @@ class MainActivity : ComponentActivity() {
         registerAdminButton.setOnClickListener {
             registerAdminDocument()
         }
+        categoryCertificate.setOnClickListener { selectHomeCategory(HomeCategory.CERTIFICATE) }
+        categoryLetter.setOnClickListener { selectHomeCategory(HomeCategory.LETTER) }
+        categoryLogbook.setOnClickListener { selectHomeCategory(HomeCategory.LOGBOOK) }
+        categoryTranscript.setOnClickListener { selectHomeCategory(HomeCategory.TRANSCRIPT) }
         logoutButton.setOnClickListener {
             getPreferences(MODE_PRIVATE).edit().clear().apply()
             selectedHash = null
@@ -314,6 +365,7 @@ class MainActivity : ComponentActivity() {
         } else {
             "Registry belum dikonfigurasi"
         }
+        selectHomeCategory(HomeCategory.CERTIFICATE)
         updateHome()
         val firstPage = if (activeRole == ROLE_ADMIN) R.id.nav_admin else R.id.nav_home
         bottomNavigation.selectedItemId = firstPage
@@ -323,6 +375,49 @@ class MainActivity : ComponentActivity() {
     private fun selectRole(role: String) {
         selectedRole = role
         updateRoleButtons()
+    }
+
+    private fun selectHomeCategory(category: HomeCategory) {
+        val activeColor = getColor(R.color.validin_text)
+        val inactiveColor = getColor(R.color.validin_muted)
+
+        val items = listOf(
+            HomeCategory.CERTIFICATE to Triple(categoryCertificateIcon, categoryCertificateLabel, categoryCertificateUnderline),
+            HomeCategory.LETTER to Triple(categoryLetterIcon, categoryLetterLabel, categoryLetterUnderline),
+            HomeCategory.LOGBOOK to Triple(categoryLogbookIcon, categoryLogbookLabel, categoryLogbookUnderline),
+            HomeCategory.TRANSCRIPT to Triple(categoryTranscriptIcon, categoryTranscriptLabel, categoryTranscriptUnderline)
+        )
+
+        items.forEach { (itemCategory, views) ->
+            val selected = itemCategory == category
+            views.first.setColorFilter(if (selected) activeColor else inactiveColor)
+            views.second.setTextColor(if (selected) activeColor else inactiveColor)
+            views.third.visibility = if (selected) View.VISIBLE else View.INVISIBLE
+        }
+
+        val title: String
+        val subtitle: String
+        when (category) {
+            HomeCategory.CERTIFICATE -> {
+                title = "Sertifikat Kampus"
+                subtitle = "Validasi sertifikat seminar, lomba, pelatihan, dan kepanitiaan."
+            }
+            HomeCategory.LETTER -> {
+                title = "Surat Resmi"
+                subtitle = "Cek surat tugas, surat aktif kuliah, dan dokumen administrasi."
+            }
+            HomeCategory.LOGBOOK -> {
+                title = "Logbook Digital"
+                subtitle = "Pastikan catatan magang atau bimbingan belum dimanipulasi."
+            }
+            HomeCategory.TRANSCRIPT -> {
+                title = "Transkrip & Nilai"
+                subtitle = "Cocokkan fingerprint dokumen akademik sebelum digunakan."
+            }
+        }
+
+        homeHeroTitleText.text = title
+        homeHeroSubtitleText.text = subtitle
     }
 
     private fun updateRoleButtons() {
@@ -576,13 +671,18 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun updateHome() {
-        val firstName = userName.split(" ").firstOrNull().orEmpty().ifBlank { "Pengguna" }
-        homeGreetingText.text = "Halo, $firstName"
-        statVerifiedText.text = "$validCount\nValid"
-        statReviewText.text = "$reviewCount\nReview"
+        homeGreetingText.text = "Where to verify?"
+        statVerifiedText.text = "$validCount Valid"
+        statReviewText.text = "$reviewCount Review"
         if (historyEntries.isEmpty()) {
             homeLastStatusText.text = "Belum ada dokumen yang diverifikasi."
         }
+    }
+
+    private fun scrollLoginTo(view: View) {
+        loginContainer.postDelayed({
+            loginContainer.smoothScrollTo(0, view.bottom)
+        }, 180)
     }
 
     private fun displayName(uri: Uri): String {
