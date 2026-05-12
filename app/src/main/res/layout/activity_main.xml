@@ -237,14 +237,15 @@
         <LinearLayout
             android:id="@+id/topBar"
             android:layout_width="match_parent"
-            android:layout_height="86dp"
+            android:layout_height="76dp"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp">
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <TextView
+                android:id="@+id/topLogoText"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:background="@drawable/bg_avatar_circle"
@@ -287,6 +288,27 @@
                 android:text="RZ"
                 android:textColor="@color/validin_primary"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/profileSettingsButton"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:gravity="center"
+                android:text="⚙"
+                android:textColor="@color/validin_text"
+                android:textSize="26sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/profileEditButton"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                android:text="✎"
+                android:textColor="@color/validin_text"
+                android:textSize="26sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <FrameLayout
@@ -857,18 +879,10 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Profile"
-                        android:textColor="@color/validin_text"
-                        android:textSize="38sp"
-                        android:textStyle="bold" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="190dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_height="210dp"
+                        android:layout_marginTop="8dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -926,6 +940,19 @@
                                 android:textColor="@color/validin_text"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="38dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/bg_yellow_chip"
+                                android:gravity="center"
+                                android:paddingLeft="14dp"
+                                android:paddingRight="14dp"
+                                android:text="Verified issuer access"
+                                android:textColor="@color/validin_primary_dark"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -934,7 +961,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="84dp"
                         android:layout_marginTop="18dp"
-                        android:background="@drawable/bg_modern_card"
+                        android:background="@drawable/bg_login_glass_card"
                         android:elevation="3dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="22dp"

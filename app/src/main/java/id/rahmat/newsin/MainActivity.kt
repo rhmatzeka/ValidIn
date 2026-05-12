@@ -42,9 +42,12 @@ class MainActivity : ComponentActivity() {
     private lateinit var loginButton: Button
     private lateinit var roleStudentButton: Button
     private lateinit var roleAdminButton: Button
+    private lateinit var topLogoText: TextView
     private lateinit var mainTitleText: TextView
     private lateinit var mainSubtitleText: TextView
     private lateinit var userBadgeText: TextView
+    private lateinit var profileSettingsButton: TextView
+    private lateinit var profileEditButton: TextView
     private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var homePage: ScrollView
     private lateinit var verifyPage: ScrollView
@@ -178,9 +181,12 @@ class MainActivity : ComponentActivity() {
         loginButton = findViewById(R.id.loginButton)
         roleStudentButton = findViewById(R.id.roleStudentButton)
         roleAdminButton = findViewById(R.id.roleAdminButton)
+        topLogoText = findViewById(R.id.topLogoText)
         mainTitleText = findViewById(R.id.mainTitleText)
         mainSubtitleText = findViewById(R.id.mainSubtitleText)
         userBadgeText = findViewById(R.id.userBadgeText)
+        profileSettingsButton = findViewById(R.id.profileSettingsButton)
+        profileEditButton = findViewById(R.id.profileEditButton)
         bottomNavigation = findViewById(R.id.bottomNavigation)
         homePage = findViewById(R.id.homePage)
         verifyPage = findViewById(R.id.verifyPage)
@@ -342,6 +348,12 @@ class MainActivity : ComponentActivity() {
         adminPage.visibility = if (itemId == R.id.nav_admin) View.VISIBLE else View.GONE
         historyPage.visibility = if (itemId == R.id.nav_history) View.VISIBLE else View.GONE
         profilePage.visibility = if (itemId == R.id.nav_profile) View.VISIBLE else View.GONE
+        val isProfile = itemId == R.id.nav_profile
+        topLogoText.visibility = if (isProfile) View.GONE else View.VISIBLE
+        userBadgeText.visibility = if (isProfile) View.GONE else View.VISIBLE
+        mainSubtitleText.visibility = if (isProfile) View.GONE else View.VISIBLE
+        profileSettingsButton.visibility = if (isProfile) View.VISIBLE else View.GONE
+        profileEditButton.visibility = if (isProfile) View.VISIBLE else View.GONE
 
         when (itemId) {
             R.id.nav_admin -> {
