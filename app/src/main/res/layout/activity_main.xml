@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/validin_background"
+    android:background="@drawable/bg_soft_screen"
     tools:context=".MainActivity">
 
     <ScrollView
@@ -20,138 +20,113 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="42dp">
+            android:padding="22dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="238dp"
-                android:background="@drawable/bg_login_header"
+                android:layout_height="260dp"
+                android:background="@drawable/bg_palette_hero"
                 android:orientation="vertical"
-                android:paddingLeft="28dp"
-                android:paddingTop="32dp"
-                android:paddingRight="28dp"
-                android:paddingBottom="26dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@drawable/bg_login_panel"
-                        android:gravity="center"
-                        android:text="VI"
-                        android:textColor="@color/validin_primary"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="14dp"
-                        android:layout_weight="1"
-                        android:text="ValidIn"
-                        android:textColor="@color/white"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                android:padding="24dp">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="34dp"
-                    android:text="Selamat datang"
-                    android:textColor="@color/white"
-                    android:textSize="34sp"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:background="@drawable/bg_login_panel"
+                    android:gravity="center"
+                    android:text="VI"
+                    android:textColor="@color/validin_primary"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Verifikasi dokumen kampus dengan tampilan profesional dan proses yang cepat."
+                    android:layout_marginTop="34dp"
+                    android:text="ValidIn"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="42sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Dokumen kampus, AI OCR, dan registry digital dalam satu aplikasi."
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:layout_marginTop="22dp"
-                android:layout_marginRight="22dp"
-                android:background="@drawable/bg_login_card_modern"
-                android:elevation="4dp"
+                android:layout_marginTop="-28dp"
+                android:background="@drawable/bg_modern_card"
+                android:elevation="8dp"
                 android:orientation="vertical"
                 android:padding="24dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Akun kampus"
+                    android:text="Masuk"
                     android:textColor="@color/validin_text"
-                    android:textSize="24sp"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Masuk dengan NIM dan password akun ValidIn."
+                    android:text="Pilih role sebelum melanjutkan."
                     android:textColor="@color/validin_muted"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
+                    android:layout_height="54dp"
                     android:layout_marginTop="22dp"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/roleStudentButton"
                         android:layout_width="0dp"
-                        android:layout_height="52dp"
-                        android:layout_marginRight="6dp"
+                        android:layout_height="54dp"
+                        android:layout_marginRight="7dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
                         android:backgroundTint="@color/validin_primary"
                         android:text="Mahasiswa"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/roleAdminButton"
                         android:layout_width="0dp"
-                        android:layout_height="52dp"
-                        android:layout_marginLeft="6dp"
+                        android:layout_height="54dp"
+                        android:layout_marginLeft="7dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
                         android:backgroundTint="@color/validin_border"
                         android:text="Admin"
                         android:textAllCaps="false"
                         android:textColor="@color/validin_text"
-                        android:textSize="14sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="22dp"
                     android:text="NIM"
                     android:textColor="@color/validin_muted"
-                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/loginIdInput"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="58dp"
                     android:layout_marginTop="8dp"
                     android:autofillHints="username"
                     android:background="@drawable/bg_input_modern"
@@ -167,17 +142,16 @@
                     android:layout_marginTop="18dp"
                     android:text="Password"
                     android:textColor="@color/validin_muted"
-                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/loginPasswordInput"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="58dp"
                     android:layout_marginTop="8dp"
                     android:autofillHints="password"
                     android:background="@drawable/bg_input_modern"
-                    android:hint="Masukkan password"
+                    android:hint="Rahmat123"
                     android:inputType="textPassword"
                     android:singleLine="true"
                     android:textColor="@color/validin_text"
@@ -195,7 +169,7 @@
                 <Button
                     android:id="@+id/loginButton"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="58dp"
                     android:layout_marginTop="24dp"
                     android:background="@drawable/bg_primary_button"
                     android:backgroundTint="@color/validin_primary"
@@ -205,17 +179,6 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginRight="28dp"
-                android:gravity="center"
-                android:text="ValidIn menjaga dokumen tetap privat. Aplikasi hanya mencocokkan fingerprint digital."
-                android:textColor="@color/validin_muted"
-                android:textSize="13sp" />
         </LinearLayout>
     </ScrollView>
 
@@ -223,71 +186,64 @@
         android:id="@+id/appContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/validin_soft_blue"
+        android:background="@drawable/bg_soft_screen"
         android:orientation="vertical"
         android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/topBar"
             android:layout_width="match_parent"
-            android:layout_height="98dp"
-            android:background="@color/validin_primary"
+            android:layout_height="86dp"
+            android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="28dp"
-            android:paddingRight="28dp">
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
 
             <TextView
-                android:layout_width="46dp"
-                android:layout_height="46dp"
-                android:background="@drawable/bg_login_panel"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_avatar_circle"
                 android:gravity="center"
                 android:text="VI"
-                android:textColor="@color/validin_primary"
-                android:textSize="15sp"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/mainTitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Beranda"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:text="Explore"
+                    android:textColor="@color/validin_text"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/mainSubtitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ValidIn"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:text="ValidIn Campus Trust"
+                    android:textColor="@color/validin_muted"
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/userBadgeText"
-                android:layout_width="46dp"
-                android:layout_height="46dp"
-                android:background="@drawable/bg_login_panel"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_modern_chip"
                 android:gravity="center"
-                android:text="VI"
+                android:text="RZ"
                 android:textColor="@color/validin_primary"
-                android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/validin_primary" />
 
         <FrameLayout
             android:id="@+id/contentFrame"
@@ -300,179 +256,198 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:fillViewport="true"
                 android:paddingBottom="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="28dp"
-                    android:paddingTop="26dp"
-                    android:paddingRight="28dp"
-                    android:paddingBottom="24dp">
-
-                    <TextView
-                        android:id="@+id/homeGreetingText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Halo"
-                        android:textColor="@color/validin_text"
-                        android:textSize="36sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="32dp"
-                        android:text="Alerts"
-                        android:textColor="@color/validin_muted"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                    android:padding="24dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:background="@drawable/bg_login_card_modern"
-                        android:elevation="2dp"
+                        android:layout_height="72dp"
+                        android:background="@drawable/bg_search_pill"
+                        android:elevation="6dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="24dp">
+                        android:paddingLeft="20dp"
+                        android:paddingRight="12dp">
 
                         <TextView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
                             android:gravity="center"
-                            android:text="!"
+                            android:text="⌕"
                             android:textColor="@color/validin_text"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            android:textSize="32sp" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:id="@+id/homeGreetingText"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Registry kampus aktif"
+                                android:text="Halo, Rahmat"
                                 android:textColor="@color/validin_text"
                                 android:textSize="20sp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:text="Dokumen resmi dapat dicek melalui fingerprint digital dan AI."
-                                android:textColor="@color/validin_text"
-                                android:textSize="15sp" />
+                                android:text="Verifikasi dokumen resmi kampus"
+                                android:textColor="@color/validin_muted"
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <TextView
-                            android:layout_width="34dp"
-                            android:layout_height="34dp"
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:background="@drawable/bg_modern_chip"
                             android:gravity="center"
-                            android:text="›"
-                            android:textColor="@color/validin_text"
-                            android:textSize="38sp" />
+                            android:text="☰"
+                            android:textColor="@color/validin_primary"
+                            android:textSize="22sp" />
                     </LinearLayout>
 
-                    <TextView
+                    <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="38dp"
-                        android:text="Pemeriksaan"
-                        android:textColor="@color/validin_muted"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="24dp"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="116dp"
+                                android:layout_height="76dp"
+                                android:background="@drawable/bg_yellow_chip"
+                                android:gravity="center"
+                                android:text="Sertifikat"
+                                android:textColor="@color/validin_text"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="116dp"
+                                android:layout_height="76dp"
+                                android:layout_marginLeft="12dp"
+                                android:background="@drawable/bg_modern_chip"
+                                android:gravity="center"
+                                android:text="Surat"
+                                android:textColor="@color/validin_muted"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="116dp"
+                                android:layout_height="76dp"
+                                android:layout_marginLeft="12dp"
+                                android:background="@drawable/bg_modern_chip"
+                                android:gravity="center"
+                                android:text="Logbook"
+                                android:textColor="@color/validin_muted"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="116dp"
+                                android:layout_height="76dp"
+                                android:layout_marginLeft="12dp"
+                                android:background="@drawable/bg_modern_chip"
+                                android:gravity="center"
+                                android:text="Transkrip"
+                                android:textColor="@color/validin_muted"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:background="@drawable/bg_login_card_modern"
-                        android:elevation="2dp"
+                        android:layout_height="330dp"
+                        android:layout_marginTop="28dp"
+                        android:background="@drawable/bg_palette_hero"
+                        android:elevation="4dp"
                         android:orientation="vertical"
                         android:padding="24dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Verifikasi dokumen"
-                            android:textColor="@color/validin_text"
-                            android:textSize="26sp"
+                            android:text="ValidIn Registry"
+                            android:textColor="@color/white"
+                            android:textSize="30sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="Sertifikat, surat tugas, logbook, atau dokumen akademik."
-                            android:textColor="@color/validin_text"
+                            android:text="Cari tahu apakah dokumen yang kamu terima benar-benar diterbitkan oleh issuer kampus."
+                            android:textColor="@color/white"
                             android:textSize="17sp" />
 
                         <TextView
                             android:id="@+id/homeLastStatusText"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="18dp"
-                            android:background="@drawable/bg_pill_blue"
-                            android:padding="14dp"
-                            android:text="Belum ada dokumen yang diverifikasi."
-                            android:textColor="@color/validin_muted"
-                            android:textSize="15sp" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="0dp"
                             android:layout_marginTop="24dp"
-                            android:background="@color/validin_border" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_login_panel"
                             android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/statVerifiedText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="0\nValid"
-                                android:textColor="@color/validin_success"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/statReviewText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="right"
-                                android:text="0\nReview"
-                                android:textColor="@color/validin_warning"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+                            android:padding="18dp"
+                            android:text="Belum ada dokumen yang diverifikasi."
+                            android:textColor="@color/validin_text"
+                            android:textSize="15sp" />
 
                         <Button
                             android:id="@+id/quickVerifyButton"
                             android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="18dp"
                             android:background="@drawable/bg_primary_button"
-                            android:backgroundTint="@color/validin_primary"
+                            android:backgroundTint="@color/validin_yellow"
                             android:text="Mulai verifikasi"
                             android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
+                            android:textColor="@color/validin_primary_dark"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="124dp"
+                        android:layout_marginTop="24dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/statVerifiedText"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_modern_card"
+                            android:gravity="center"
+                            android:text="0\nValid"
+                            android:textColor="@color/validin_success"
+                            android:textSize="21sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/statReviewText"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_modern_card"
+                            android:gravity="center"
+                            android:text="0\nReview"
+                            android:textColor="@color/validin_warning"
+                            android:textSize="21sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
@@ -483,7 +458,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:fillViewport="true"
                 android:paddingBottom="24dp"
                 android:visibility="gone">
 
@@ -491,136 +465,110 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="28dp"
-                    android:paddingTop="26dp"
-                    android:paddingRight="28dp"
-                    android:paddingBottom="24dp">
+                    android:padding="24dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cek keaslian"
+                        android:text="Verify"
                         android:textColor="@color/validin_text"
-                        android:textSize="34sp"
+                        android:textSize="38sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="22dp"
-                        android:background="@drawable/bg_red_card"
+                        android:layout_marginTop="18dp"
+                        android:background="@drawable/bg_palette_hero"
                         android:orientation="vertical"
-                        android:padding="24dp">
+                        android:padding="22dp">
 
                         <TextView
-                            android:layout_width="84dp"
-                            android:layout_height="84dp"
-                            android:layout_gravity="center_horizontal"
+                            android:layout_width="78dp"
+                            android:layout_height="78dp"
                             android:background="@drawable/bg_login_panel"
                             android:gravity="center"
                             android:text="AI"
                             android:textColor="@color/validin_primary"
-                            android:textSize="24sp"
+                            android:textSize="23sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="22dp"
-                            android:gravity="center"
-                            android:text="ValidIn Inspector"
+                            android:layout_marginTop="18dp"
+                            android:text="Upload atau scan dokumen"
                             android:textColor="@color/white"
                             android:textSize="28sp"
                             android:textStyle="bold" />
 
-                        <TextView
+                        <Button
+                            android:id="@+id/pickDocumentButton"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:gravity="center"
-                            android:text="Baca dokumen, cocokkan fingerprint, dan tampilkan status resmi."
+                            android:layout_height="56dp"
+                            android:layout_marginTop="18dp"
+                            android:background="@drawable/bg_primary_button"
+                            android:backgroundTint="@color/validin_yellow"
+                            android:text="Pilih dokumen"
+                            android:textAllCaps="false"
+                            android:textColor="@color/validin_primary_dark"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/scanDocumentButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_primary_button"
+                            android:backgroundTint="@color/validin_accent"
+                            android:text="Scan dengan kamera"
+                            android:textAllCaps="false"
                             android:textColor="@color/white"
-                            android:textSize="17sp" />
+                            android:textStyle="bold" />
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/fileNameText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="26dp"
-                            android:background="@drawable/bg_login_panel"
-                            android:orientation="vertical"
-                            android:padding="18dp">
+                            android:layout_marginTop="16dp"
+                            android:text="Belum ada file dipilih"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
 
-                            <Button
-                                android:id="@+id/pickDocumentButton"
-                                android:layout_width="match_parent"
-                                android:layout_height="56dp"
-                                android:background="@drawable/bg_primary_button"
-                                android:backgroundTint="@color/validin_primary"
-                                android:drawableStart="@drawable/ic_upload"
-                                android:drawablePadding="8dp"
-                                android:text="Pilih dokumen"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/hashText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Fingerprint: -"
+                            android:textColor="@color/white"
+                            android:textIsSelectable="true"
+                            android:textSize="12sp" />
 
-                            <Button
-                                android:id="@+id/scanDocumentButton"
-                                android:layout_width="match_parent"
-                                android:layout_height="56dp"
-                                android:layout_marginTop="10dp"
-                                android:background="@drawable/bg_primary_button"
-                                android:backgroundTint="@color/validin_primary"
-                                android:text="Scan dengan kamera"
-                                android:textAllCaps="false"
-                                android:textColor="@color/white"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/fileNameText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="14dp"
-                                android:text="Belum ada file dipilih"
-                                android:textColor="@color/validin_muted"
-                                android:textSize="15sp" />
-
-                            <TextView
-                                android:id="@+id/hashText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:text="Fingerprint: -"
-                                android:textColor="@color/validin_text"
-                                android:textIsSelectable="true"
-                                android:textSize="12sp" />
-
-                            <ProgressBar
-                                android:id="@+id/progressBar"
-                                style="?android:attr/progressBarStyleHorizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="8dp"
-                                android:layout_marginTop="14dp"
-                                android:indeterminate="true"
-                                android:visibility="gone" />
-                        </LinearLayout>
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:layout_marginTop="16dp"
+                            android:indeterminate="true"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="28dp"
-                        android:background="@drawable/bg_login_card_modern"
-                        android:elevation="2dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/bg_modern_card"
+                        android:elevation="3dp"
                         android:orientation="vertical"
                         android:padding="22dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Analisis AI"
-                            android:textColor="@color/validin_muted"
+                            android:text="AI Inspector"
+                            android:textColor="@color/validin_text"
                             android:textSize="24sp"
                             android:textStyle="bold" />
 
@@ -628,9 +576,9 @@
                             android:id="@+id/aiStatusText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="12dp"
                             android:text="AI akan membaca nama, nomor induk, tanggal, dan penerbit dokumen."
-                            android:textColor="@color/validin_text"
+                            android:textColor="@color/validin_muted"
                             android:textSize="15sp" />
 
                         <TextView
@@ -641,37 +589,18 @@
                             android:textColor="@color/validin_text"
                             android:textIsSelectable="true"
                             android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/bg_login_card_modern"
-                        android:elevation="2dp"
-                        android:orientation="vertical"
-                        android:padding="22dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Status dokumen"
-                            android:textColor="@color/validin_muted"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
 
                         <Button
                             android:id="@+id/verifyButton"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="18dp"
                             android:background="@drawable/bg_primary_button"
                             android:backgroundTint="@color/validin_primary"
                             android:enabled="false"
                             android:text="Cek status"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
-                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -692,7 +621,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:fillViewport="true"
                 android:paddingBottom="24dp"
                 android:visibility="gone">
 
@@ -700,25 +628,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="28dp"
-                    android:paddingTop="26dp"
-                    android:paddingRight="28dp"
-                    android:paddingBottom="24dp">
+                    android:padding="24dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Admin"
+                        android:text="Issuer Studio"
                         android:textColor="@color/validin_text"
-                        android:textSize="34sp"
+                        android:textSize="38sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="22dp"
-                        android:background="@drawable/bg_login_card_modern"
-                        android:elevation="2dp"
+                        android:layout_marginTop="18dp"
+                        android:background="@drawable/bg_modern_card"
+                        android:elevation="3dp"
                         android:orientation="vertical"
                         android:padding="22dp">
 
@@ -727,14 +652,14 @@
                             android:layout_height="wrap_content"
                             android:text="Terbitkan dokumen"
                             android:textColor="@color/validin_text"
-                            android:textSize="24sp"
+                            android:textSize="25sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Pilih atau scan dokumen resmi, lalu daftarkan fingerprint-nya ke registry kampus."
+                            android:text="Upload atau scan dokumen resmi. Fingerprint akan dikirim ke admin server."
                             android:textColor="@color/validin_muted"
                             android:textSize="15sp" />
 
@@ -748,7 +673,6 @@
                             android:text="Pilih dokumen admin"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
-                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <Button
@@ -757,11 +681,10 @@
                             android:layout_height="56dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/bg_primary_button"
-                            android:backgroundTint="@color/validin_primary"
+                            android:backgroundTint="@color/validin_accent"
                             android:text="Scan dokumen admin"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
-                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -783,47 +706,27 @@
                             android:textIsSelectable="true"
                             android:textSize="12sp" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="18dp"
-                            android:text="Jenis dokumen"
-                            android:textColor="@color/validin_muted"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
                         <EditText
                             android:id="@+id/adminDocTypeInput"
                             android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:layout_marginTop="8dp"
+                            android:layout_height="58dp"
+                            android:layout_marginTop="18dp"
                             android:background="@drawable/bg_input_modern"
-                            android:hint="Sertifikat, Surat Tugas, Logbook"
+                            android:hint="Jenis dokumen"
                             android:inputType="text"
                             android:singleLine="true"
-                            android:textColor="@color/validin_text"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="18dp"
-                            android:text="Pemilik dokumen"
-                            android:textColor="@color/validin_muted"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/validin_text" />
 
                         <EditText
                             android:id="@+id/adminSubjectInput"
                             android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:layout_marginTop="8dp"
+                            android:layout_height="58dp"
+                            android:layout_marginTop="10dp"
                             android:background="@drawable/bg_input_modern"
-                            android:hint="NIM dan nama pemilik"
+                            android:hint="Pemilik dokumen"
                             android:inputType="text"
                             android:singleLine="true"
-                            android:textColor="@color/validin_text"
-                            android:textSize="16sp" />
+                            android:textColor="@color/validin_text" />
 
                         <ProgressBar
                             android:id="@+id/adminProgressBar"
@@ -840,12 +743,11 @@
                             android:layout_height="56dp"
                             android:layout_marginTop="18dp"
                             android:background="@drawable/bg_primary_button"
-                            android:backgroundTint="@color/validin_primary"
+                            android:backgroundTint="@color/validin_yellow"
                             android:enabled="false"
                             android:text="Daftarkan dokumen"
                             android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
+                            android:textColor="@color/validin_primary_dark"
                             android:textStyle="bold" />
 
                         <TextView
@@ -866,7 +768,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:fillViewport="true"
                 android:paddingBottom="24dp"
                 android:visibility="gone">
 
@@ -874,45 +775,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="28dp"
-                    android:paddingTop="26dp"
-                    android:paddingRight="28dp"
-                    android:paddingBottom="24dp">
+                    android:padding="24dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Riwayat"
+                        android:text="History"
                         android:textColor="@color/validin_text"
-                        android:textSize="34sp"
+                        android:textSize="38sp"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/historyListText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="22dp"
-                        android:background="@drawable/bg_login_card_modern"
-                        android:elevation="2dp"
-                        android:orientation="vertical"
-                        android:padding="22dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Pemeriksaan terakhir"
-                            android:textColor="@color/validin_muted"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/historyListText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:text="Belum ada riwayat."
-                            android:textColor="@color/validin_text"
-                            android:textSize="15sp" />
-                    </LinearLayout>
+                        android:layout_marginTop="18dp"
+                        android:background="@drawable/bg_modern_card"
+                        android:elevation="3dp"
+                        android:padding="22dp"
+                        android:text="Belum ada riwayat."
+                        android:textColor="@color/validin_text"
+                        android:textSize="15sp" />
                 </LinearLayout>
             </ScrollView>
 
@@ -921,7 +804,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:fillViewport="true"
                 android:paddingBottom="24dp"
                 android:visibility="gone">
 
@@ -929,68 +811,137 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="28dp"
-                    android:paddingTop="26dp"
-                    android:paddingRight="28dp"
-                    android:paddingBottom="24dp">
+                    android:padding="24dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Profil"
+                        android:text="Profile"
                         android:textColor="@color/validin_text"
-                        android:textSize="34sp"
+                        android:textSize="38sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="22dp"
-                        android:background="@drawable/bg_login_card_modern"
-                        android:elevation="2dp"
-                        android:orientation="vertical"
-                        android:padding="24dp">
+                        android:layout_height="190dp"
+                        android:layout_marginTop="24dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="150dp"
+                            android:layout_height="150dp">
+
+                            <TextView
+                                android:layout_width="150dp"
+                                android:layout_height="150dp"
+                                android:background="@drawable/bg_avatar_circle"
+                                android:gravity="center"
+                                android:text="RZ"
+                                android:textColor="@color/white"
+                                android:textSize="38sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="78dp"
+                                android:layout_height="38dp"
+                                android:layout_gravity="bottom|center_horizontal"
+                                android:background="@drawable/bg_yellow_chip"
+                                android:gravity="center"
+                                android:text="100%"
+                                android:textColor="@color/validin_primary_dark"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/profileNameText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Rahmat Zeka"
+                                android:textColor="@color/validin_text"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/profileIdText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="42dp"
+                                android:layout_marginTop="12dp"
+                                android:background="@drawable/bg_modern_chip"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="14dp"
+                                android:paddingRight="14dp"
+                                android:text="Mahasiswa"
+                                android:textColor="@color/validin_text"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/registryStatusText"
+                        android:layout_width="match_parent"
+                        android:layout_height="84dp"
+                        android:layout_marginTop="18dp"
+                        android:background="@drawable/bg_modern_card"
+                        android:elevation="3dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="22dp"
+                        android:paddingRight="22dp"
+                        android:text="Registry kampus aktif dan siap digunakan"
+                        android:textColor="@color/validin_text"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="116dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/profileNameText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/validin_text"
-                            android:textSize="26sp"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_modern_card"
+                            android:gravity="center"
+                            android:text="AI\nReady"
+                            android:textColor="@color/validin_primary"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/profileIdText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:textColor="@color/validin_muted"
-                            android:textSize="17sp" />
-
-                        <TextView
-                            android:id="@+id/registryStatusText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
-                            android:background="@drawable/bg_alert_card"
-                            android:padding="16dp"
-                            android:textColor="@color/validin_text"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <Button
-                            android:id="@+id/logoutButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:layout_marginTop="24dp"
-                            android:background="@drawable/bg_primary_button"
-                            android:backgroundTint="@color/validin_primary"
-                            android:text="Keluar"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_modern_card"
+                            android:gravity="center"
+                            android:text="Trust\nRegistry"
+                            android:textColor="@color/validin_accent"
+                            android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
+
+                    <Button
+                        android:id="@+id/logoutButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/bg_primary_button"
+                        android:backgroundTint="@color/validin_primary"
+                        android:text="Keluar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </ScrollView>
         </FrameLayout>
@@ -998,8 +949,8 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"
-            android:layout_height="76dp"
-            android:background="@color/white"
+            android:layout_height="78dp"
+            android:background="@drawable/bg_bottom_nav"
             app:itemIconTint="@color/bottom_nav_item"
             app:itemTextColor="@color/bottom_nav_item"
             app:labelVisibilityMode="labeled"
