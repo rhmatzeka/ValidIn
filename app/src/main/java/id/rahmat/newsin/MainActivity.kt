@@ -60,7 +60,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var historyPage: ScrollView
     private lateinit var profilePage: ScrollView
     private lateinit var homeSearchInput: EditText
-    private lateinit var homeSearchSuggestionText: TextView
     private lateinit var homeSearchActionButton: TextView
     private lateinit var homeSearchFeedbackText: TextView
     private lateinit var homeHeroTitleText: TextView
@@ -247,7 +246,6 @@ class MainActivity : ComponentActivity() {
         historyPage = findViewById(R.id.historyPage)
         profilePage = findViewById(R.id.profilePage)
         homeSearchInput = findViewById(R.id.homeSearchInput)
-        homeSearchSuggestionText = findViewById(R.id.homeSearchSuggestionText)
         homeSearchActionButton = findViewById(R.id.homeSearchActionButton)
         homeSearchFeedbackText = findViewById(R.id.homeSearchFeedbackText)
         homeHeroTitleText = findViewById(R.id.homeHeroTitleText)
@@ -509,17 +507,14 @@ class MainActivity : ComponentActivity() {
     private fun updateHomeSearchPreview(query: String) {
         val match = resolveHomeSearch(query)
         if (query.isBlank()) {
-            homeSearchSuggestionText.text = "Sertifikat · Surat · Logbook · Transkrip"
             homeSearchFeedbackText.visibility = View.GONE
             return
         }
 
         homeSearchFeedbackText.visibility = View.VISIBLE
         if (match == null) {
-            homeSearchSuggestionText.text = "Tidak ada kategori cocok"
             homeSearchFeedbackText.text = "Coba kata kunci: sertifikat, surat, logbook, transkrip, nilai, scan, atau riwayat."
         } else {
-            homeSearchSuggestionText.text = match.title
             homeSearchFeedbackText.text = "${match.title}\n${match.description}"
         }
     }
@@ -606,19 +601,19 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun updateRoleButtons() {
-        val selectedColor = ColorStateList.valueOf(getColor(R.color.validin_primary))
-        val unselectedColor = ColorStateList.valueOf(getColor(R.color.validin_border))
+        val selectedColor = ColorStateList.valueOf(getColor(R.color.validin_yellow))
+        val unselectedColor = ColorStateList.valueOf(getColor(R.color.white))
 
         roleStudentButton.backgroundTintList =
             if (selectedRole == ROLE_STUDENT) selectedColor else unselectedColor
         roleStudentButton.setTextColor(
-            getColor(if (selectedRole == ROLE_STUDENT) R.color.white else R.color.validin_text)
+            getColor(if (selectedRole == ROLE_STUDENT) R.color.validin_primary_dark else R.color.validin_text)
         )
 
         roleAdminButton.backgroundTintList =
             if (selectedRole == ROLE_ADMIN) selectedColor else unselectedColor
         roleAdminButton.setTextColor(
-            getColor(if (selectedRole == ROLE_ADMIN) R.color.white else R.color.validin_text)
+            getColor(if (selectedRole == ROLE_ADMIN) R.color.validin_primary_dark else R.color.validin_text)
         )
     }
 

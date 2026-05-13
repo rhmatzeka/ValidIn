@@ -12,7 +12,7 @@
         android:id="@+id/loginContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/validin_background"
+        android:background="@color/validin_primary"
         android:clipToPadding="false"
         android:fillViewport="true"
         android:paddingBottom="24dp">
@@ -30,8 +30,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_login_glass_card"
-                android:elevation="8dp"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
                 android:orientation="vertical"
                 android:paddingLeft="18dp"
                 android:paddingTop="18dp"
@@ -41,18 +41,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="Masuk"
-                    android:textColor="@color/validin_text"
-                    android:textSize="24sp"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:gravity="center"
                     android:text="Pilih role sebelum melanjutkan."
-                    android:textColor="@color/validin_muted"
-                    android:textSize="12sp" />
+                    android:textColor="#CCFFFFFF"
+                    android:textSize="13sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -67,10 +69,10 @@
                         android:layout_marginRight="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
-                        android:backgroundTint="@color/validin_primary"
+                        android:backgroundTint="@color/validin_yellow"
                         android:text="Mahasiswa"
                         android:textAllCaps="false"
-                        android:textColor="@color/white"
+                        android:textColor="@color/validin_primary_dark"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
@@ -81,7 +83,7 @@
                         android:layout_marginLeft="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
-                        android:backgroundTint="@color/validin_border"
+                        android:backgroundTint="@color/white"
                         android:text="Admin"
                         android:textAllCaps="false"
                         android:textColor="@color/validin_text"
@@ -94,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="NIM"
-                    android:textColor="@color/validin_muted"
+                    android:textColor="#DFFFFFFF"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
@@ -118,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Password"
-                    android:textColor="@color/validin_muted"
+                    android:textColor="#DFFFFFFF"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
@@ -289,15 +291,16 @@
                             android:textSize="26sp" />
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                             <EditText
                                 android:id="@+id/homeSearchInput"
                                 android:layout_width="match_parent"
-                                android:layout_height="28dp"
+                                android:layout_height="44dp"
                                 android:background="@android:color/transparent"
                                 android:hint="Cari dokumen"
                                 android:imeOptions="actionSearch"
@@ -308,14 +311,6 @@
                                 android:textColorHint="@color/validin_text"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/homeSearchSuggestionText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Certificate · Letter · Logbook"
-                                android:textColor="@color/validin_muted"
-                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <TextView
