@@ -493,6 +493,7 @@ class MainActivity : ComponentActivity() {
             bottomNavigation.selectedItemId = R.id.nav_verify
             verifyCamera.launch(null)
         }
+        bottomScanButton.bringToFront()
     }
 
     private fun openHomeCategory(category: HomeCategory) {

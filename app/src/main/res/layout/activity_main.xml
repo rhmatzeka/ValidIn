@@ -1929,14 +1929,19 @@
 
         <ImageView
             android:id="@+id/bottomScanButton"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="36dp"
+            android:layout_marginBottom="34dp"
             android:background="@drawable/bg_scan_fab"
+            android:clickable="true"
             android:contentDescription="Scan dokumen"
-            android:padding="17dp"
+            android:elevation="18dp"
+            android:focusable="true"
+            android:padding="19dp"
             android:scaleType="center"
-            android:src="@drawable/ic_scan_qr" />
+            android:src="@drawable/ic_scan_qr"
+            android:translationZ="18dp"
+            android:visibility="visible" />
     </FrameLayout>
 </FrameLayout>
