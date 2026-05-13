@@ -22,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.imageview.ShapeableImageView
 import id.rahmat.newsin.ai.AiDocumentInspector
 import id.rahmat.newsin.blockchain.ValidInContractClient
 import id.rahmat.newsin.blockchain.VerificationResult
@@ -91,6 +92,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var resultText: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var historyListText: TextView
+    private lateinit var profilePhotoImage: ShapeableImageView
     private lateinit var profileAvatarText: TextView
     private lateinit var profileNameText: TextView
     private lateinit var profileIdText: TextView
@@ -102,6 +104,8 @@ class MainActivity : ComponentActivity() {
     private lateinit var profileGoVerifyButton: TextView
     private lateinit var profileGoHistoryButton: TextView
     private lateinit var profileDisplayNameInput: EditText
+    private lateinit var profilePickPhotoButton: TextView
+    private lateinit var profileRemovePhotoButton: TextView
     private lateinit var profileSaveButton: Button
     private lateinit var logoutButton: Button
     private lateinit var pickAdminDocumentButton: Button
@@ -137,6 +141,7 @@ class MainActivity : ComponentActivity() {
     private var adminFileName: String = ""
     private var userName: String = ""
     private var userId: String = ""
+    private var profilePhotoUri: Uri? = null
     private var selectedRole: String = ROLE_STUDENT
     private var activeRole: String = ROLE_STUDENT
     private var validCount = 0
@@ -193,6 +198,24 @@ class MainActivity : ComponentActivity() {
                 // Some providers only allow temporary access.
             }
             analyzeAdminDocument(uri)
+        }
+    }
+
+    private val profilePhotoPicker = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) {
+            try {
+                contentResolver.takePersistableUriPermission(
+                    uri,
+                    android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            } catch (_: SecurityException) {
+                // Some providers only allow temporary access.
+            }
+            profilePhotoUri = uri
+            getPreferences(MODE_PRIVATE).edit()
+                .putString("photoUri", uri.toString())
+                .apply()
+            updateProfileUi()
         }
     }
 
@@ -286,6 +309,7 @@ class MainActivity : ComponentActivity() {
         resultText = findViewById(R.id.resultText)
         progressBar = findViewById(R.id.progressBar)
         historyListText = findViewById(R.id.historyListText)
+        profilePhotoImage = findViewById(R.id.profilePhotoImage)
         profileAvatarText = findViewById(R.id.profileAvatarText)
         profileNameText = findViewById(R.id.profileNameText)
         profileIdText = findViewById(R.id.profileIdText)
@@ -297,6 +321,8 @@ class MainActivity : ComponentActivity() {
         profileGoVerifyButton = findViewById(R.id.profileGoVerifyButton)
         profileGoHistoryButton = findViewById(R.id.profileGoHistoryButton)
         profileDisplayNameInput = findViewById(R.id.profileDisplayNameInput)
+        profilePickPhotoButton = findViewById(R.id.profilePickPhotoButton)
+        profileRemovePhotoButton = findViewById(R.id.profileRemovePhotoButton)
         profileSaveButton = findViewById(R.id.profileSaveButton)
         logoutButton = findViewById(R.id.logoutButton)
         pickAdminDocumentButton = findViewById(R.id.pickAdminDocumentButton)
@@ -334,8 +360,12 @@ class MainActivity : ComponentActivity() {
         loginButton.setOnClickListener { login() }
         profileSettingsButton.setOnClickListener { showProfileSettingsPanel() }
         profileEditButton.setOnClickListener { showProfileEditPanel() }
+        profilePhotoImage.setOnClickListener { pickProfilePhoto() }
+        profileAvatarText.setOnClickListener { pickProfilePhoto() }
         profileGoVerifyButton.setOnClickListener { bottomNavigation.selectedItemId = R.id.nav_verify }
         profileGoHistoryButton.setOnClickListener { bottomNavigation.selectedItemId = R.id.nav_history }
+        profilePickPhotoButton.setOnClickListener { pickProfilePhoto() }
+        profileRemovePhotoButton.setOnClickListener { removeProfilePhoto() }
         profileSaveButton.setOnClickListener { saveProfileEdits() }
         homeSearchActionButton.setOnClickListener { performHomeSearch() }
         homeSearchInput.setOnEditorActionListener { _, actionId, _ ->
@@ -409,6 +439,7 @@ class MainActivity : ComponentActivity() {
         userName = prefs.getString("name", "") ?: ""
         userId = prefs.getString("id", "") ?: ""
         activeRole = prefs.getString("role", ROLE_STUDENT) ?: ROLE_STUDENT
+        profilePhotoUri = prefs.getString("photoUri", null)?.let { Uri.parse(it) }
         selectedRole = activeRole
         updateRoleButtons()
 
@@ -675,6 +706,21 @@ class MainActivity : ComponentActivity() {
         val initials = initials(userName)
         userBadgeText.text = initials
         profileAvatarText.text = initials
+        val photoUri = profilePhotoUri
+        if (photoUri != null) {
+            try {
+                profilePhotoImage.setImageURI(photoUri)
+                profilePhotoImage.visibility = View.VISIBLE
+                profileAvatarText.visibility = View.GONE
+            } catch (_: Throwable) {
+                profilePhotoUri = null
+                profilePhotoImage.visibility = View.GONE
+                profileAvatarText.visibility = View.VISIBLE
+            }
+        } else {
+            profilePhotoImage.visibility = View.GONE
+            profileAvatarText.visibility = View.VISIBLE
+        }
         profileNameText.text = userName
         profileIdText.text = if (activeRole == ROLE_ADMIN) "Admin kampus - $userId" else "Mahasiswa - $userId"
         profileTrustBadgeText.text = if (activeRole == ROLE_ADMIN) {
@@ -710,6 +756,16 @@ class MainActivity : ComponentActivity() {
             if (profileEditPanel.visibility == View.VISIBLE) View.GONE else View.VISIBLE
     }
 
+    private fun pickProfilePhoto() {
+        profilePhotoPicker.launch(arrayOf("image/*"))
+    }
+
+    private fun removeProfilePhoto() {
+        profilePhotoUri = null
+        getPreferences(MODE_PRIVATE).edit().remove("photoUri").apply()
+        updateProfileUi()
+    }
+
     private fun hideProfilePanels() {
         profileSettingsPanel.visibility = View.GONE
         profileEditPanel.visibility = View.GONE
@@ -727,6 +783,7 @@ class MainActivity : ComponentActivity() {
             .putString("name", userName)
             .putString("id", userId)
             .putString("role", activeRole)
+            .putString("photoUri", profilePhotoUri?.toString())
             .apply()
 
         updateProfileUi()
