@@ -550,12 +550,11 @@ class MainActivity : ComponentActivity() {
     private fun showApp() {
         loginContainer.visibility = View.GONE
         appContainer.visibility = View.VISIBLE
-        bottomNavigation.menu.findItem(R.id.nav_admin).isVisible = activeRole == ROLE_ADMIN
         updateProfileUi()
         hideProfilePanels()
         selectHomeCategory(HomeCategory.CERTIFICATE)
         updateHome()
-        val firstPage = if (activeRole == ROLE_ADMIN) R.id.nav_admin else R.id.nav_home
+        val firstPage = R.id.nav_home
         bottomNavigation.selectedItemId = firstPage
         showPage(firstPage)
     }
