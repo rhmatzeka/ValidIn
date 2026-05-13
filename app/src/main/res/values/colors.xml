@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="validin_background">#F6F7FF</color>
+    <color name="validin_login_background">#F2F5FA</color>
     <color name="validin_surface">#FFFFFF</color>
     <color name="validin_primary">#2D21D9</color>
     <color name="validin_primary_dark">#210B67</color>

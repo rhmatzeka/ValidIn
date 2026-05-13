@@ -12,7 +12,7 @@
         android:id="@+id/loginContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/validin_primary"
+        android:background="@color/validin_login_background"
         android:clipToPadding="false"
         android:fillViewport="true"
         android:paddingBottom="24dp">
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Masuk"
-                    android:textColor="@color/white"
+                    android:textColor="@color/validin_text"
                     android:textSize="26sp"
                     android:textStyle="bold" />
 
@@ -53,7 +53,7 @@
                     android:layout_marginTop="4dp"
                     android:gravity="center"
                     android:text="Pilih role sebelum melanjutkan."
-                    android:textColor="#CCFFFFFF"
+                    android:textColor="@color/validin_muted"
                     android:textSize="13sp" />
 
                 <LinearLayout
@@ -69,10 +69,10 @@
                         android:layout_marginRight="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
-                        android:backgroundTint="@color/validin_yellow"
+                        android:backgroundTint="@color/validin_primary"
                         android:text="Mahasiswa"
                         android:textAllCaps="false"
-                        android:textColor="@color/validin_primary_dark"
+                        android:textColor="@color/white"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="NIM"
-                    android:textColor="#DFFFFFFF"
+                    android:textColor="@color/validin_muted"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Password"
-                    android:textColor="#DFFFFFFF"
+                    android:textColor="@color/validin_muted"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
@@ -1167,6 +1167,7 @@
                             android:layout_height="150dp">
 
                             <TextView
+                                android:id="@+id/profileAvatarText"
                                 android:layout_width="150dp"
                                 android:layout_height="150dp"
                                 android:background="@drawable/bg_avatar_circle"
@@ -1218,6 +1219,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/profileTrustBadgeText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="38dp"
                                 android:layout_marginTop="10dp"
@@ -1275,6 +1277,112 @@
                             android:text="Trust\nRegistry"
                             android:textColor="@color/validin_accent"
                             android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/profileSettingsPanel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/bg_modern_card"
+                        android:elevation="3dp"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Pengaturan profil"
+                            android:textColor="@color/validin_text"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/profileSettingsInfoText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Role, registry, dan status sesi akan tampil di sini."
+                            android:textColor="@color/validin_muted"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="16dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/profileGoVerifyButton"
+                                android:layout_width="0dp"
+                                android:layout_height="44dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_modern_chip"
+                                android:gravity="center"
+                                android:text="Verifikasi"
+                                android:textColor="@color/validin_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/profileGoHistoryButton"
+                                android:layout_width="0dp"
+                                android:layout_height="44dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_modern_chip"
+                                android:gravity="center"
+                                android:text="Riwayat"
+                                android:textColor="@color/validin_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/profileEditPanel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/bg_modern_card"
+                        android:elevation="3dp"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Edit profil"
+                            android:textColor="@color/validin_text"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/profileDisplayNameInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="14dp"
+                            android:background="@drawable/bg_input_modern"
+                            android:hint="Nama tampilan"
+                            android:inputType="textPersonName"
+                            android:singleLine="true"
+                            android:textColor="@color/validin_text"
+                            android:textSize="14sp" />
+
+                        <Button
+                            android:id="@+id/profileSaveButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="14dp"
+                            android:background="@drawable/bg_primary_button"
+                            android:backgroundTint="@color/validin_yellow"
+                            android:text="Simpan profil"
+                            android:textAllCaps="false"
+                            android:textColor="@color/validin_primary_dark"
                             android:textStyle="bold" />
                     </LinearLayout>
 

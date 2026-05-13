@@ -91,9 +91,18 @@ class MainActivity : ComponentActivity() {
     private lateinit var resultText: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var historyListText: TextView
+    private lateinit var profileAvatarText: TextView
     private lateinit var profileNameText: TextView
     private lateinit var profileIdText: TextView
+    private lateinit var profileTrustBadgeText: TextView
     private lateinit var registryStatusText: TextView
+    private lateinit var profileSettingsPanel: LinearLayout
+    private lateinit var profileEditPanel: LinearLayout
+    private lateinit var profileSettingsInfoText: TextView
+    private lateinit var profileGoVerifyButton: TextView
+    private lateinit var profileGoHistoryButton: TextView
+    private lateinit var profileDisplayNameInput: EditText
+    private lateinit var profileSaveButton: Button
     private lateinit var logoutButton: Button
     private lateinit var pickAdminDocumentButton: Button
     private lateinit var scanAdminDocumentButton: Button
@@ -277,9 +286,18 @@ class MainActivity : ComponentActivity() {
         resultText = findViewById(R.id.resultText)
         progressBar = findViewById(R.id.progressBar)
         historyListText = findViewById(R.id.historyListText)
+        profileAvatarText = findViewById(R.id.profileAvatarText)
         profileNameText = findViewById(R.id.profileNameText)
         profileIdText = findViewById(R.id.profileIdText)
+        profileTrustBadgeText = findViewById(R.id.profileTrustBadgeText)
         registryStatusText = findViewById(R.id.registryStatusText)
+        profileSettingsPanel = findViewById(R.id.profileSettingsPanel)
+        profileEditPanel = findViewById(R.id.profileEditPanel)
+        profileSettingsInfoText = findViewById(R.id.profileSettingsInfoText)
+        profileGoVerifyButton = findViewById(R.id.profileGoVerifyButton)
+        profileGoHistoryButton = findViewById(R.id.profileGoHistoryButton)
+        profileDisplayNameInput = findViewById(R.id.profileDisplayNameInput)
+        profileSaveButton = findViewById(R.id.profileSaveButton)
         logoutButton = findViewById(R.id.logoutButton)
         pickAdminDocumentButton = findViewById(R.id.pickAdminDocumentButton)
         scanAdminDocumentButton = findViewById(R.id.scanAdminDocumentButton)
@@ -314,6 +332,11 @@ class MainActivity : ComponentActivity() {
         loginIdInput.setOnFocusChangeListener { view, hasFocus -> if (hasFocus) scrollLoginTo(view) }
         loginPasswordInput.setOnFocusChangeListener { view, hasFocus -> if (hasFocus) scrollLoginTo(view) }
         loginButton.setOnClickListener { login() }
+        profileSettingsButton.setOnClickListener { showProfileSettingsPanel() }
+        profileEditButton.setOnClickListener { showProfileEditPanel() }
+        profileGoVerifyButton.setOnClickListener { bottomNavigation.selectedItemId = R.id.nav_verify }
+        profileGoHistoryButton.setOnClickListener { bottomNavigation.selectedItemId = R.id.nav_history }
+        profileSaveButton.setOnClickListener { saveProfileEdits() }
         homeSearchActionButton.setOnClickListener { performHomeSearch() }
         homeSearchInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -424,14 +447,8 @@ class MainActivity : ComponentActivity() {
         loginContainer.visibility = View.GONE
         appContainer.visibility = View.VISIBLE
         bottomNavigation.menu.findItem(R.id.nav_admin).isVisible = activeRole == ROLE_ADMIN
-        userBadgeText.text = initials(userName)
-        profileNameText.text = userName
-        profileIdText.text = if (activeRole == ROLE_ADMIN) "Admin kampus - $userId" else "Mahasiswa - $userId"
-        registryStatusText.text = if (registryConfigured()) {
-            "Registry kampus aktif dan siap digunakan"
-        } else {
-            "Registry belum dikonfigurasi"
-        }
+        updateProfileUi()
+        hideProfilePanels()
         selectHomeCategory(HomeCategory.CERTIFICATE)
         updateHome()
         val firstPage = if (activeRole == ROLE_ADMIN) R.id.nav_admin else R.id.nav_home
@@ -601,19 +618,19 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun updateRoleButtons() {
-        val selectedColor = ColorStateList.valueOf(getColor(R.color.validin_yellow))
+        val selectedColor = ColorStateList.valueOf(getColor(R.color.validin_primary))
         val unselectedColor = ColorStateList.valueOf(getColor(R.color.white))
 
         roleStudentButton.backgroundTintList =
             if (selectedRole == ROLE_STUDENT) selectedColor else unselectedColor
         roleStudentButton.setTextColor(
-            getColor(if (selectedRole == ROLE_STUDENT) R.color.validin_primary_dark else R.color.validin_text)
+            getColor(if (selectedRole == ROLE_STUDENT) R.color.white else R.color.validin_text)
         )
 
         roleAdminButton.backgroundTintList =
             if (selectedRole == ROLE_ADMIN) selectedColor else unselectedColor
         roleAdminButton.setTextColor(
-            getColor(if (selectedRole == ROLE_ADMIN) R.color.validin_primary_dark else R.color.validin_text)
+            getColor(if (selectedRole == ROLE_ADMIN) R.color.white else R.color.validin_text)
         )
     }
 
@@ -652,6 +669,68 @@ class MainActivity : ComponentActivity() {
                 mainSubtitleText.text = "ValidIn Campus Trust"
             }
         }
+    }
+
+    private fun updateProfileUi() {
+        val initials = initials(userName)
+        userBadgeText.text = initials
+        profileAvatarText.text = initials
+        profileNameText.text = userName
+        profileIdText.text = if (activeRole == ROLE_ADMIN) "Admin kampus - $userId" else "Mahasiswa - $userId"
+        profileTrustBadgeText.text = if (activeRole == ROLE_ADMIN) {
+            "Verified issuer access"
+        } else {
+            "Verified student access"
+        }
+        registryStatusText.text = if (registryConfigured()) {
+            "Registry kampus aktif dan siap digunakan"
+        } else {
+            "Registry belum dikonfigurasi"
+        }
+        profileSettingsInfoText.text = listOf(
+            "Akun: $userName",
+            "Role: ${if (activeRole == ROLE_ADMIN) "Admin kampus" else "Mahasiswa"}",
+            "NIM/ID: $userId",
+            "Registry: ${if (registryConfigured()) "aktif" else "belum dikonfigurasi"}",
+            "Riwayat sesi: ${historyEntries.size} pemeriksaan"
+        ).joinToString("\n")
+    }
+
+    private fun showProfileSettingsPanel() {
+        updateProfileUi()
+        profileEditPanel.visibility = View.GONE
+        profileSettingsPanel.visibility =
+            if (profileSettingsPanel.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+    }
+
+    private fun showProfileEditPanel() {
+        profileDisplayNameInput.setText(userName)
+        profileSettingsPanel.visibility = View.GONE
+        profileEditPanel.visibility =
+            if (profileEditPanel.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+    }
+
+    private fun hideProfilePanels() {
+        profileSettingsPanel.visibility = View.GONE
+        profileEditPanel.visibility = View.GONE
+    }
+
+    private fun saveProfileEdits() {
+        val updatedName = profileDisplayNameInput.text.toString().trim()
+        if (updatedName.isBlank()) {
+            profileDisplayNameInput.error = "Nama tidak boleh kosong"
+            return
+        }
+
+        userName = updatedName
+        getPreferences(MODE_PRIVATE).edit()
+            .putString("name", userName)
+            .putString("id", userId)
+            .putString("role", activeRole)
+            .apply()
+
+        updateProfileUi()
+        profileEditPanel.visibility = View.GONE
     }
 
     private fun analyzeDocument(uri: Uri, forcedMimeType: String? = null) {
@@ -811,6 +890,7 @@ class MainActivity : ComponentActivity() {
                     val formatted = formatVerificationResult(result)
                     resultText.text = formatted
                     recordHistory(result, formatted)
+                    updateProfileUi()
                     setBusy(false)
                 }
             } catch (error: Throwable) {
@@ -818,6 +898,7 @@ class MainActivity : ComponentActivity() {
                     resultText.text = "Verifikasi gagal: ${error.message}"
                     reviewCount += 1
                     updateHome()
+                    updateProfileUi()
                     setBusy(false)
                 }
             }
