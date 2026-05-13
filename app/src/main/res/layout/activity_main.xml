@@ -1596,7 +1596,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="54dp"
+                        android:layout_height="64dp"
                         android:layout_marginTop="18dp"
                         android:orientation="horizontal">
 
@@ -1605,11 +1605,13 @@
                             android:layout_height="match_parent"
                             android:layout_marginRight="6dp"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_modern_chip"
-                            android:gravity="center"
-                            android:text="AI OCR"
+                            android:background="@drawable/bg_profile_feature_ai"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="14dp"
+                            android:text="AI OCR\nSiap membaca dokumen"
                             android:textColor="@color/validin_primary"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -1617,11 +1619,13 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="6dp"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_modern_chip"
-                            android:gravity="center"
-                            android:text="Registry"
-                            android:textColor="@color/validin_accent"
-                            android:textSize="13sp"
+                            android:background="@drawable/bg_profile_feature_registry"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="14dp"
+                            android:text="Registry\nFingerprint aktif"
+                            android:textColor="@color/validin_success"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -1629,10 +1633,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="18dp"
-                        android:background="@android:color/transparent"
+                        android:background="@drawable/bg_modern_card"
                         android:orientation="vertical"
-                        android:paddingLeft="2dp"
-                        android:paddingRight="2dp">
+                        android:padding="16dp">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -1644,27 +1647,27 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_height="68dp"
+                            android:layout_marginTop="12dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/profileTotalChecksText"
                                 android:layout_width="0dp"
-                                android:layout_height="54dp"
+                                android:layout_height="68dp"
                                 android:layout_marginRight="6dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/bg_modern_chip"
+                                android:background="@drawable/bg_profile_stat_total"
                                 android:gravity="center"
                                 android:text="0\nTotal"
                                 android:textColor="@color/validin_primary"
-                                android:textSize="12sp"
+                                android:textSize="13sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/profileValidChecksText"
                                 android:layout_width="0dp"
-                                android:layout_height="54dp"
+                                android:layout_height="68dp"
                                 android:layout_marginLeft="6dp"
                                 android:layout_marginRight="6dp"
                                 android:layout_weight="1"
@@ -1672,20 +1675,20 @@
                                 android:gravity="center"
                                 android:text="0\nValid"
                                 android:textColor="@color/validin_success"
-                                android:textSize="12sp"
+                                android:textSize="13sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/profileReviewChecksText"
                                 android:layout_width="0dp"
-                                android:layout_height="54dp"
+                                android:layout_height="68dp"
                                 android:layout_marginLeft="6dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/bg_pill_orange"
                                 android:gravity="center"
                                 android:text="0\nReview"
                                 android:textColor="@color/validin_warning"
-                                android:textSize="12sp"
+                                android:textSize="13sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1709,34 +1712,38 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="44dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_height="74dp"
+                            android:layout_marginTop="12dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/profileGoVerifyButton"
                                 android:layout_width="0dp"
-                                android:layout_height="44dp"
+                                android:layout_height="74dp"
                                 android:layout_marginRight="6dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/bg_modern_chip"
-                                android:gravity="center"
-                                android:text="Verifikasi"
-                                android:textColor="@color/validin_primary"
-                                android:textSize="13sp"
+                                android:background="@drawable/bg_profile_action_verify"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="18dp"
+                                android:paddingRight="14dp"
+                                android:text="Verifikasi\nCek dokumen"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/profileGoHistoryButton"
                                 android:layout_width="0dp"
-                                android:layout_height="44dp"
+                                android:layout_height="74dp"
                                 android:layout_marginLeft="6dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/bg_modern_chip"
-                                android:gravity="center"
-                                android:text="Riwayat"
+                                android:background="@drawable/bg_profile_action_history"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="18dp"
+                                android:paddingRight="14dp"
+                                android:text="Riwayat\nLihat aktivitas"
                                 android:textColor="@color/validin_primary"
-                                android:textSize="13sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
