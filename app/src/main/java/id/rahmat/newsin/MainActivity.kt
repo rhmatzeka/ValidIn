@@ -747,10 +747,14 @@ class MainActivity : ComponentActivity() {
         } else {
             "Verified student access"
         }
-        registryStatusText.text = if (registryConfigured()) {
-            "Registry kampus aktif dan siap digunakan"
+        if (registryConfigured()) {
+            registryStatusText.setBackgroundResource(R.drawable.bg_pill_green)
+            registryStatusText.setTextColor(getColor(R.color.validin_success))
+            registryStatusText.text = "Registry kampus aktif dan siap digunakan"
         } else {
-            "Registry belum dikonfigurasi"
+            registryStatusText.setBackgroundResource(R.drawable.bg_pill_orange)
+            registryStatusText.setTextColor(getColor(R.color.validin_warning))
+            registryStatusText.text = "Registry belum dikonfigurasi"
         }
         val totalCount = validCount + reviewCount + notFoundCount
         profileTotalChecksText.text = "$totalCount\nTotal"
