@@ -963,7 +963,7 @@
                 android:id="@+id/verifyPage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_verify_screen"
+                android:background="@drawable/bg_soft_screen"
                 android:clipToPadding="false"
                 android:paddingBottom="112dp"
                 android:visibility="gone">
@@ -1148,7 +1148,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:background="@drawable/bg_verify_panel_dark"
+                        android:background="@drawable/bg_modern_card"
                         android:elevation="0dp"
                         android:orientation="vertical"
                         android:padding="22dp">
@@ -1163,7 +1163,7 @@
                                 android:id="@+id/aiScoreText"
                                 android:layout_width="74dp"
                                 android:layout_height="74dp"
-                                android:background="@drawable/bg_verify_chip_dark"
+                                android:background="@drawable/bg_modern_chip"
                                 android:gravity="center"
                                 android:text="--"
                                 android:textColor="@color/validin_primary"
@@ -1181,7 +1181,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="AI Inspector"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/validin_text"
                                     android:textSize="24sp"
                                     android:textStyle="bold" />
 
@@ -1191,7 +1191,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="6dp"
                                     android:text="AI akan membaca nama, nomor induk, tanggal, dan penerbit dokumen."
-                                    android:textColor="#AEB8C6"
+                                    android:textColor="@color/validin_muted"
                                     android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -1201,10 +1201,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:background="@drawable/bg_verify_chip_dark"
+                            android:background="@drawable/bg_modern_chip"
                             android:padding="12dp"
                             android:text="Jenis dokumen: -"
-                            android:textColor="@color/white"
+                            android:textColor="@color/validin_text"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -1213,10 +1213,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_verify_field_dark"
+                            android:background="@drawable/bg_outline_card"
                             android:padding="12dp"
                             android:text="Pemilik: -\nNIM/NPM/ID: -"
-                            android:textColor="#E8EDF7"
+                            android:textColor="@color/validin_text"
                             android:textSize="14sp" />
 
                         <TextView
@@ -1224,10 +1224,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_verify_field_dark"
+                            android:background="@drawable/bg_outline_card"
                             android:padding="12dp"
                             android:text="Tanggal: -\nPenerbit: -"
-                            android:textColor="#E8EDF7"
+                            android:textColor="@color/validin_text"
                             android:textSize="14sp" />
 
                         <TextView
@@ -1246,7 +1246,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:textColor="#CFD8E8"
+                            android:textColor="@color/validin_text"
                             android:textIsSelectable="true"
                             android:textSize="12sp" />
 
@@ -1271,7 +1271,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="14dp"
                             android:text="Hasil pemeriksaan akan muncul di sini."
-                            android:textColor="#E8EDF7"
+                            android:textColor="@color/validin_text"
                             android:textIsSelectable="true"
                             android:textSize="15sp" />
 
@@ -1929,16 +1929,16 @@
 
         <ImageView
             android:id="@+id/bottomScanButton"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="34dp"
+            android:layout_marginBottom="56dp"
             android:background="@drawable/bg_scan_fab"
             android:clickable="true"
             android:contentDescription="Scan dokumen"
             android:elevation="18dp"
             android:focusable="true"
-            android:padding="19dp"
+            android:padding="17dp"
             android:scaleType="center"
             android:src="@drawable/ic_scan_qr"
             android:translationZ="18dp"
