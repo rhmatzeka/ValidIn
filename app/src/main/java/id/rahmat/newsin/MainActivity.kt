@@ -5,7 +5,10 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -56,12 +59,28 @@ class MainActivity : ComponentActivity() {
     private lateinit var adminPage: ScrollView
     private lateinit var historyPage: ScrollView
     private lateinit var profilePage: ScrollView
-    private lateinit var homeGreetingText: TextView
+    private lateinit var homeSearchInput: EditText
+    private lateinit var homeSearchSuggestionText: TextView
+    private lateinit var homeSearchActionButton: TextView
+    private lateinit var homeSearchFeedbackText: TextView
     private lateinit var homeHeroTitleText: TextView
     private lateinit var homeHeroSubtitleText: TextView
     private lateinit var statVerifiedText: TextView
     private lateinit var statReviewText: TextView
     private lateinit var homeLastStatusText: TextView
+    private lateinit var homeQuickInsightText: TextView
+    private lateinit var homeRegistryStatusText: TextView
+    private lateinit var homeShortcutScanButton: TextView
+    private lateinit var homeShortcutPickButton: TextView
+    private lateinit var homeShortcutHistoryButton: TextView
+    private lateinit var homeTotalChecksText: TextView
+    private lateinit var homeValidMetricText: TextView
+    private lateinit var homeReviewMetricText: TextView
+    private lateinit var homeMissingMetricText: TextView
+    private lateinit var homeRecentHistoryEmptyText: TextView
+    private lateinit var homeRecentHistoryOneText: TextView
+    private lateinit var homeRecentHistoryTwoText: TextView
+    private lateinit var homeRecentHistoryThreeText: TextView
     private lateinit var quickVerifyButton: Button
     private lateinit var pickDocumentButton: Button
     private lateinit var scanDocumentButton: Button
@@ -114,6 +133,7 @@ class MainActivity : ComponentActivity() {
     private var activeRole: String = ROLE_STUDENT
     private var validCount = 0
     private var reviewCount = 0
+    private var notFoundCount = 0
     private val historyEntries = mutableListOf<String>()
     private val idLocale: Locale = Locale.forLanguageTag("id-ID")
 
@@ -123,6 +143,13 @@ class MainActivity : ComponentActivity() {
         LOGBOOK,
         TRANSCRIPT
     }
+
+    private data class HomeSearchMatch(
+        val category: HomeCategory?,
+        val destinationId: Int?,
+        val title: String,
+        val description: String
+    )
 
     private companion object {
         const val VALID_NIM = "231011402890"
@@ -183,12 +210,11 @@ class MainActivity : ComponentActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val keyboard = insets.getInsets(WindowInsetsCompat.Type.ime())
             view.setPadding(
                 systemBars.left,
                 systemBars.top,
                 systemBars.right,
-                maxOf(systemBars.bottom, keyboard.bottom)
+                systemBars.bottom
             )
             insets
         }
@@ -220,12 +246,28 @@ class MainActivity : ComponentActivity() {
         adminPage = findViewById(R.id.adminPage)
         historyPage = findViewById(R.id.historyPage)
         profilePage = findViewById(R.id.profilePage)
-        homeGreetingText = findViewById(R.id.homeGreetingText)
+        homeSearchInput = findViewById(R.id.homeSearchInput)
+        homeSearchSuggestionText = findViewById(R.id.homeSearchSuggestionText)
+        homeSearchActionButton = findViewById(R.id.homeSearchActionButton)
+        homeSearchFeedbackText = findViewById(R.id.homeSearchFeedbackText)
         homeHeroTitleText = findViewById(R.id.homeHeroTitleText)
         homeHeroSubtitleText = findViewById(R.id.homeHeroSubtitleText)
         statVerifiedText = findViewById(R.id.statVerifiedText)
         statReviewText = findViewById(R.id.statReviewText)
         homeLastStatusText = findViewById(R.id.homeLastStatusText)
+        homeQuickInsightText = findViewById(R.id.homeQuickInsightText)
+        homeRegistryStatusText = findViewById(R.id.homeRegistryStatusText)
+        homeShortcutScanButton = findViewById(R.id.homeShortcutScanButton)
+        homeShortcutPickButton = findViewById(R.id.homeShortcutPickButton)
+        homeShortcutHistoryButton = findViewById(R.id.homeShortcutHistoryButton)
+        homeTotalChecksText = findViewById(R.id.homeTotalChecksText)
+        homeValidMetricText = findViewById(R.id.homeValidMetricText)
+        homeReviewMetricText = findViewById(R.id.homeReviewMetricText)
+        homeMissingMetricText = findViewById(R.id.homeMissingMetricText)
+        homeRecentHistoryEmptyText = findViewById(R.id.homeRecentHistoryEmptyText)
+        homeRecentHistoryOneText = findViewById(R.id.homeRecentHistoryOneText)
+        homeRecentHistoryTwoText = findViewById(R.id.homeRecentHistoryTwoText)
+        homeRecentHistoryThreeText = findViewById(R.id.homeRecentHistoryThreeText)
         quickVerifyButton = findViewById(R.id.quickVerifyButton)
         pickDocumentButton = findViewById(R.id.pickDocumentButton)
         scanDocumentButton = findViewById(R.id.scanDocumentButton)
@@ -274,8 +316,35 @@ class MainActivity : ComponentActivity() {
         loginIdInput.setOnFocusChangeListener { view, hasFocus -> if (hasFocus) scrollLoginTo(view) }
         loginPasswordInput.setOnFocusChangeListener { view, hasFocus -> if (hasFocus) scrollLoginTo(view) }
         loginButton.setOnClickListener { login() }
+        homeSearchActionButton.setOnClickListener { performHomeSearch() }
+        homeSearchInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performHomeSearch()
+                true
+            } else {
+                false
+            }
+        }
+        homeSearchInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) = Unit
+            override fun afterTextChanged(text: Editable?) {
+                updateHomeSearchPreview(text?.toString().orEmpty())
+            }
+        })
         quickVerifyButton.setOnClickListener {
             bottomNavigation.selectedItemId = R.id.nav_verify
+        }
+        homeShortcutScanButton.setOnClickListener {
+            bottomNavigation.selectedItemId = R.id.nav_verify
+            verifyCamera.launch(null)
+        }
+        homeShortcutPickButton.setOnClickListener {
+            bottomNavigation.selectedItemId = R.id.nav_verify
+            documentPicker.launch(arrayOf("application/pdf", "image/*", "text/*"))
+        }
+        homeShortcutHistoryButton.setOnClickListener {
+            bottomNavigation.selectedItemId = R.id.nav_history
         }
         pickDocumentButton.setOnClickListener {
             documentPicker.launch(arrayOf("application/pdf", "image/*", "text/*"))
@@ -418,6 +487,122 @@ class MainActivity : ComponentActivity() {
 
         homeHeroTitleText.text = title
         homeHeroSubtitleText.text = subtitle
+    }
+
+    private fun performHomeSearch() {
+        val query = homeSearchInput.text.toString()
+        val match = resolveHomeSearch(query)
+
+        if (match == null) {
+            homeSearchFeedbackText.visibility = View.VISIBLE
+            homeSearchFeedbackText.text =
+                "Ketik contoh: sertifikat, surat tugas, logbook magang, transkrip, scan, riwayat, atau profil."
+            return
+        }
+
+        match.category?.let { selectHomeCategory(it) }
+        homeSearchFeedbackText.visibility = View.VISIBLE
+        homeSearchFeedbackText.text = "${match.title}\n${match.description}"
+        match.destinationId?.let { bottomNavigation.selectedItemId = it }
+    }
+
+    private fun updateHomeSearchPreview(query: String) {
+        val match = resolveHomeSearch(query)
+        if (query.isBlank()) {
+            homeSearchSuggestionText.text = "Sertifikat · Surat · Logbook · Transkrip"
+            homeSearchFeedbackText.visibility = View.GONE
+            return
+        }
+
+        homeSearchFeedbackText.visibility = View.VISIBLE
+        if (match == null) {
+            homeSearchSuggestionText.text = "Tidak ada kategori cocok"
+            homeSearchFeedbackText.text = "Coba kata kunci: sertifikat, surat, logbook, transkrip, nilai, scan, atau riwayat."
+        } else {
+            homeSearchSuggestionText.text = match.title
+            homeSearchFeedbackText.text = "${match.title}\n${match.description}"
+        }
+    }
+
+    private fun resolveHomeSearch(query: String): HomeSearchMatch? {
+        val lower = query.trim().lowercase(Locale.ROOT)
+        if (lower.isBlank()) return null
+
+        return when {
+            lower.anyKeyword("sertifikat", "seminar", "lomba", "pelatihan", "kepanitiaan") -> {
+                HomeSearchMatch(
+                    category = HomeCategory.CERTIFICATE,
+                    destinationId = null,
+                    title = "Sertifikat Kampus",
+                    description = "Kategori sertifikat dipilih. Tekan Mulai verifikasi untuk cek fingerprint dan registry."
+                )
+            }
+            lower.anyKeyword("surat", "tugas", "aktif kuliah", "administrasi") -> {
+                HomeSearchMatch(
+                    category = HomeCategory.LETTER,
+                    destinationId = null,
+                    title = "Surat Resmi",
+                    description = "Kategori surat dipilih untuk surat tugas, surat aktif kuliah, dan dokumen administrasi."
+                )
+            }
+            lower.anyKeyword("logbook", "magang", "bimbingan", "catatan") -> {
+                HomeSearchMatch(
+                    category = HomeCategory.LOGBOOK,
+                    destinationId = null,
+                    title = "Logbook Digital",
+                    description = "Kategori logbook dipilih untuk catatan magang atau bimbingan."
+                )
+            }
+            lower.anyKeyword("transkrip", "nilai", "khs", "ipk") -> {
+                HomeSearchMatch(
+                    category = HomeCategory.TRANSCRIPT,
+                    destinationId = null,
+                    title = "Transkrip & Nilai",
+                    description = "Kategori transkrip dipilih untuk dokumen akademik dan nilai."
+                )
+            }
+            lower.anyKeyword("verifikasi", "verify", "cek", "scan", "upload", "pilih dokumen") -> {
+                HomeSearchMatch(
+                    category = null,
+                    destinationId = R.id.nav_verify,
+                    title = "Buka Verifikasi",
+                    description = "Membuka halaman untuk pilih dokumen atau scan kamera."
+                )
+            }
+            lower.anyKeyword("riwayat", "history", "hasil") -> {
+                HomeSearchMatch(
+                    category = null,
+                    destinationId = R.id.nav_history,
+                    title = "Buka Riwayat",
+                    description = "Membuka daftar hasil pemeriksaan dokumen selama sesi ini."
+                )
+            }
+            lower.anyKeyword("profil", "profile", "akun") -> {
+                HomeSearchMatch(
+                    category = null,
+                    destinationId = R.id.nav_profile,
+                    title = "Buka Profil",
+                    description = "Membuka informasi akun dan status registry."
+                )
+            }
+            lower.anyKeyword("admin", "terbit", "register", "daftar") && activeRole == ROLE_ADMIN -> {
+                HomeSearchMatch(
+                    category = null,
+                    destinationId = R.id.nav_admin,
+                    title = "Buka Admin",
+                    description = "Membuka halaman penerbitan dokumen ke registry kampus."
+                )
+            }
+            lower.anyKeyword("admin", "terbit", "register", "daftar") -> {
+                HomeSearchMatch(
+                    category = null,
+                    destinationId = null,
+                    title = "Akses Admin",
+                    description = "Menu admin hanya tersedia saat login dengan role Admin."
+                )
+            }
+            else -> null
+        }
     }
 
     private fun updateRoleButtons() {
@@ -645,9 +830,17 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun recordHistory(result: VerificationResult, formatted: String) {
-        if (result.exists && result.active) validCount += 1 else reviewCount += 1
+        when {
+            result.exists && result.active -> validCount += 1
+            !result.exists -> notFoundCount += 1
+            else -> reviewCount += 1
+        }
 
-        val status = if (result.exists && result.active) "Valid" else "Perlu review"
+        val status = when {
+            result.exists && result.active -> "Valid"
+            !result.exists -> "Tidak ditemukan"
+            else -> "Perlu review"
+        }
         val entry = "${historyEntries.size + 1}. $selectedFileName\n$status - ${nowText()}\n${formatted.lineSequence().firstOrNull().orEmpty()}"
         historyEntries.add(0, entry)
         historyListText.text = historyEntries.joinToString(separator = "\n\n")
@@ -671,11 +864,54 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun updateHome() {
-        homeGreetingText.text = "Where to verify?"
+        val totalCount = validCount + reviewCount + notFoundCount
         statVerifiedText.text = "$validCount Valid"
-        statReviewText.text = "$reviewCount Review"
+        statReviewText.text = "${reviewCount + notFoundCount} Review"
+        homeTotalChecksText.text = "$totalCount pemeriksaan"
+        homeValidMetricText.text = "$validCount\nValid"
+        homeReviewMetricText.text = "$reviewCount\nReview"
+        homeMissingMetricText.text = "$notFoundCount\nTidak ada"
+
+        if (registryConfigured()) {
+            homeRegistryStatusText.setBackgroundResource(R.drawable.bg_pill_green)
+            homeRegistryStatusText.setTextColor(getColor(R.color.validin_success))
+            homeRegistryStatusText.text = "Registry aktif dan siap mengecek blockchain"
+        } else {
+            homeRegistryStatusText.setBackgroundResource(R.drawable.bg_pill_orange)
+            homeRegistryStatusText.setTextColor(getColor(R.color.validin_warning))
+            homeRegistryStatusText.text = "Registry belum dikonfigurasi"
+        }
+
+        homeQuickInsightText.text = if (registryConfigured()) {
+            "Registry aktif. Verifikasi terakhir: ${if (historyEntries.isEmpty()) "belum ada" else historyEntries.first().lineSequence().firstOrNull().orEmpty()}."
+        } else {
+            "Registry belum dikonfigurasi. Kamu tetap bisa mencoba OCR, tetapi hasil blockchain belum bisa dicek."
+        }
+
+        updateRecentHistoryCards()
         if (historyEntries.isEmpty()) {
             homeLastStatusText.text = "Belum ada dokumen yang diverifikasi."
+        }
+    }
+
+    private fun updateRecentHistoryCards() {
+        val recentViews = listOf(
+            homeRecentHistoryOneText,
+            homeRecentHistoryTwoText,
+            homeRecentHistoryThreeText
+        )
+
+        homeRecentHistoryEmptyText.visibility =
+            if (historyEntries.isEmpty()) View.VISIBLE else View.GONE
+
+        recentViews.forEachIndexed { index, view ->
+            val entry = historyEntries.getOrNull(index)
+            if (entry == null) {
+                view.visibility = View.GONE
+            } else {
+                view.text = entry
+                view.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -768,6 +1004,10 @@ class MainActivity : ComponentActivity() {
     private fun shortAddress(address: String): String {
         if (address.length < 12) return address
         return "${address.take(6)}...${address.takeLast(4)}"
+    }
+
+    private fun String.anyKeyword(vararg keywords: String): Boolean {
+        return keywords.any { contains(it) }
     }
 
     private fun formatTimestamp(epochSeconds: Long): String {

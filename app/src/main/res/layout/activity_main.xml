@@ -12,139 +12,151 @@
         android:id="@+id/loginContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_login_palette_full"
+        android:background="@color/validin_background"
         android:clipToPadding="false"
         android:fillViewport="true"
-        android:paddingBottom="220dp">
+        android:paddingBottom="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingLeft="22dp"
-            android:paddingTop="18dp"
-            android:paddingRight="22dp"
-            android:paddingBottom="42dp">
+            android:paddingLeft="18dp"
+            android:paddingTop="28dp"
+            android:paddingRight="18dp"
+            android:paddingBottom="28dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_login_glass_card"
-                android:elevation="10dp"
+                android:elevation="8dp"
                 android:orientation="vertical"
-                android:padding="22dp">
+                android:paddingLeft="18dp"
+                android:paddingTop="18dp"
+                android:paddingRight="18dp"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Masuk"
                     android:textColor="@color/validin_text"
-                    android:textSize="28sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="4dp"
                     android:text="Pilih role sebelum melanjutkan."
                     android:textColor="@color/validin_muted"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="14dp"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/roleStudentButton"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
-                        android:layout_marginRight="7dp"
+                        android:layout_height="42dp"
+                        android:layout_marginRight="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
                         android:backgroundTint="@color/validin_primary"
                         android:text="Mahasiswa"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/roleAdminButton"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
-                        android:layout_marginLeft="7dp"
+                        android:layout_height="42dp"
+                        android:layout_marginLeft="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
                         android:backgroundTint="@color/validin_border"
                         android:text="Admin"
                         android:textAllCaps="false"
                         android:textColor="@color/validin_text"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:text="NIM"
                     android:textColor="@color/validin_muted"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/loginIdInput"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="6dp"
                     android:autofillHints="username"
                     android:background="@drawable/bg_input_modern"
                     android:hint="231011402890"
                     android:inputType="number"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp"
                     android:singleLine="true"
                     android:textColor="@color/validin_text"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="10dp"
                     android:text="Password"
                     android:textColor="@color/validin_muted"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/loginPasswordInput"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="6dp"
                     android:autofillHints="password"
                     android:background="@drawable/bg_input_modern"
                     android:hint="Rahmat123"
                     android:inputType="textPassword"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp"
                     android:singleLine="true"
                     android:textColor="@color/validin_text"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/loginErrorText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/validin_danger"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:visibility="gone" />
 
                 <Button
                     android:id="@+id/loginButton"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="14dp"
                     android:background="@drawable/bg_login_yellow_button"
                     android:backgroundTint="@color/validin_yellow"
                     android:text="Masuk"
                     android:textAllCaps="false"
                     android:textColor="@color/validin_primary_dark"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -282,16 +294,23 @@
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/homeGreetingText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Where to verify?"
+                            <EditText
+                                android:id="@+id/homeSearchInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="28dp"
+                                android:background="@android:color/transparent"
+                                android:hint="Cari dokumen"
+                                android:imeOptions="actionSearch"
+                                android:inputType="text"
+                                android:padding="0dp"
+                                android:singleLine="true"
                                 android:textColor="@color/validin_text"
+                                android:textColorHint="@color/validin_text"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/homeSearchSuggestionText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Certificate · Letter · Logbook"
@@ -300,6 +319,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/homeSearchActionButton"
                             android:layout_width="44dp"
                             android:layout_height="44dp"
                             android:background="@drawable/bg_modern_chip"
@@ -308,6 +328,20 @@
                             android:textColor="@color/validin_primary"
                             android:textSize="22sp" />
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/homeSearchFeedbackText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_outline_card"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="12dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="12dp"
+                        android:textColor="@color/validin_text"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
 
                     <HorizontalScrollView
                         android:layout_width="match_parent"
@@ -533,6 +567,235 @@
                             android:textAllCaps="false"
                             android:textColor="@color/validin_primary_dark"
                             android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/homeQuickInsightCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:background="@drawable/bg_modern_card"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Langkah cepat"
+                            android:textColor="@color/validin_text"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/homeQuickInsightText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Pilih jenis dokumen di atas atau cari dokumen yang ingin diverifikasi."
+                            android:textColor="@color/validin_muted"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/homeRegistryStatusText"
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginTop="14dp"
+                            android:background="@drawable/bg_pill_orange"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="14dp"
+                            android:paddingRight="14dp"
+                            android:text="Registry belum dikonfigurasi"
+                            android:textColor="@color/validin_warning"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/homeShortcutScanButton"
+                                android:layout_width="0dp"
+                                android:layout_height="44dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_modern_chip"
+                                android:gravity="center"
+                                android:text="Scan"
+                                android:textColor="@color/validin_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/homeShortcutPickButton"
+                                android:layout_width="0dp"
+                                android:layout_height="44dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_modern_chip"
+                                android:gravity="center"
+                                android:text="Pilih File"
+                                android:textColor="@color/validin_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/homeShortcutHistoryButton"
+                                android:layout_width="0dp"
+                                android:layout_height="44dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_modern_chip"
+                                android:gravity="center"
+                                android:text="Riwayat"
+                                android:textColor="@color/validin_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/homeProgressCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_modern_card"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:id="@+id/homeTotalChecksText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0 pemeriksaan"
+                            android:textColor="@color/validin_text"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/homeValidMetricText"
+                                android:layout_width="0dp"
+                                android:layout_height="58dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_pill_green"
+                                android:gravity="center"
+                                android:text="0\nValid"
+                                android:textColor="@color/validin_success"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/homeReviewMetricText"
+                                android:layout_width="0dp"
+                                android:layout_height="58dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_pill_orange"
+                                android:gravity="center"
+                                android:text="0\nReview"
+                                android:textColor="@color/validin_warning"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/homeMissingMetricText"
+                                android:layout_width="0dp"
+                                android:layout_height="58dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_outline_card"
+                                android:gravity="center"
+                                android:text="0\nTidak ada"
+                                android:textColor="@color/validin_muted"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/homeValidationTipText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_yellow_chip"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="14dp"
+                        android:paddingRight="18dp"
+                        android:paddingBottom="14dp"
+                        android:text="Tips: Pastikan dokumen belum diedit, dikompres ulang, atau dibuat ulang sebelum diverifikasi."
+                        android:textColor="@color/validin_primary_dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/homeRecentHistoryCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_modern_card"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Riwayat terakhir"
+                            android:textColor="@color/validin_text"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/homeRecentHistoryEmptyText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Belum ada pemeriksaan. Mulai dari scan atau pilih file."
+                            android:textColor="@color/validin_muted"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/homeRecentHistoryOneText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_outline_card"
+                            android:padding="14dp"
+                            android:textColor="@color/validin_text"
+                            android:textSize="13sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/homeRecentHistoryTwoText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_outline_card"
+                            android:padding="14dp"
+                            android:textColor="@color/validin_text"
+                            android:textSize="13sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/homeRecentHistoryThreeText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_outline_card"
+                            android:padding="14dp"
+                            android:textColor="@color/validin_text"
+                            android:textSize="13sp"
+                            android:visibility="gone" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
