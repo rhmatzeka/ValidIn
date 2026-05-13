@@ -60,6 +60,8 @@ class MainActivity : ComponentActivity() {
     private lateinit var adminPage: ScrollView
     private lateinit var historyPage: ScrollView
     private lateinit var profilePage: ScrollView
+    private lateinit var settingsPage: ScrollView
+    private lateinit var editProfilePage: ScrollView
     private lateinit var homeSearchInput: EditText
     private lateinit var homeSearchActionButton: TextView
     private lateinit var homeSearchFeedbackText: TextView
@@ -98,11 +100,12 @@ class MainActivity : ComponentActivity() {
     private lateinit var profileIdText: TextView
     private lateinit var profileTrustBadgeText: TextView
     private lateinit var registryStatusText: TextView
-    private lateinit var profileSettingsPanel: LinearLayout
-    private lateinit var profileEditPanel: LinearLayout
     private lateinit var profileSettingsInfoText: TextView
     private lateinit var profileGoVerifyButton: TextView
     private lateinit var profileGoHistoryButton: TextView
+    private lateinit var profileTotalChecksText: TextView
+    private lateinit var profileValidChecksText: TextView
+    private lateinit var profileReviewChecksText: TextView
     private lateinit var profileDisplayNameInput: EditText
     private lateinit var profilePickPhotoButton: TextView
     private lateinit var profileRemovePhotoButton: TextView
@@ -170,6 +173,8 @@ class MainActivity : ComponentActivity() {
         const val VALID_NAME = "Rahmat Zeka"
         const val ROLE_STUDENT = "student"
         const val ROLE_ADMIN = "admin"
+        const val PAGE_SETTINGS = -1001
+        const val PAGE_EDIT_PROFILE = -1002
     }
 
     private val documentPicker = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
@@ -277,6 +282,8 @@ class MainActivity : ComponentActivity() {
         adminPage = findViewById(R.id.adminPage)
         historyPage = findViewById(R.id.historyPage)
         profilePage = findViewById(R.id.profilePage)
+        settingsPage = findViewById(R.id.settingsPage)
+        editProfilePage = findViewById(R.id.editProfilePage)
         homeSearchInput = findViewById(R.id.homeSearchInput)
         homeSearchActionButton = findViewById(R.id.homeSearchActionButton)
         homeSearchFeedbackText = findViewById(R.id.homeSearchFeedbackText)
@@ -315,11 +322,12 @@ class MainActivity : ComponentActivity() {
         profileIdText = findViewById(R.id.profileIdText)
         profileTrustBadgeText = findViewById(R.id.profileTrustBadgeText)
         registryStatusText = findViewById(R.id.registryStatusText)
-        profileSettingsPanel = findViewById(R.id.profileSettingsPanel)
-        profileEditPanel = findViewById(R.id.profileEditPanel)
         profileSettingsInfoText = findViewById(R.id.profileSettingsInfoText)
         profileGoVerifyButton = findViewById(R.id.profileGoVerifyButton)
         profileGoHistoryButton = findViewById(R.id.profileGoHistoryButton)
+        profileTotalChecksText = findViewById(R.id.profileTotalChecksText)
+        profileValidChecksText = findViewById(R.id.profileValidChecksText)
+        profileReviewChecksText = findViewById(R.id.profileReviewChecksText)
         profileDisplayNameInput = findViewById(R.id.profileDisplayNameInput)
         profilePickPhotoButton = findViewById(R.id.profilePickPhotoButton)
         profileRemovePhotoButton = findViewById(R.id.profileRemovePhotoButton)
@@ -671,14 +679,25 @@ class MainActivity : ComponentActivity() {
         adminPage.visibility = if (itemId == R.id.nav_admin) View.VISIBLE else View.GONE
         historyPage.visibility = if (itemId == R.id.nav_history) View.VISIBLE else View.GONE
         profilePage.visibility = if (itemId == R.id.nav_profile) View.VISIBLE else View.GONE
-        val isProfile = itemId == R.id.nav_profile
-        topLogoText.visibility = if (isProfile) View.GONE else View.VISIBLE
-        userBadgeText.visibility = if (isProfile) View.GONE else View.VISIBLE
-        mainSubtitleText.visibility = if (isProfile) View.GONE else View.VISIBLE
-        profileSettingsButton.visibility = if (isProfile) View.VISIBLE else View.GONE
-        profileEditButton.visibility = if (isProfile) View.VISIBLE else View.GONE
+        settingsPage.visibility = if (itemId == PAGE_SETTINGS) View.VISIBLE else View.GONE
+        editProfilePage.visibility = if (itemId == PAGE_EDIT_PROFILE) View.VISIBLE else View.GONE
+        val isProfileArea = itemId == R.id.nav_profile || itemId == PAGE_SETTINGS || itemId == PAGE_EDIT_PROFILE
+        val isProfileRoot = itemId == R.id.nav_profile
+        topLogoText.visibility = if (isProfileArea) View.GONE else View.VISIBLE
+        userBadgeText.visibility = if (isProfileArea) View.GONE else View.VISIBLE
+        mainSubtitleText.visibility = if (isProfileArea) View.GONE else View.VISIBLE
+        profileSettingsButton.visibility = if (isProfileRoot) View.VISIBLE else View.GONE
+        profileEditButton.visibility = if (isProfileRoot) View.VISIBLE else View.GONE
 
         when (itemId) {
+            PAGE_SETTINGS -> {
+                mainTitleText.text = "Pengaturan"
+                mainSubtitleText.text = "Akun dan aplikasi"
+            }
+            PAGE_EDIT_PROFILE -> {
+                mainTitleText.text = "Edit Profil"
+                mainSubtitleText.text = "Nama dan foto"
+            }
             R.id.nav_admin -> {
                 mainTitleText.text = "Admin"
                 mainSubtitleText.text = "Terbitkan dokumen"
@@ -733,6 +752,10 @@ class MainActivity : ComponentActivity() {
         } else {
             "Registry belum dikonfigurasi"
         }
+        val totalCount = validCount + reviewCount + notFoundCount
+        profileTotalChecksText.text = "$totalCount\nTotal"
+        profileValidChecksText.text = "$validCount\nValid"
+        profileReviewChecksText.text = "${reviewCount + notFoundCount}\nReview"
         profileSettingsInfoText.text = listOf(
             "Akun: $userName",
             "Role: ${if (activeRole == ROLE_ADMIN) "Admin kampus" else "Mahasiswa"}",
@@ -744,16 +767,12 @@ class MainActivity : ComponentActivity() {
 
     private fun showProfileSettingsPanel() {
         updateProfileUi()
-        profileEditPanel.visibility = View.GONE
-        profileSettingsPanel.visibility =
-            if (profileSettingsPanel.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+        showPage(PAGE_SETTINGS)
     }
 
     private fun showProfileEditPanel() {
         profileDisplayNameInput.setText(userName)
-        profileSettingsPanel.visibility = View.GONE
-        profileEditPanel.visibility =
-            if (profileEditPanel.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+        showPage(PAGE_EDIT_PROFILE)
     }
 
     private fun pickProfilePhoto() {
@@ -767,8 +786,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun hideProfilePanels() {
-        profileSettingsPanel.visibility = View.GONE
-        profileEditPanel.visibility = View.GONE
+        settingsPage.visibility = View.GONE
+        editProfilePage.visibility = View.GONE
     }
 
     private fun saveProfileEdits() {
@@ -787,7 +806,7 @@ class MainActivity : ComponentActivity() {
             .apply()
 
         updateProfileUi()
-        profileEditPanel.visibility = View.GONE
+        showPage(R.id.nav_profile)
     }
 
     private fun analyzeDocument(uri: Uri, forcedMimeType: String? = null) {
