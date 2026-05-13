@@ -984,7 +984,12 @@ class MainActivity : ComponentActivity() {
         }
 
         if (!apiUrl.startsWith("http")) {
-            adminResultText.text = "Server admin belum siap. Jalankan `npm run admin:server` di laptop/server admin."
+            adminResultText.text = "Alamat server admin belum diisi. Isi VALIDIN_ADMIN_API_URL dengan IP laptop, contoh http://10.241.83.218:8787, lalu build ulang app."
+            return
+        }
+
+        if (apiUrl.contains("10.0.2.2")) {
+            adminResultText.text = "Alamat 10.0.2.2 hanya untuk emulator. Karena kamu pakai HP, isi VALIDIN_ADMIN_API_URL dengan IP laptop di jaringan yang sama."
             return
         }
 
@@ -1320,7 +1325,7 @@ class MainActivity : ComponentActivity() {
 
     private fun adminApiUrl(): String {
         val configured = BuildConfig.VALIDIN_ADMIN_API_URL.trim().trimEnd('/')
-        return configured.ifBlank { "http://10.0.2.2:8787" }
+        return configured
     }
 
     private fun initials(name: String): String {
