@@ -1927,17 +1927,16 @@
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_nav" />
 
-        <TextView
+        <ImageView
             android:id="@+id/bottomScanButton"
-            android:layout_width="58dp"
-            android:layout_height="58dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="36dp"
             android:background="@drawable/bg_scan_fab"
-            android:gravity="center"
-            android:text="⌕"
-            android:textColor="@color/validin_primary_dark"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:contentDescription="Scan dokumen"
+            android:padding="17dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_scan_qr" />
     </FrameLayout>
 </FrameLayout>

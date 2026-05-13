@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var profileSettingsButton: TextView
     private lateinit var profileEditButton: TextView
     private lateinit var bottomNavigation: BottomNavigationView
-    private lateinit var bottomScanButton: TextView
+    private lateinit var bottomScanButton: ImageView
     private lateinit var homePage: ScrollView
     private lateinit var verifyPage: ScrollView
     private lateinit var adminPage: ScrollView
