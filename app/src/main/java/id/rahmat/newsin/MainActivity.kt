@@ -24,6 +24,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.imageview.ShapeableImageView
 import id.rahmat.newsin.ai.AiDocumentInspector
+import id.rahmat.newsin.ai.AiReport
 import id.rahmat.newsin.blockchain.ValidInContractClient
 import id.rahmat.newsin.blockchain.VerificationResult
 import id.rahmat.newsin.util.Sha256
@@ -87,9 +88,20 @@ class MainActivity : ComponentActivity() {
     private lateinit var pickDocumentButton: Button
     private lateinit var scanDocumentButton: Button
     private lateinit var verifyButton: Button
+    private lateinit var retryVerifyButton: Button
+    private lateinit var filePreviewPanel: LinearLayout
     private lateinit var fileNameText: TextView
+    private lateinit var fileMetaText: TextView
     private lateinit var hashText: TextView
+    private lateinit var stepUploadText: TextView
+    private lateinit var stepAiText: TextView
+    private lateinit var stepBlockchainText: TextView
+    private lateinit var aiScoreText: TextView
     private lateinit var aiStatusText: TextView
+    private lateinit var aiDocTypeText: TextView
+    private lateinit var aiOwnerText: TextView
+    private lateinit var aiDateIssuerText: TextView
+    private lateinit var aiFlagsText: TextView
     private lateinit var extractedText: TextView
     private lateinit var resultText: TextView
     private lateinit var progressBar: ProgressBar
@@ -309,9 +321,20 @@ class MainActivity : ComponentActivity() {
         pickDocumentButton = findViewById(R.id.pickDocumentButton)
         scanDocumentButton = findViewById(R.id.scanDocumentButton)
         verifyButton = findViewById(R.id.verifyButton)
+        retryVerifyButton = findViewById(R.id.retryVerifyButton)
+        filePreviewPanel = findViewById(R.id.filePreviewPanel)
         fileNameText = findViewById(R.id.fileNameText)
+        fileMetaText = findViewById(R.id.fileMetaText)
         hashText = findViewById(R.id.hashText)
+        stepUploadText = findViewById(R.id.stepUploadText)
+        stepAiText = findViewById(R.id.stepAiText)
+        stepBlockchainText = findViewById(R.id.stepBlockchainText)
+        aiScoreText = findViewById(R.id.aiScoreText)
         aiStatusText = findViewById(R.id.aiStatusText)
+        aiDocTypeText = findViewById(R.id.aiDocTypeText)
+        aiOwnerText = findViewById(R.id.aiOwnerText)
+        aiDateIssuerText = findViewById(R.id.aiDateIssuerText)
+        aiFlagsText = findViewById(R.id.aiFlagsText)
         extractedText = findViewById(R.id.extractedText)
         resultText = findViewById(R.id.resultText)
         progressBar = findViewById(R.id.progressBar)
@@ -414,6 +437,9 @@ class MainActivity : ComponentActivity() {
         verifyButton.setOnClickListener {
             verifySelectedDocument()
         }
+        retryVerifyButton.setOnClickListener {
+            verifySelectedDocument()
+        }
         pickAdminDocumentButton.setOnClickListener {
             adminDocumentPicker.launch(arrayOf("application/pdf", "image/*", "text/*"))
         }
@@ -423,10 +449,31 @@ class MainActivity : ComponentActivity() {
         registerAdminButton.setOnClickListener {
             registerAdminDocument()
         }
-        categoryCertificate.setOnClickListener { selectHomeCategory(HomeCategory.CERTIFICATE) }
-        categoryLetter.setOnClickListener { selectHomeCategory(HomeCategory.LETTER) }
-        categoryLogbook.setOnClickListener { selectHomeCategory(HomeCategory.LOGBOOK) }
-        categoryTranscript.setOnClickListener { selectHomeCategory(HomeCategory.TRANSCRIPT) }
+        categoryCertificate.setOnClickListener { openHomeCategory(HomeCategory.CERTIFICATE) }
+        categoryLetter.setOnClickListener { openHomeCategory(HomeCategory.LETTER) }
+        categoryLogbook.setOnClickListener { openHomeCategory(HomeCategory.LOGBOOK) }
+        categoryTranscript.setOnClickListener { openHomeCategory(HomeCategory.TRANSCRIPT) }
+        findViewById<LinearLayout>(R.id.shortcutVerify).setOnClickListener {
+            bottomNavigation.selectedItemId = R.id.nav_verify
+        }
+        findViewById<LinearLayout>(R.id.shortcutScan).setOnClickListener {
+            bottomNavigation.selectedItemId = R.id.nav_verify
+            verifyCamera.launch(null)
+        }
+        findViewById<LinearLayout>(R.id.shortcutAdmin).setOnClickListener {
+            if (activeRole == ROLE_ADMIN) {
+                bottomNavigation.selectedItemId = R.id.nav_admin
+            } else {
+                homeSearchFeedbackText.visibility = View.VISIBLE
+                homeSearchFeedbackText.text = "Menu admin hanya tersedia saat login dengan role Admin."
+            }
+        }
+        findViewById<LinearLayout>(R.id.shortcutHistory).setOnClickListener {
+            bottomNavigation.selectedItemId = R.id.nav_history
+        }
+        findViewById<LinearLayout>(R.id.shortcutProfile).setOnClickListener {
+            bottomNavigation.selectedItemId = R.id.nav_profile
+        }
         logoutButton.setOnClickListener {
             getPreferences(MODE_PRIVATE).edit().clear().apply()
             selectedHash = null
@@ -439,6 +486,17 @@ class MainActivity : ComponentActivity() {
         bottomNavigation.setOnItemSelectedListener { item ->
             showPage(item.itemId)
             true
+        }
+    }
+
+    private fun openHomeCategory(category: HomeCategory) {
+        selectHomeCategory(category)
+        bottomNavigation.selectedItemId = R.id.nav_verify
+        resultText.text = when (category) {
+            HomeCategory.CERTIFICATE -> "Kategori Sertifikat dipilih. Pilih atau scan sertifikat kampus untuk memulai verifikasi."
+            HomeCategory.LETTER -> "Kategori Surat dipilih. Pilih atau scan surat resmi untuk memulai verifikasi."
+            HomeCategory.LOGBOOK -> "Kategori Logbook dipilih. Pilih atau scan logbook untuk memulai verifikasi."
+            HomeCategory.TRANSCRIPT -> "Kategori Transkrip dipilih. Pilih atau scan transkrip atau dokumen nilai untuk memulai verifikasi."
         }
     }
 
@@ -688,6 +746,7 @@ class MainActivity : ComponentActivity() {
         mainSubtitleText.visibility = if (isProfileArea) View.GONE else View.VISIBLE
         profileSettingsButton.visibility = if (isProfileRoot) View.VISIBLE else View.GONE
         profileEditButton.visibility = if (isProfileRoot) View.VISIBLE else View.GONE
+        mainTitleText.textSize = if (isProfileArea) 26f else 22f
 
         when (itemId) {
             PAGE_SETTINGS -> {
@@ -816,11 +875,16 @@ class MainActivity : ComponentActivity() {
     private fun analyzeDocument(uri: Uri, forcedMimeType: String? = null) {
         setBusy(true)
         verifyButton.isEnabled = false
+        retryVerifyButton.visibility = View.GONE
         selectedHash = null
         selectedFileName = displayName(uri)
-        fileNameText.text = selectedFileName
-        hashText.text = "Fingerprint: menghitung..."
-        aiStatusText.text = "AI sedang membaca dokumen..."
+        val mimeType = forcedMimeType ?: contentResolver.getType(uri)
+        filePreviewPanel.visibility = View.VISIBLE
+        fileNameText.text = "Nama file: $selectedFileName"
+        fileMetaText.text = "Ukuran: ${displayFileSize(uri)} | Jenis: ${displayMimeType(mimeType)}"
+        hashText.text = "Hash: menghitung..."
+        resetAiInspector("AI sedang membaca dokumen...")
+        updateVerifySteps(0)
         extractedText.text = ""
         resultText.text = "Hasil pemeriksaan akan muncul setelah dokumen dicek."
 
@@ -832,32 +896,38 @@ class MainActivity : ComponentActivity() {
                 }
                 selectedHash = hash
                 runOnUiThread {
-                    hashText.text = "Fingerprint: ${hash.take(18)}...${hash.takeLast(12)}"
+                    hashText.text = "Hash: ${shortHash(hash)}"
+                    updateVerifySteps(1)
                     verifyButton.isEnabled = true
                 }
 
-                val mimeType = forcedMimeType ?: contentResolver.getType(uri)
                 inspector.inspect(
                     uri = uri,
                     mimeType = mimeType,
                     onResult = { report ->
                         runOnUiThread {
-                            aiStatusText.text = report.summary()
-                            extractedText.text = "Teks terbaca:\n${report.extractedText}"
+                            updateAiInspector(report)
+                            updateVerifySteps(2)
                             setBusy(false)
                         }
                     },
                     onError = { error ->
                         runOnUiThread {
-                            aiStatusText.text = "AI gagal membaca dokumen: ${error.message}"
+                            aiScoreText.text = "!"
+                            aiScoreText.setBackgroundResource(R.drawable.bg_alert_card)
+                            aiScoreText.setTextColor(getColor(R.color.validin_danger))
+                            aiStatusText.text = "AI gagal membaca dokumen."
+                            aiFlagsText.setBackgroundResource(R.drawable.bg_alert_card)
+                            aiFlagsText.setTextColor(getColor(R.color.validin_danger))
+                            aiFlagsText.text = "Catatan: ${error.message ?: "OCR gagal diproses."}"
                             setBusy(false)
                         }
                     }
                 )
             } catch (error: Throwable) {
                 runOnUiThread {
-                    hashText.text = "Fingerprint: gagal dihitung"
-                    aiStatusText.text = error.message ?: "Dokumen gagal dianalisis."
+                    hashText.text = "Hash: gagal dihitung"
+                    resetAiInspector(error.message ?: "Dokumen gagal dianalisis.")
                     setBusy(false)
                 }
             }
@@ -953,10 +1023,13 @@ class MainActivity : ComponentActivity() {
 
         if (!registryConfigured()) {
             resultText.text = "Registry kampus belum dikonfigurasi di aplikasi."
+            retryVerifyButton.visibility = View.VISIBLE
             return
         }
 
         setBusy(true)
+        retryVerifyButton.visibility = View.GONE
+        updateVerifySteps(3)
         resultText.text = "Memeriksa keaslian dokumen melalui registry kampus..."
 
         Thread {
@@ -971,6 +1044,7 @@ class MainActivity : ComponentActivity() {
                     resultText.text = formatted
                     recordHistory(result, formatted)
                     updateProfileUi()
+                    retryVerifyButton.visibility = View.VISIBLE
                     setBusy(false)
                 }
             } catch (error: Throwable) {
@@ -979,10 +1053,74 @@ class MainActivity : ComponentActivity() {
                     reviewCount += 1
                     updateHome()
                     updateProfileUi()
+                    retryVerifyButton.visibility = View.VISIBLE
                     setBusy(false)
                 }
             }
         }.start()
+    }
+
+    private fun resetAiInspector(message: String) {
+        aiScoreText.text = "--"
+        aiScoreText.setBackgroundResource(R.drawable.bg_modern_chip)
+        aiScoreText.setTextColor(getColor(R.color.validin_primary))
+        aiStatusText.text = message
+        aiDocTypeText.text = "Jenis dokumen: -"
+        aiOwnerText.text = "Pemilik: -\nNIM/NPM/ID: -"
+        aiDateIssuerText.text = "Tanggal: -\nPenerbit: -"
+        aiFlagsText.setBackgroundResource(R.drawable.bg_pill_orange)
+        aiFlagsText.setTextColor(getColor(R.color.validin_warning))
+        aiFlagsText.text = "Catatan: belum ada dokumen dibaca."
+        extractedText.text = ""
+    }
+
+    private fun updateAiInspector(report: AiReport) {
+        val status = when {
+            report.score >= 80 -> "Risiko rendah"
+            report.score >= 55 -> "Perlu review admin"
+            else -> "Risiko tinggi"
+        }
+
+        aiScoreText.text = "${report.score}\n/100"
+        when {
+            report.score >= 80 -> {
+                aiScoreText.setBackgroundResource(R.drawable.bg_pill_green)
+                aiScoreText.setTextColor(getColor(R.color.validin_success))
+            }
+            report.score >= 55 -> {
+                aiScoreText.setBackgroundResource(R.drawable.bg_pill_orange)
+                aiScoreText.setTextColor(getColor(R.color.validin_warning))
+            }
+            else -> {
+                aiScoreText.setBackgroundResource(R.drawable.bg_alert_card)
+                aiScoreText.setTextColor(getColor(R.color.validin_danger))
+            }
+        }
+
+        aiStatusText.text = "$status berdasarkan hasil OCR."
+        aiDocTypeText.text = "Jenis dokumen: ${report.docType}"
+        aiOwnerText.text = "Pemilik: ${report.subjectName ?: "-"}\nNIM/NPM/ID: ${report.subjectId ?: "-"}"
+        aiDateIssuerText.text = "Tanggal: ${report.detectedDate ?: "-"}\nPenerbit: ${report.issuerHint ?: "-"}"
+
+        if (report.flags.isEmpty()) {
+            aiFlagsText.setBackgroundResource(R.drawable.bg_pill_green)
+            aiFlagsText.setTextColor(getColor(R.color.validin_success))
+            aiFlagsText.text = "Catatan: tidak ada anomali utama terdeteksi."
+        } else {
+            aiFlagsText.setBackgroundResource(R.drawable.bg_pill_orange)
+            aiFlagsText.setTextColor(getColor(R.color.validin_warning))
+            aiFlagsText.text = "Catatan: ${report.flags.joinToString("; ")}"
+        }
+        extractedText.text = "Teks terbaca:\n${report.extractedText}"
+    }
+
+    private fun updateVerifySteps(completedStage: Int) {
+        val steps = listOf(stepUploadText, stepAiText, stepBlockchainText)
+        steps.forEachIndexed { index, view ->
+            val done = completedStage >= index + 1
+            view.setBackgroundResource(if (done) R.drawable.bg_yellow_chip else R.drawable.bg_login_dark_chip)
+            view.setTextColor(getColor(if (done) R.color.validin_primary_dark else R.color.white))
+        }
     }
 
     private fun recordHistory(result: VerificationResult, formatted: String) {
@@ -1087,6 +1225,39 @@ class MainActivity : ComponentActivity() {
         return uri.lastPathSegment ?: "Dokumen dipilih"
     }
 
+    private fun displayFileSize(uri: Uri): String {
+        val size = if (uri.scheme == "file") {
+            File(uri.path ?: "").length()
+        } else {
+            val cursor = contentResolver.query(uri, null, null, null, null)
+            cursor?.use {
+                val index = it.getColumnIndex(OpenableColumns.SIZE)
+                if (index >= 0 && it.moveToFirst()) it.getLong(index) else -1L
+            } ?: -1L
+        }
+
+        if (size <= 0) return "-"
+        val kb = size / 1024.0
+        val mb = kb / 1024.0
+        return when {
+            mb >= 1 -> String.format(Locale.ROOT, "%.1f MB", mb)
+            kb >= 1 -> String.format(Locale.ROOT, "%.0f KB", kb)
+            else -> "$size B"
+        }
+    }
+
+    private fun displayMimeType(mimeType: String?): String {
+        return when {
+            mimeType == "application/pdf" -> "PDF"
+            mimeType == "image/jpeg" -> "Gambar JPEG"
+            mimeType == "image/png" -> "Gambar PNG"
+            mimeType?.startsWith("image/") == true -> "Gambar"
+            mimeType?.startsWith("text/") == true -> "Teks"
+            mimeType.isNullOrBlank() -> "Tidak diketahui"
+            else -> mimeType
+        }
+    }
+
     private fun openDocumentStream(uri: Uri): InputStream? {
         return if (uri.scheme == "file") {
             File(uri.path ?: return null).inputStream()
@@ -1160,6 +1331,11 @@ class MainActivity : ComponentActivity() {
     private fun shortAddress(address: String): String {
         if (address.length < 12) return address
         return "${address.take(6)}...${address.takeLast(4)}"
+    }
+
+    private fun shortHash(hash: String): String {
+        if (hash.length < 24) return hash
+        return "${hash.take(14)}...${hash.takeLast(10)}"
     }
 
     private fun String.anyKeyword(vararg keywords: String): Boolean {

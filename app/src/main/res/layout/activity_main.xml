@@ -12,7 +12,7 @@
         android:id="@+id/loginContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/validin_login_background"
+        android:background="@drawable/bg_login_palette_full"
         android:clipToPadding="false"
         android:fillViewport="true"
         android:paddingBottom="24dp">
@@ -22,29 +22,41 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingLeft="18dp"
+            android:paddingLeft="20dp"
             android:paddingTop="28dp"
-            android:paddingRight="18dp"
+            android:paddingRight="20dp"
             android:paddingBottom="28dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:background="@drawable/bg_login_glass_card"
                 android:elevation="0dp"
                 android:orientation="vertical"
-                android:paddingLeft="18dp"
-                android:paddingTop="18dp"
-                android:paddingRight="18dp"
-                android:paddingBottom="16dp">
+                android:paddingLeft="20dp"
+                android:paddingTop="24dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="22dp">
+
+                <TextView
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/bg_avatar_circle"
+                    android:gravity="center"
+                    android:text="VI"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
                     android:gravity="center"
                     android:text="Masuk"
                     android:textColor="@color/validin_text"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -70,6 +82,8 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
                         android:backgroundTint="@color/validin_primary"
+                        android:elevation="0dp"
+                        android:stateListAnimator="@null"
                         android:text="Mahasiswa"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
@@ -84,6 +98,8 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
                         android:backgroundTint="@color/white"
+                        android:elevation="0dp"
+                        android:stateListAnimator="@null"
                         android:text="Admin"
                         android:textAllCaps="false"
                         android:textColor="@color/validin_text"
@@ -155,6 +171,8 @@
                     android:layout_marginTop="14dp"
                     android:background="@drawable/bg_login_yellow_button"
                     android:backgroundTint="@color/validin_yellow"
+                    android:elevation="0dp"
+                    android:stateListAnimator="@null"
                     android:text="Masuk"
                     android:textAllCaps="false"
                     android:textColor="@color/validin_primary_dark"
@@ -165,19 +183,24 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/appContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_soft_screen"
-        android:orientation="vertical"
+        android:background="@android:color/transparent"
         android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/topBar"
             android:layout_width="match_parent"
             android:layout_height="76dp"
-            android:background="@color/white"
+            android:background="@android:color/transparent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
@@ -230,23 +253,21 @@
 
             <TextView
                 android:id="@+id/profileSettingsButton"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bg_profile_settings_button"
                 android:gravity="center"
-                android:text="⚙"
-                android:textColor="@color/validin_text"
-                android:textSize="26sp"
+                android:text=""
                 android:visibility="gone" />
 
             <TextView
                 android:id="@+id/profileEditButton"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_marginLeft="8dp"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginLeft="12dp"
+                android:background="@drawable/bg_profile_edit_button"
                 android:gravity="center"
-                android:text="✎"
-                android:textColor="@color/validin_text"
-                android:textSize="26sp"
+                android:text=""
                 android:visibility="gone" />
         </LinearLayout>
 
@@ -254,14 +275,15 @@
             android:id="@+id/contentFrame"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:clipToPadding="false">
 
             <ScrollView
                 android:id="@+id/homePage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingBottom="24dp">
+                android:paddingBottom="112dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -276,7 +298,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="58dp"
                         android:background="@drawable/bg_search_pill"
-                        android:elevation="6dp"
+                        android:elevation="0dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingLeft="14dp"
@@ -341,7 +363,7 @@
                     <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="22dp"
+                        android:layout_marginTop="14dp"
                         android:scrollbars="none">
 
                         <LinearLayout
@@ -351,129 +373,269 @@
 
                             <LinearLayout
                                 android:id="@+id/categoryCertificate"
-                                android:layout_width="86dp"
-                                android:layout_height="74dp"
-                                android:gravity="center"
+                                android:layout_width="78dp"
+                                android:layout_height="56dp"
+                                android:gravity="center_horizontal"
                                 android:orientation="vertical">
 
                                 <ImageView
                                     android:id="@+id/categoryCertificateIcon"
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
                                     android:src="@drawable/ic_doc_cert"
                                     android:tint="@color/validin_text" />
 
                                 <TextView
                                     android:id="@+id/categoryCertificateLabel"
                                     android:layout_width="match_parent"
-                                    android:layout_height="24dp"
+                                    android:layout_height="22dp"
                                     android:gravity="center"
                                     android:text="Sertifikat"
                                     android:textColor="@color/validin_text"
-                                    android:textSize="13sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold" />
 
                                 <View
                                     android:id="@+id/categoryCertificateUnderline"
-                                    android:layout_width="56dp"
-                                    android:layout_height="3dp"
+                                    android:layout_width="50dp"
+                                    android:layout_height="2dp"
                                     android:background="@color/validin_text" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/categoryLetter"
-                                android:layout_width="96dp"
-                                android:layout_height="70dp"
-                                android:gravity="center"
+                                android:layout_width="78dp"
+                                android:layout_height="56dp"
+                                android:gravity="center_horizontal"
                                 android:orientation="vertical">
 
                                 <ImageView
                                     android:id="@+id/categoryLetterIcon"
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
                                     android:src="@drawable/ic_doc_letter"
                                     android:tint="@color/validin_muted" />
 
                                 <TextView
                                     android:id="@+id/categoryLetterLabel"
                                     android:layout_width="match_parent"
-                                    android:layout_height="24dp"
+                                    android:layout_height="22dp"
                                     android:gravity="center"
                                     android:text="Surat"
                                     android:textColor="@color/validin_muted"
-                                    android:textSize="13sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold" />
 
                                 <View
                                     android:id="@+id/categoryLetterUnderline"
-                                    android:layout_width="56dp"
-                                    android:layout_height="3dp"
+                                    android:layout_width="50dp"
+                                    android:layout_height="2dp"
                                     android:background="@color/validin_text"
                                     android:visibility="invisible" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/categoryLogbook"
-                                android:layout_width="104dp"
-                                android:layout_height="70dp"
-                                android:gravity="center"
+                                android:layout_width="84dp"
+                                android:layout_height="56dp"
+                                android:gravity="center_horizontal"
                                 android:orientation="vertical">
 
                                 <ImageView
                                     android:id="@+id/categoryLogbookIcon"
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
                                     android:src="@drawable/ic_doc_logbook"
                                     android:tint="@color/validin_muted" />
 
                                 <TextView
                                     android:id="@+id/categoryLogbookLabel"
                                     android:layout_width="match_parent"
-                                    android:layout_height="24dp"
+                                    android:layout_height="22dp"
                                     android:gravity="center"
                                     android:text="Logbook"
                                     android:textColor="@color/validin_muted"
-                                    android:textSize="13sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold" />
 
                                 <View
                                     android:id="@+id/categoryLogbookUnderline"
-                                    android:layout_width="56dp"
-                                    android:layout_height="3dp"
+                                    android:layout_width="50dp"
+                                    android:layout_height="2dp"
                                     android:background="@color/validin_text"
                                     android:visibility="invisible" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/categoryTranscript"
-                                android:layout_width="104dp"
-                                android:layout_height="70dp"
-                                android:gravity="center"
+                                android:layout_width="88dp"
+                                android:layout_height="56dp"
+                                android:gravity="center_horizontal"
                                 android:orientation="vertical">
 
                                 <ImageView
                                     android:id="@+id/categoryTranscriptIcon"
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
                                     android:src="@drawable/ic_doc_transcript"
                                     android:tint="@color/validin_muted" />
 
                                 <TextView
                                     android:id="@+id/categoryTranscriptLabel"
                                     android:layout_width="match_parent"
-                                    android:layout_height="24dp"
+                                    android:layout_height="22dp"
                                     android:gravity="center"
                                     android:text="Transkrip"
                                     android:textColor="@color/validin_muted"
-                                    android:textSize="13sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold" />
 
                                 <View
                                     android:id="@+id/categoryTranscriptUnderline"
-                                    android:layout_width="56dp"
-                                    android:layout_height="3dp"
+                                    android:layout_width="50dp"
+                                    android:layout_height="2dp"
                                     android:background="@color/validin_text"
                                     android:visibility="invisible" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/shortcutVerify"
+                                android:layout_width="82dp"
+                                android:layout_height="56dp"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_verified"
+                                    android:tint="@color/validin_muted" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="22dp"
+                                    android:gravity="center"
+                                    android:text="Verifikasi"
+                                    android:textColor="@color/validin_muted"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="2dp"
+                                    android:background="@android:color/transparent" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/shortcutScan"
+                                android:layout_width="72dp"
+                                android:layout_height="56dp"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_upload"
+                                    android:tint="@color/validin_muted" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="22dp"
+                                    android:gravity="center"
+                                    android:text="Scan"
+                                    android:textColor="@color/validin_muted"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="2dp"
+                                    android:background="@android:color/transparent" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/shortcutAdmin"
+                                android:layout_width="72dp"
+                                android:layout_height="56dp"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_admin"
+                                    android:tint="@color/validin_muted" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="22dp"
+                                    android:gravity="center"
+                                    android:text="Admin"
+                                    android:textColor="@color/validin_muted"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="2dp"
+                                    android:background="@android:color/transparent" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/shortcutHistory"
+                                android:layout_width="78dp"
+                                android:layout_height="56dp"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_history"
+                                    android:tint="@color/validin_muted" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="22dp"
+                                    android:gravity="center"
+                                    android:text="Riwayat"
+                                    android:textColor="@color/validin_muted"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="2dp"
+                                    android:background="@android:color/transparent" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/shortcutProfile"
+                                android:layout_width="70dp"
+                                android:layout_height="56dp"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_person"
+                                    android:tint="@color/validin_muted" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="22dp"
+                                    android:gravity="center"
+                                    android:text="Profil"
+                                    android:textColor="@color/validin_muted"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="50dp"
+                                    android:layout_height="2dp"
+                                    android:background="@android:color/transparent" />
                             </LinearLayout>
                         </LinearLayout>
                     </HorizontalScrollView>
@@ -481,9 +643,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="360dp"
-                        android:layout_marginTop="22dp"
+                        android:layout_marginTop="14dp"
                         android:background="@drawable/bg_palette_hero"
-                        android:elevation="4dp"
+                        android:elevation="0dp"
                         android:orientation="vertical"
                         android:padding="24dp">
 
@@ -558,6 +720,8 @@
                             android:layout_marginTop="18dp"
                             android:background="@drawable/bg_primary_button"
                             android:backgroundTint="@color/validin_yellow"
+                            android:elevation="0dp"
+                            android:stateListAnimator="@null"
                             android:text="Mulai verifikasi"
                             android:textAllCaps="false"
                             android:textColor="@color/validin_primary_dark"
@@ -800,7 +964,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingBottom="24dp"
+                android:paddingBottom="112dp"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -809,18 +973,9 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Verify"
-                        android:textColor="@color/validin_text"
-                        android:textSize="38sp"
-                        android:textStyle="bold" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
                         android:background="@drawable/bg_palette_hero"
                         android:orientation="vertical"
                         android:padding="22dp">
@@ -851,6 +1006,8 @@
                             android:layout_marginTop="18dp"
                             android:background="@drawable/bg_primary_button"
                             android:backgroundTint="@color/validin_yellow"
+                            android:elevation="0dp"
+                            android:stateListAnimator="@null"
                             android:text="Pilih dokumen"
                             android:textAllCaps="false"
                             android:textColor="@color/validin_primary_dark"
@@ -863,29 +1020,107 @@
                             android:layout_marginTop="10dp"
                             android:background="@drawable/bg_primary_button"
                             android:backgroundTint="@color/validin_accent"
+                            android:elevation="0dp"
+                            android:stateListAnimator="@null"
                             android:text="Scan dengan kamera"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/fileNameText"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="42dp"
+                            android:layout_marginTop="16dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/stepUploadText"
+                                android:layout_width="0dp"
+                                android:layout_height="42dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_login_dark_chip"
+                                android:gravity="center"
+                                android:text="Upload"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/stepAiText"
+                                android:layout_width="0dp"
+                                android:layout_height="42dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_login_dark_chip"
+                                android:gravity="center"
+                                android:text="AI OCR"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/stepBlockchainText"
+                                android:layout_width="0dp"
+                                android:layout_height="42dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_login_dark_chip"
+                                android:gravity="center"
+                                android:text="Blockchain"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/filePreviewPanel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:text="Belum ada file dipilih"
-                            android:textColor="@color/white"
-                            android:textSize="15sp" />
+                            android:background="@drawable/bg_login_dark_chip"
+                            android:orientation="vertical"
+                            android:padding="14dp"
+                            android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/hashText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Fingerprint: -"
-                            android:textColor="@color/white"
-                            android:textIsSelectable="true"
-                            android:textSize="12sp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Preview dokumen"
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/fileNameText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Nama file: -"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/fileMetaText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="Ukuran: - | Jenis: -"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/hashText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="Hash: -"
+                                android:textColor="@color/white"
+                                android:textIsSelectable="true"
+                                android:textSize="12sp" />
+                        </LinearLayout>
 
                         <ProgressBar
                             android:id="@+id/progressBar"
@@ -902,26 +1137,97 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/bg_modern_card"
-                        android:elevation="3dp"
+                        android:elevation="0dp"
                         android:orientation="vertical"
                         android:padding="22dp">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="AI Inspector"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/aiScoreText"
+                                android:layout_width="74dp"
+                                android:layout_height="74dp"
+                                android:background="@drawable/bg_modern_chip"
+                                android:gravity="center"
+                                android:text="--"
+                                android:textColor="@color/validin_primary"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="14dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="AI Inspector"
+                                    android:textColor="@color/validin_text"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/aiStatusText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="AI akan membaca nama, nomor induk, tanggal, dan penerbit dokumen."
+                                    android:textColor="@color/validin_muted"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/aiDocTypeText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_modern_chip"
+                            android:padding="12dp"
+                            android:text="Jenis dokumen: -"
                             android:textColor="@color/validin_text"
-                            android:textSize="24sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/aiStatusText"
+                            android:id="@+id/aiOwnerText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="AI akan membaca nama, nomor induk, tanggal, dan penerbit dokumen."
-                            android:textColor="@color/validin_muted"
-                            android:textSize="15sp" />
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_outline_card"
+                            android:padding="12dp"
+                            android:text="Pemilik: -\nNIM/NPM/ID: -"
+                            android:textColor="@color/validin_text"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/aiDateIssuerText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_outline_card"
+                            android:padding="12dp"
+                            android:text="Tanggal: -\nPenerbit: -"
+                            android:textColor="@color/validin_text"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/aiFlagsText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_pill_orange"
+                            android:padding="12dp"
+                            android:text="Catatan: belum ada dokumen dibaca."
+                            android:textColor="@color/validin_warning"
+                            android:textSize="13sp" />
 
                         <TextView
                             android:id="@+id/extractedText"
@@ -939,7 +1245,9 @@
                             android:layout_marginTop="18dp"
                             android:background="@drawable/bg_primary_button"
                             android:backgroundTint="@color/validin_primary"
+                            android:elevation="0dp"
                             android:enabled="false"
+                            android:stateListAnimator="@null"
                             android:text="Cek status"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
@@ -954,6 +1262,21 @@
                             android:textColor="@color/validin_text"
                             android:textIsSelectable="true"
                             android:textSize="15sp" />
+
+                        <Button
+                            android:id="@+id/retryVerifyButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_primary_button"
+                            android:backgroundTint="@color/validin_accent"
+                            android:elevation="0dp"
+                            android:stateListAnimator="@null"
+                            android:text="Cek ulang"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
@@ -963,7 +1286,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingBottom="24dp"
+                android:paddingBottom="112dp"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -985,7 +1308,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="18dp"
                         android:background="@drawable/bg_modern_card"
-                        android:elevation="3dp"
+                        android:elevation="0dp"
                         android:orientation="vertical"
                         android:padding="22dp">
 
@@ -1012,6 +1335,8 @@
                             android:layout_marginTop="18dp"
                             android:background="@drawable/bg_primary_button"
                             android:backgroundTint="@color/validin_primary"
+                            android:elevation="0dp"
+                            android:stateListAnimator="@null"
                             android:text="Pilih dokumen admin"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
@@ -1024,6 +1349,8 @@
                             android:layout_marginTop="10dp"
                             android:background="@drawable/bg_primary_button"
                             android:backgroundTint="@color/validin_accent"
+                            android:elevation="0dp"
+                            android:stateListAnimator="@null"
                             android:text="Scan dokumen admin"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
@@ -1086,7 +1413,9 @@
                             android:layout_marginTop="18dp"
                             android:background="@drawable/bg_primary_button"
                             android:backgroundTint="@color/validin_yellow"
+                            android:elevation="0dp"
                             android:enabled="false"
+                            android:stateListAnimator="@null"
                             android:text="Daftarkan dokumen"
                             android:textAllCaps="false"
                             android:textColor="@color/validin_primary_dark"
@@ -1110,7 +1439,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingBottom="24dp"
+                android:paddingBottom="112dp"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -1133,7 +1462,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="18dp"
                         android:background="@drawable/bg_modern_card"
-                        android:elevation="3dp"
+                        android:elevation="0dp"
                         android:padding="22dp"
                         android:text="Belum ada riwayat."
                         android:textColor="@color/validin_text"
@@ -1146,7 +1475,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingBottom="24dp"
+                android:paddingBottom="112dp"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -1163,7 +1492,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/bg_palette_hero"
-                        android:elevation="4dp"
+                        android:elevation="0dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="20dp">
@@ -1268,7 +1597,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="54dp"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="18dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -1419,7 +1748,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingBottom="24dp"
+                android:paddingBottom="112dp"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -1433,7 +1762,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_modern_card"
-                        android:elevation="3dp"
+                        android:elevation="0dp"
                         android:padding="18dp"
                         android:text="Role, registry, dan status sesi akan tampil di sini."
                         android:textColor="@color/validin_text"
@@ -1445,7 +1774,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
                         android:background="@drawable/bg_modern_card"
-                        android:elevation="3dp"
+                        android:elevation="0dp"
                         android:padding="18dp"
                         android:text="Tentang ValidIn\n\nValidIn membantu verifikasi dokumen kampus dengan OCR, fingerprint SHA-256, dan registry blockchain. Dokumen asli tidak disimpan di blockchain, hanya fingerprint dan metadata hash.\n\nDibuat oleh Rahmat Eka Satria\nGitHub: rhmatzeka"
                         android:textColor="@color/validin_text"
@@ -1458,6 +1787,8 @@
                         android:layout_marginTop="18dp"
                         android:background="@drawable/bg_primary_button"
                         android:backgroundTint="@color/validin_primary"
+                        android:elevation="0dp"
+                        android:stateListAnimator="@null"
                         android:text="Keluar"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
@@ -1470,7 +1801,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingBottom="24dp"
+                android:paddingBottom="112dp"
                 android:visibility="gone">
 
                 <LinearLayout
@@ -1483,7 +1814,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_modern_card"
-                        android:elevation="3dp"
+                        android:elevation="0dp"
                         android:orientation="vertical"
                         android:padding="18dp">
 
@@ -1499,7 +1830,7 @@
                             android:id="@+id/profileDisplayNameInput"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
-                            android:layout_marginTop="12dp"
+                    android:layout_marginTop="14dp"
                             android:background="@drawable/bg_input_modern"
                             android:hint="Nama tampilan"
                             android:inputType="textPersonName"
@@ -1547,6 +1878,8 @@
                             android:layout_marginTop="12dp"
                             android:background="@drawable/bg_primary_button"
                             android:backgroundTint="@color/validin_yellow"
+                            android:elevation="0dp"
+                            android:stateListAnimator="@null"
                             android:text="Simpan profil"
                             android:textAllCaps="false"
                             android:textColor="@color/validin_primary_dark"
@@ -1556,26 +1889,23 @@
             </ScrollView>
         </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="86dp"
-            android:background="@color/white"
-            android:paddingLeft="16dp"
-            android:paddingTop="10dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="14dp">
+        </LinearLayout>
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigation"
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_bottom_nav"
-                android:elevation="10dp"
-                app:itemIconTint="@color/bottom_nav_item"
-                app:itemTextColor="@color/bottom_nav_item"
-                app:labelVisibilityMode="unlabeled"
-                app:menu="@menu/bottom_nav" />
-        </FrameLayout>
-    </LinearLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_bottom_nav"
+            android:elevation="0dp"
+            app:itemBackground="@android:color/transparent"
+            app:itemIconTint="@color/bottom_nav_item"
+            app:itemRippleColor="@android:color/transparent"
+            app:itemTextColor="@color/bottom_nav_item"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/bottom_nav" />
+    </FrameLayout>
 </FrameLayout>
