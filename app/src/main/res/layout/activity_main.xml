@@ -1918,26 +1918,26 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_bottom_nav_dark"
+            android:background="@drawable/bg_bottom_nav"
             android:elevation="0dp"
             app:itemBackground="@android:color/transparent"
-            app:itemIconTint="@color/bottom_nav_dark_item"
+            app:itemIconTint="@color/bottom_nav_item"
             app:itemRippleColor="@android:color/transparent"
-            app:itemTextColor="@color/bottom_nav_dark_item"
+            app:itemTextColor="@color/bottom_nav_item"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_nav" />
 
         <TextView
             android:id="@+id/bottomScanButton"
-            android:layout_width="66dp"
-            android:layout_height="66dp"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="14dp"
             android:background="@drawable/bg_scan_fab"
             android:gravity="center"
-            android:text="⌁"
+            android:text="⌕"
             android:textColor="@color/validin_primary_dark"
-            android:textSize="32sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
     </FrameLayout>
 </FrameLayout>
