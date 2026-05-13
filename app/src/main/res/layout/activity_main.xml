@@ -206,15 +206,15 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <TextView
+            <ImageView
                 android:id="@+id/topLogoText"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
-                android:background="@drawable/bg_avatar_circle"
-                android:gravity="center"
-                android:text="VI"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:background="@drawable/bg_modern_chip"
+                android:contentDescription="@string/app_name"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logoapp_icon" />
 
             <LinearLayout
                 android:layout_width="0dp"

@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var loginButton: Button
     private lateinit var roleStudentButton: Button
     private lateinit var roleAdminButton: Button
-    private lateinit var topLogoText: TextView
+    private lateinit var topLogoText: ImageView
     private lateinit var mainTitleText: TextView
     private lateinit var mainSubtitleText: TextView
     private lateinit var userBadgeText: TextView
