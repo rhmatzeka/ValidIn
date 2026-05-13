@@ -56,6 +56,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var profileSettingsButton: TextView
     private lateinit var profileEditButton: TextView
     private lateinit var bottomNavigation: BottomNavigationView
+    private lateinit var bottomScanButton: TextView
     private lateinit var homePage: ScrollView
     private lateinit var verifyPage: ScrollView
     private lateinit var adminPage: ScrollView
@@ -289,6 +290,7 @@ class MainActivity : ComponentActivity() {
         profileSettingsButton = findViewById(R.id.profileSettingsButton)
         profileEditButton = findViewById(R.id.profileEditButton)
         bottomNavigation = findViewById(R.id.bottomNavigation)
+        bottomScanButton = findViewById(R.id.bottomScanButton)
         homePage = findViewById(R.id.homePage)
         verifyPage = findViewById(R.id.verifyPage)
         adminPage = findViewById(R.id.adminPage)
@@ -486,6 +488,10 @@ class MainActivity : ComponentActivity() {
         bottomNavigation.setOnItemSelectedListener { item ->
             showPage(item.itemId)
             true
+        }
+        bottomScanButton.setOnClickListener {
+            bottomNavigation.selectedItemId = R.id.nav_verify
+            verifyCamera.launch(null)
         }
     }
 

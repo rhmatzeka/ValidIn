@@ -963,6 +963,7 @@
                 android:id="@+id/verifyPage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/bg_verify_screen"
                 android:clipToPadding="false"
                 android:paddingBottom="112dp"
                 android:visibility="gone">
@@ -971,18 +972,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="24dp">
+                    android:paddingLeft="16dp"
+                    android:paddingTop="18dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="24dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_palette_hero"
+                        android:background="@drawable/bg_verify_hero_card"
                         android:orientation="vertical"
-                        android:padding="22dp">
+                        android:padding="18dp">
 
                         <TextView
-                            android:layout_width="78dp"
-                            android:layout_height="78dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:background="@drawable/bg_login_panel"
                             android:gravity="center"
                             android:text="AI"
@@ -993,17 +997,25 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="18dp"
+                            android:layout_marginTop="16dp"
                             android:text="Upload atau scan dokumen"
                             android:textColor="@color/white"
-                            android:textSize="28sp"
+                            android:textSize="25sp"
                             android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Validasi OCR, fingerprint, dan status blockchain dalam satu alur."
+                            android:textColor="#DDE6FF"
+                            android:textSize="13sp" />
 
                         <Button
                             android:id="@+id/pickDocumentButton"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
-                            android:layout_marginTop="18dp"
+                            android:layout_marginTop="16dp"
                             android:background="@drawable/bg_primary_button"
                             android:backgroundTint="@color/validin_yellow"
                             android:elevation="0dp"
@@ -1029,14 +1041,14 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="42dp"
+                            android:layout_height="40dp"
                             android:layout_marginTop="16dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/stepUploadText"
                                 android:layout_width="0dp"
-                                android:layout_height="42dp"
+                                android:layout_height="40dp"
                                 android:layout_marginRight="6dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/bg_login_dark_chip"
@@ -1049,7 +1061,7 @@
                             <TextView
                                 android:id="@+id/stepAiText"
                                 android:layout_width="0dp"
-                                android:layout_height="42dp"
+                                android:layout_height="40dp"
                                 android:layout_marginLeft="6dp"
                                 android:layout_marginRight="6dp"
                                 android:layout_weight="1"
@@ -1063,7 +1075,7 @@
                             <TextView
                                 android:id="@+id/stepBlockchainText"
                                 android:layout_width="0dp"
-                                android:layout_height="42dp"
+                                android:layout_height="40dp"
                                 android:layout_marginLeft="6dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/bg_login_dark_chip"
@@ -1136,7 +1148,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:background="@drawable/bg_modern_card"
+                        android:background="@drawable/bg_verify_panel_dark"
                         android:elevation="0dp"
                         android:orientation="vertical"
                         android:padding="22dp">
@@ -1151,7 +1163,7 @@
                                 android:id="@+id/aiScoreText"
                                 android:layout_width="74dp"
                                 android:layout_height="74dp"
-                                android:background="@drawable/bg_modern_chip"
+                                android:background="@drawable/bg_verify_chip_dark"
                                 android:gravity="center"
                                 android:text="--"
                                 android:textColor="@color/validin_primary"
@@ -1169,7 +1181,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="AI Inspector"
-                                    android:textColor="@color/validin_text"
+                                    android:textColor="@color/white"
                                     android:textSize="24sp"
                                     android:textStyle="bold" />
 
@@ -1179,7 +1191,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="6dp"
                                     android:text="AI akan membaca nama, nomor induk, tanggal, dan penerbit dokumen."
-                                    android:textColor="@color/validin_muted"
+                                    android:textColor="#AEB8C6"
                                     android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -1189,10 +1201,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:background="@drawable/bg_modern_chip"
+                            android:background="@drawable/bg_verify_chip_dark"
                             android:padding="12dp"
                             android:text="Jenis dokumen: -"
-                            android:textColor="@color/validin_text"
+                            android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -1201,10 +1213,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_outline_card"
+                            android:background="@drawable/bg_verify_field_dark"
                             android:padding="12dp"
                             android:text="Pemilik: -\nNIM/NPM/ID: -"
-                            android:textColor="@color/validin_text"
+                            android:textColor="#E8EDF7"
                             android:textSize="14sp" />
 
                         <TextView
@@ -1212,10 +1224,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:background="@drawable/bg_outline_card"
+                            android:background="@drawable/bg_verify_field_dark"
                             android:padding="12dp"
                             android:text="Tanggal: -\nPenerbit: -"
-                            android:textColor="@color/validin_text"
+                            android:textColor="#E8EDF7"
                             android:textSize="14sp" />
 
                         <TextView
@@ -1234,7 +1246,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:textColor="@color/validin_text"
+                            android:textColor="#CFD8E8"
                             android:textIsSelectable="true"
                             android:textSize="12sp" />
 
@@ -1259,7 +1271,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="14dp"
                             android:text="Hasil pemeriksaan akan muncul di sini."
-                            android:textColor="@color/validin_text"
+                            android:textColor="#E8EDF7"
                             android:textIsSelectable="true"
                             android:textSize="15sp" />
 
@@ -1906,13 +1918,26 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/bg_bottom_nav"
+            android:background="@drawable/bg_bottom_nav_dark"
             android:elevation="0dp"
             app:itemBackground="@android:color/transparent"
-            app:itemIconTint="@color/bottom_nav_item"
+            app:itemIconTint="@color/bottom_nav_dark_item"
             app:itemRippleColor="@android:color/transparent"
-            app:itemTextColor="@color/bottom_nav_item"
+            app:itemTextColor="@color/bottom_nav_dark_item"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_nav" />
+
+        <TextView
+            android:id="@+id/bottomScanButton"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_scan_fab"
+            android:gravity="center"
+            android:text="⌁"
+            android:textColor="@color/validin_primary_dark"
+            android:textSize="32sp"
+            android:textStyle="bold" />
     </FrameLayout>
 </FrameLayout>
