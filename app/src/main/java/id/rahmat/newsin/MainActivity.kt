@@ -1,5 +1,6 @@
 package id.rahmat.newsin
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.content.res.ColorStateList
 import android.content.res.Configuration
@@ -7,7 +8,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.text.Editable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
@@ -18,6 +24,7 @@ import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
@@ -117,6 +124,9 @@ class MainActivity : ComponentActivity() {
     private lateinit var profileTrustBadgeText: TextView
     private lateinit var registryStatusText: TextView
     private lateinit var profileSettingsInfoText: TextView
+    private lateinit var aboutAppText: TextView
+    private lateinit var settingsBackButton: TextView
+    private lateinit var editProfileBackButton: TextView
     private lateinit var profileGoVerifyButton: TextView
     private lateinit var profileGoHistoryButton: TextView
     private lateinit var profileTotalChecksText: TextView
@@ -354,6 +364,9 @@ class MainActivity : ComponentActivity() {
         profileTrustBadgeText = findViewById(R.id.profileTrustBadgeText)
         registryStatusText = findViewById(R.id.registryStatusText)
         profileSettingsInfoText = findViewById(R.id.profileSettingsInfoText)
+        aboutAppText = findViewById(R.id.aboutAppText)
+        settingsBackButton = findViewById(R.id.settingsBackButton)
+        editProfileBackButton = findViewById(R.id.editProfileBackButton)
         profileGoVerifyButton = findViewById(R.id.profileGoVerifyButton)
         profileGoHistoryButton = findViewById(R.id.profileGoHistoryButton)
         profileTotalChecksText = findViewById(R.id.profileTotalChecksText)
@@ -397,6 +410,8 @@ class MainActivity : ComponentActivity() {
         loginIdInput.setOnFocusChangeListener { view, hasFocus -> if (hasFocus) scrollLoginTo(view) }
         loginPasswordInput.setOnFocusChangeListener { view, hasFocus -> if (hasFocus) scrollLoginTo(view) }
         loginButton.setOnClickListener { login() }
+        settingsBackButton.setOnClickListener { showPage(R.id.nav_profile) }
+        editProfileBackButton.setOnClickListener { showPage(R.id.nav_profile) }
         profileSettingsButton.setOnClickListener { showProfileSettingsPanel() }
         profileEditButton.setOnClickListener { showProfileEditPanel() }
         profilePhotoImage.setOnClickListener { pickProfilePhoto() }
@@ -500,6 +515,53 @@ class MainActivity : ComponentActivity() {
             verifyCamera.launch(null)
         }
         bottomScanButton.bringToFront()
+        setupAboutLink()
+        setupBackNavigation()
+    }
+
+    private fun setupBackNavigation() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (settingsPage.visibility == View.VISIBLE || editProfilePage.visibility == View.VISIBLE) {
+                    showPage(R.id.nav_profile)
+                    return
+                }
+
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+                isEnabled = true
+            }
+        })
+    }
+
+    private fun setupAboutLink() {
+        val githubUrl = "https://github.com/rhmatzeka"
+        val text = "Tentang ValidIn\n\n" +
+            "ValidIn membantu verifikasi dokumen kampus dengan OCR, fingerprint SHA-256, dan registry blockchain. " +
+            "Dokumen asli tidak disimpan di blockchain, hanya fingerprint dan metadata hash.\n\n" +
+            "Dibuat oleh Rahmat Eka Satria\nGitHub: $githubUrl"
+        val start = text.indexOf(githubUrl)
+        val span = SpannableString(text)
+        span.setSpan(
+            object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl)))
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.color = getColor(R.color.validin_primary)
+                    ds.isUnderlineText = false
+                    ds.isFakeBoldText = true
+                }
+            },
+            start,
+            start + githubUrl.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        aboutAppText.text = span
+        aboutAppText.movementMethod = LinkMovementMethod.getInstance()
+        aboutAppText.highlightColor = getColor(android.R.color.transparent)
     }
 
     private fun openHomeCategory(category: HomeCategory) {
