@@ -1,5 +1,6 @@
 package id.rahmat.newsin
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.content.res.ColorStateList
@@ -172,6 +173,7 @@ class MainActivity : ComponentActivity() {
     private var profilePhotoUri: Uri? = null
     private var selectedRole: String = ROLE_STUDENT
     private var activeRole: String = ROLE_STUDENT
+    private var tutorialDialog: AlertDialog? = null
     private var validCount = 0
     private var reviewCount = 0
     private var notFoundCount = 0
@@ -190,6 +192,12 @@ class MainActivity : ComponentActivity() {
         val destinationId: Int?,
         val title: String,
         val description: String
+    )
+
+    private data class TutorialStep(
+        val pageId: Int,
+        val title: String,
+        val message: String
     )
 
     private companion object {
@@ -499,10 +507,12 @@ class MainActivity : ComponentActivity() {
             bottomNavigation.selectedItemId = R.id.nav_profile
         }
         logoutButton.setOnClickListener {
+            tutorialDialog?.dismiss()
             getPreferences(MODE_PRIVATE).edit().clear().apply()
             selectedHash = null
             selectedRole = ROLE_STUDENT
             activeRole = ROLE_STUDENT
+            bottomNavigation.menu.findItem(R.id.nav_admin)?.isVisible = false
             updateRoleButtons()
             loginContainer.visibility = View.VISIBLE
             appContainer.visibility = View.GONE
@@ -614,11 +624,13 @@ class MainActivity : ComponentActivity() {
 
         loginErrorText.visibility = View.GONE
         showApp()
+        showWelcomeTutorial()
     }
 
     private fun showApp() {
         loginContainer.visibility = View.GONE
         appContainer.visibility = View.VISIBLE
+        bottomNavigation.menu.findItem(R.id.nav_admin)?.isVisible = activeRole == ROLE_ADMIN
         updateProfileUi()
         hideProfilePanels()
         selectHomeCategory(HomeCategory.CERTIFICATE)
@@ -626,6 +638,96 @@ class MainActivity : ComponentActivity() {
         val firstPage = R.id.nav_home
         bottomNavigation.selectedItemId = firstPage
         showPage(firstPage)
+    }
+
+    private fun showWelcomeTutorial() {
+        tutorialDialog?.dismiss()
+        tutorialDialog = AlertDialog.Builder(this)
+            .setTitle("Selamat datang, $userName")
+            .setMessage(
+                "ValidIn membantu kamu mengecek dokumen kampus lewat AI OCR, fingerprint SHA-256, dan blockchain registry.\n\n" +
+                    "Saya akan tunjukkan fungsi utama di setiap halaman. Tutorial ini bisa dilewati kapan saja."
+            )
+            .setNegativeButton("Lewati") { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton("Mulai tutorial") { _, _ -> showTutorialStep(0) }
+            .show()
+    }
+
+    private fun showTutorialStep(index: Int) {
+        val steps = tutorialSteps()
+        if (index !in steps.indices) {
+            bottomNavigation.selectedItemId = R.id.nav_home
+            return
+        }
+
+        val step = steps[index]
+        showTutorialPage(step.pageId)
+        tutorialDialog?.dismiss()
+        tutorialDialog = AlertDialog.Builder(this)
+            .setTitle("${step.title} (${index + 1}/${steps.size})")
+            .setMessage(step.message)
+            .setNegativeButton("Lewati") { dialog, _ ->
+                dialog.dismiss()
+                bottomNavigation.selectedItemId = R.id.nav_home
+            }
+            .setPositiveButton(if (index == steps.lastIndex) "Selesai" else "Lanjut") { _, _ ->
+                showTutorialStep(index + 1)
+            }
+            .show()
+    }
+
+    private fun showTutorialPage(pageId: Int) {
+        if (pageId == R.id.nav_admin && activeRole == ROLE_ADMIN) {
+            showPage(pageId)
+            return
+        }
+
+        if (pageId == R.id.nav_home ||
+            pageId == R.id.nav_verify ||
+            pageId == R.id.nav_history ||
+            pageId == R.id.nav_profile
+        ) {
+            bottomNavigation.selectedItemId = pageId
+        } else {
+            showPage(pageId)
+        }
+    }
+
+    private fun tutorialSteps(): List<TutorialStep> {
+        val steps = mutableListOf(
+            TutorialStep(
+                pageId = R.id.nav_home,
+                title = "Beranda",
+                message = "Di Beranda kamu bisa melihat ringkasan status registry, statistik pemeriksaan, shortcut scan, shortcut pilih dokumen, dan akses cepat ke kategori dokumen."
+            ),
+            TutorialStep(
+                pageId = R.id.nav_verify,
+                title = "Verifikasi dokumen",
+                message = "Di halaman Verifikasi, pilih file PDF/gambar/teks atau scan dokumen. Aplikasi akan menghitung hash, membaca isi dokumen dengan AI OCR, lalu tombol Cek status dipakai untuk mencocokkan fingerprint ke blockchain."
+            ),
+            TutorialStep(
+                pageId = R.id.nav_history,
+                title = "Riwayat",
+                message = "Halaman Riwayat menyimpan hasil pemeriksaan dalam sesi aplikasi. Kamu bisa melihat dokumen terakhir, status valid, perlu review, atau tidak ditemukan."
+            ),
+            TutorialStep(
+                pageId = R.id.nav_profile,
+                title = "Profil",
+                message = "Di Profil kamu bisa melihat akun aktif, role, status registry, total pemeriksaan, serta membuka pengaturan dan edit profil."
+            )
+        )
+
+        if (activeRole == ROLE_ADMIN) {
+            steps.add(
+                TutorialStep(
+                    pageId = R.id.nav_admin,
+                    title = "Admin",
+                    message = "Halaman Admin dipakai issuer kampus untuk menyiapkan fingerprint dokumen resmi dan mendaftarkannya ke registry blockchain melalui API admin."
+                )
+            )
+        }
+
+        return steps
     }
 
     private fun selectRole(role: String) {
