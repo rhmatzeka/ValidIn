@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var mainTitleText: TextView
     private lateinit var mainSubtitleText: TextView
     private lateinit var userBadgeText: TextView
-    private lateinit var topBackButton: TextView
+    private lateinit var topBackButton: ImageView
     private lateinit var profileSettingsButton: TextView
     private lateinit var profileEditButton: TextView
     private lateinit var bottomNavigation: BottomNavigationView
