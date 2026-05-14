@@ -1,10 +1,14 @@
 package id.rahmat.newsin
 
-import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.Typeface
 import android.content.res.ColorStateList
 import android.content.res.Configuration
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -15,10 +19,14 @@ import android.text.TextPaint
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -49,6 +57,7 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.max
 
 class MainActivity : ComponentActivity() {
     private lateinit var inspector: AiDocumentInspector
@@ -173,7 +182,8 @@ class MainActivity : ComponentActivity() {
     private var profilePhotoUri: Uri? = null
     private var selectedRole: String = ROLE_STUDENT
     private var activeRole: String = ROLE_STUDENT
-    private var tutorialDialog: AlertDialog? = null
+    private var welcomeDialog: Dialog? = null
+    private var tutorialOverlay: FrameLayout? = null
     private var validCount = 0
     private var reviewCount = 0
     private var notFoundCount = 0
@@ -196,8 +206,10 @@ class MainActivity : ComponentActivity() {
 
     private data class TutorialStep(
         val pageId: Int,
+        val target: () -> View,
         val title: String,
-        val message: String
+        val message: String,
+        val actionHint: String
     )
 
     private companion object {
@@ -507,7 +519,8 @@ class MainActivity : ComponentActivity() {
             bottomNavigation.selectedItemId = R.id.nav_profile
         }
         logoutButton.setOnClickListener {
-            tutorialDialog?.dismiss()
+            welcomeDialog?.dismiss()
+            removeTutorialOverlay()
             getPreferences(MODE_PRIVATE).edit().clear().apply()
             selectedHash = null
             selectedRole = ROLE_STUDENT
@@ -533,6 +546,11 @@ class MainActivity : ComponentActivity() {
     private fun setupBackNavigation() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                if (tutorialOverlay != null) {
+                    finishTutorial()
+                    return
+                }
+
                 if (settingsPage.visibility == View.VISIBLE || editProfilePage.visibility == View.VISIBLE) {
                     showPage(R.id.nav_profile)
                     return
@@ -641,51 +659,234 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun showWelcomeTutorial() {
-        tutorialDialog?.dismiss()
-        tutorialDialog = AlertDialog.Builder(this)
-            .setTitle("Selamat datang, $userName")
-            .setMessage(
-                "ValidIn membantu kamu mengecek dokumen kampus lewat AI OCR, fingerprint SHA-256, dan blockchain registry.\n\n" +
-                    "Saya akan tunjukkan fungsi utama di setiap halaman. Tutorial ini bisa dilewati kapan saja."
-            )
-            .setNegativeButton("Lewati") { dialog, _ -> dialog.dismiss() }
-            .setPositiveButton("Mulai tutorial") { _, _ -> showTutorialStep(0) }
-            .show()
+        welcomeDialog?.dismiss()
+
+        val dialog = Dialog(this)
+        val card = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = roundedDrawable(getColor(R.color.validin_surface), 24)
+            setPadding(dp(20), dp(18), dp(20), dp(18))
+        }
+        val container = FrameLayout(this).apply {
+            setPadding(dp(18), dp(24), dp(18), dp(24))
+            addView(card, FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER
+            ))
+        }
+
+        val closeButton = TextView(this).apply {
+            text = "X"
+            gravity = Gravity.CENTER
+            textSize = 14f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(getColor(R.color.validin_muted))
+            background = roundedDrawable(getColor(R.color.validin_background), 18)
+            setOnClickListener { dialog.dismiss() }
+        }
+        container.addView(closeButton, FrameLayout.LayoutParams(dp(38), dp(38), Gravity.TOP or Gravity.RIGHT).apply {
+            topMargin = dp(12)
+            rightMargin = dp(12)
+        })
+
+        card.addView(labelText("VALIDIN", 12f, getColor(R.color.validin_primary), true))
+        card.addView(labelText("Selamat datang, $userName", 24f, getColor(R.color.validin_text), true).apply {
+            setPadding(0, dp(8), dp(38), 0)
+        })
+        card.addView(labelText(
+            "Aplikasi ini membantu kamu mengecek dokumen kampus lewat AI OCR, fingerprint SHA-256, dan blockchain registry.",
+            15f,
+            getColor(R.color.validin_muted),
+            false
+        ).apply {
+            setPadding(0, dp(10), 0, 0)
+        })
+        card.addView(labelText(
+            "Tutorial berikut akan menyorot tombol asli di aplikasi dan menjelaskan cara pakainya satu per satu.",
+            14f,
+            getColor(R.color.validin_text),
+            false
+        ).apply {
+            background = roundedDrawable(getColor(R.color.validin_background), 14)
+            setPadding(dp(12), dp(12), dp(12), dp(12))
+            (layoutParams as? LinearLayout.LayoutParams)?.topMargin = dp(14)
+        })
+
+        val actions = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(0, dp(18), 0, 0)
+        }
+        actions.addView(tutorialButton("Nanti saja", false) { dialog.dismiss() }, LinearLayout.LayoutParams(
+            0,
+            dp(48),
+            1f
+        ).apply { rightMargin = dp(10) })
+        actions.addView(tutorialButton("Mulai", true) {
+            dialog.dismiss()
+            showTutorialStep(0)
+        }, LinearLayout.LayoutParams(0, dp(48), 1f))
+        card.addView(actions)
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(container)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        welcomeDialog = dialog
     }
 
     private fun showTutorialStep(index: Int) {
         val steps = tutorialSteps()
         if (index !in steps.indices) {
-            bottomNavigation.selectedItemId = R.id.nav_home
+            finishTutorial()
             return
         }
 
         val step = steps[index]
         showTutorialPage(step.pageId)
-        tutorialDialog?.dismiss()
-        tutorialDialog = AlertDialog.Builder(this)
-            .setTitle("${step.title} (${index + 1}/${steps.size})")
-            .setMessage(step.message)
-            .setNegativeButton("Lewati") { dialog, _ ->
-                dialog.dismiss()
-                bottomNavigation.selectedItemId = R.id.nav_home
-            }
-            .setPositiveButton(if (index == steps.lastIndex) "Selesai" else "Lanjut") { _, _ ->
-                showTutorialStep(index + 1)
-            }
-            .show()
+        scrollTutorialTarget(step)
+        findViewById<FrameLayout>(R.id.main).postDelayed({
+            renderTutorialOverlay(index)
+        }, 360)
     }
 
-    private fun showTutorialPage(pageId: Int) {
-        if (pageId == R.id.nav_admin && activeRole == ROLE_ADMIN) {
-            showPage(pageId)
+    private fun renderTutorialOverlay(index: Int) {
+        val steps = tutorialSteps()
+        if (index !in steps.indices) return
+
+        val root = findViewById<FrameLayout>(R.id.main)
+        val step = steps[index]
+        val target = step.target()
+        if (target.width == 0 || target.height == 0) {
+            root.postDelayed({ renderTutorialOverlay(index) }, 160)
             return
         }
 
+        removeTutorialOverlay()
+        val overlay = FrameLayout(this).apply {
+            setBackgroundColor(Color.parseColor("#B8000000"))
+            isClickable = true
+        }
+        root.addView(overlay, FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        ))
+
+        val rootLocation = IntArray(2)
+        val targetLocation = IntArray(2)
+        root.getLocationOnScreen(rootLocation)
+        target.getLocationOnScreen(targetLocation)
+        val padding = dp(8)
+        val targetLeft = (targetLocation[0] - rootLocation[0] - padding).coerceAtLeast(dp(10))
+        val targetTop = (targetLocation[1] - rootLocation[1] - padding).coerceAtLeast(dp(10))
+        val targetWidth = (target.width + padding * 2).coerceAtMost(root.width - dp(20))
+        val targetHeight = target.height + padding * 2
+
+        val highlight = FrameLayout(this).apply {
+            background = roundedDrawable(Color.TRANSPARENT, 18, getColor(R.color.validin_yellow), dp(3))
+        }
+        overlay.addView(highlight, FrameLayout.LayoutParams(targetWidth, targetHeight).apply {
+            leftMargin = targetLeft
+            topMargin = targetTop
+        })
+
+        overlay.addView(labelText("Bagian ini", 12f, getColor(R.color.validin_primary_dark), true).apply {
+            gravity = Gravity.CENTER
+            background = roundedDrawable(getColor(R.color.validin_yellow), 999)
+            setPadding(dp(10), dp(5), dp(10), dp(5))
+        }, FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            dp(30)
+        ).apply {
+            leftMargin = targetLeft
+            topMargin = max(dp(8), targetTop - dp(34))
+        })
+
+        val card = tutorialCard(index, steps.size, step)
+        val targetCenterY = targetTop + targetHeight / 2
+        val cardParams = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply {
+            leftMargin = dp(16)
+            rightMargin = dp(16)
+            if (targetCenterY < root.height / 2) {
+                gravity = Gravity.BOTTOM
+                bottomMargin = dp(24)
+            } else {
+                gravity = Gravity.TOP
+                topMargin = dp(24)
+            }
+        }
+        overlay.addView(card, cardParams)
+        tutorialOverlay = overlay
+    }
+
+    private fun tutorialCard(index: Int, total: Int, step: TutorialStep): LinearLayout {
+        return LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = roundedDrawable(getColor(R.color.validin_surface), 20)
+            setPadding(dp(16), dp(14), dp(16), dp(16))
+
+            val header = LinearLayout(this@MainActivity).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+            }
+            header.addView(labelText("Langkah ${index + 1}/$total", 12f, getColor(R.color.validin_primary), true), LinearLayout.LayoutParams(
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                1f
+            ))
+            header.addView(tutorialButton("X", false) { finishTutorial() }, LinearLayout.LayoutParams(dp(42), dp(38)))
+            addView(header)
+
+            addView(labelText(step.title, 21f, getColor(R.color.validin_text), true).apply {
+                setPadding(0, dp(8), 0, 0)
+            })
+            addView(labelText(step.message, 14f, getColor(R.color.validin_muted), false).apply {
+                setPadding(0, dp(8), 0, 0)
+            })
+            addView(labelText("Cara pakai: ${step.actionHint}", 14f, getColor(R.color.validin_primary_dark), true).apply {
+                background = roundedDrawable(getColor(R.color.validin_background), 14)
+                setPadding(dp(12), dp(10), dp(12), dp(10))
+            }, LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply { topMargin = dp(12) })
+
+            val actions = LinearLayout(this@MainActivity).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+                setPadding(0, dp(14), 0, 0)
+            }
+            actions.addView(tutorialButton("Lewati", false) { finishTutorial() }, LinearLayout.LayoutParams(
+                0,
+                dp(46),
+                1f
+            ).apply { rightMargin = dp(8) })
+            if (index > 0) {
+                actions.addView(tutorialButton("Kembali", false) { showTutorialStep(index - 1) }, LinearLayout.LayoutParams(
+                    0,
+                    dp(46),
+                    1f
+                ).apply { rightMargin = dp(8) })
+            }
+            actions.addView(tutorialButton(if (index == total - 1) "Selesai" else "Lanjut", true) {
+                showTutorialStep(index + 1)
+            }, LinearLayout.LayoutParams(0, dp(46), 1f))
+            addView(actions)
+        }
+    }
+
+    private fun showTutorialPage(pageId: Int) {
         if (pageId == R.id.nav_home ||
             pageId == R.id.nav_verify ||
             pageId == R.id.nav_history ||
-            pageId == R.id.nav_profile
+            pageId == R.id.nav_profile ||
+            pageId == R.id.nav_admin && activeRole == ROLE_ADMIN
         ) {
             bottomNavigation.selectedItemId = pageId
         } else {
@@ -693,41 +894,181 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun scrollTutorialTarget(step: TutorialStep) {
+        val scrollView = tutorialScrollView(step.pageId) ?: return
+        scrollView.post {
+            val scrollLocation = IntArray(2)
+            val targetLocation = IntArray(2)
+            scrollView.getLocationOnScreen(scrollLocation)
+            step.target().getLocationOnScreen(targetLocation)
+            val targetY = targetLocation[1] - scrollLocation[1] + scrollView.scrollY - dp(140)
+            scrollView.smoothScrollTo(0, max(0, targetY))
+        }
+    }
+
+    private fun tutorialScrollView(pageId: Int): ScrollView? {
+        return when (pageId) {
+            R.id.nav_home -> homePage
+            R.id.nav_verify -> verifyPage
+            R.id.nav_history -> historyPage
+            R.id.nav_profile -> profilePage
+            R.id.nav_admin -> adminPage
+            else -> null
+        }
+    }
+
+    private fun finishTutorial() {
+        removeTutorialOverlay()
+        bottomNavigation.selectedItemId = R.id.nav_home
+    }
+
+    private fun removeTutorialOverlay() {
+        tutorialOverlay?.let { overlay ->
+            (overlay.parent as? ViewGroup)?.removeView(overlay)
+        }
+        tutorialOverlay = null
+    }
+
     private fun tutorialSteps(): List<TutorialStep> {
         val steps = mutableListOf(
             TutorialStep(
                 pageId = R.id.nav_home,
-                title = "Beranda",
-                message = "Di Beranda kamu bisa melihat ringkasan status registry, statistik pemeriksaan, shortcut scan, shortcut pilih dokumen, dan akses cepat ke kategori dokumen."
+                target = { homeSearchInput },
+                title = "Cari fitur dari Beranda",
+                message = "Kolom ini membantu pengguna langsung menemukan menu verifikasi, scan, riwayat, profil, atau admin tanpa mencari manual.",
+                actionHint = "Ketik kata seperti verifikasi, scan, history, profil, atau admin, lalu tekan tombol cari."
+            ),
+            TutorialStep(
+                pageId = R.id.nav_home,
+                target = { categoryCertificate },
+                title = "Pilih kategori dokumen",
+                message = "Kategori ini membantu pengguna menentukan konteks dokumen yang akan diperiksa, misalnya sertifikat, surat, logbook, atau transkrip.",
+                actionHint = "Pilih salah satu kategori, lalu aplikasi akan mengarahkan kamu ke halaman verifikasi."
+            ),
+            TutorialStep(
+                pageId = R.id.nav_home,
+                target = { quickVerifyButton },
+                title = "Mulai verifikasi cepat",
+                message = "Tombol ini adalah jalan paling cepat untuk masuk ke alur pemeriksaan dokumen.",
+                actionHint = "Tekan tombol ini saat ingin langsung memilih atau scan dokumen."
             ),
             TutorialStep(
                 pageId = R.id.nav_verify,
-                title = "Verifikasi dokumen",
-                message = "Di halaman Verifikasi, pilih file PDF/gambar/teks atau scan dokumen. Aplikasi akan menghitung hash, membaca isi dokumen dengan AI OCR, lalu tombol Cek status dipakai untuk mencocokkan fingerprint ke blockchain."
+                target = { pickDocumentButton },
+                title = "Pilih file dokumen",
+                message = "Gunakan tombol ini untuk mengambil PDF, gambar, atau file teks dari perangkat. File asli digital memberi hasil hash paling kuat.",
+                actionHint = "Tekan Pilih dokumen, pilih file resmi, lalu tunggu hash dan AI OCR selesai."
+            ),
+            TutorialStep(
+                pageId = R.id.nav_verify,
+                target = { scanDocumentButton },
+                title = "Scan dokumen fisik",
+                message = "Tombol scan membuka kamera untuk membaca dokumen fisik. Ini berguna untuk review cepat, tetapi hasil foto bisa dipengaruhi cahaya dan sudut kamera.",
+                actionHint = "Arahkan kamera ke dokumen dengan terang dan lurus agar AI lebih mudah membaca teks."
+            ),
+            TutorialStep(
+                pageId = R.id.nav_verify,
+                target = { verifyButton },
+                title = "Cek status blockchain",
+                message = "Setelah dokumen dipilih dan hash berhasil dihitung, tombol ini mencocokkan fingerprint dokumen ke registry blockchain.",
+                actionHint = "Tekan Cek status setelah tombol aktif untuk melihat apakah dokumen valid, dicabut, atau tidak terdaftar."
+            ),
+            TutorialStep(
+                pageId = R.id.nav_verify,
+                target = { resultText },
+                title = "Baca hasil pemeriksaan",
+                message = "Area ini menampilkan status akhir, issuer kampus, kontrak registry, waktu pencatatan, dan link Etherscan jika dokumen ditemukan.",
+                actionHint = "Kalau alamat issuer atau kontrak muncul, tekan alamatnya untuk melihat bukti publik di Etherscan."
             ),
             TutorialStep(
                 pageId = R.id.nav_history,
-                title = "Riwayat",
-                message = "Halaman Riwayat menyimpan hasil pemeriksaan dalam sesi aplikasi. Kamu bisa melihat dokumen terakhir, status valid, perlu review, atau tidak ditemukan."
+                target = { historyListText },
+                title = "Cek riwayat verifikasi",
+                message = "Setiap pemeriksaan dalam sesi aplikasi akan dirangkum di sini agar pengguna bisa meninjau ulang status dokumen terakhir.",
+                actionHint = "Buka halaman Riwayat setelah verifikasi untuk melihat nama dokumen, waktu, dan status ringkasnya."
             ),
             TutorialStep(
                 pageId = R.id.nav_profile,
-                title = "Profil",
-                message = "Di Profil kamu bisa melihat akun aktif, role, status registry, total pemeriksaan, serta membuka pengaturan dan edit profil."
+                target = { profileSettingsButton },
+                title = "Buka pengaturan akun",
+                message = "Tombol ini membuka detail akun, role, NIM/ID, status registry, dan jumlah pemeriksaan dalam sesi aplikasi.",
+                actionHint = "Tekan ikon pengaturan saat ingin mengecek konfigurasi akun dan registry."
+            ),
+            TutorialStep(
+                pageId = R.id.nav_profile,
+                target = { profileEditButton },
+                title = "Edit profil",
+                message = "Tombol ini dipakai untuk mengganti nama tampilan dan foto profil pengguna.",
+                actionHint = "Tekan edit, ubah nama atau foto, lalu simpan perubahan."
             )
         )
 
         if (activeRole == ROLE_ADMIN) {
-            steps.add(
-                TutorialStep(
-                    pageId = R.id.nav_admin,
-                    title = "Admin",
-                    message = "Halaman Admin dipakai issuer kampus untuk menyiapkan fingerprint dokumen resmi dan mendaftarkannya ke registry blockchain melalui API admin."
+            steps.addAll(
+                listOf(
+                    TutorialStep(
+                        pageId = R.id.nav_admin,
+                        target = { pickAdminDocumentButton },
+                        title = "Siapkan dokumen resmi",
+                        message = "Admin atau issuer kampus memilih dokumen resmi di sini. Aplikasi akan menghitung fingerprint sebelum dokumen didaftarkan.",
+                        actionHint = "Pilih file resmi yang final, karena perubahan kecil pada file akan menghasilkan hash berbeda."
+                    ),
+                    TutorialStep(
+                        pageId = R.id.nav_admin,
+                        target = { registerAdminButton },
+                        title = "Daftarkan ke registry",
+                        message = "Tombol ini mengirim fingerprint, metadata, dan subjek dokumen ke API admin untuk dicatat di smart contract.",
+                        actionHint = "Pastikan jenis dokumen dan subjek sudah benar, lalu tekan Daftarkan dokumen."
+                    )
                 )
             )
         }
 
         return steps
+    }
+
+    private fun labelText(textValue: String, sizeSp: Float, color: Int, bold: Boolean): TextView {
+        return TextView(this).apply {
+            text = textValue
+            textSize = sizeSp
+            setTextColor(color)
+            setLineSpacing(dp(2).toFloat(), 1f)
+            if (bold) typeface = Typeface.DEFAULT_BOLD
+        }
+    }
+
+    private fun tutorialButton(textValue: String, filled: Boolean, onClick: () -> Unit): TextView {
+        return TextView(this).apply {
+            text = textValue
+            gravity = Gravity.CENTER
+            textSize = 14f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(getColor(if (filled) R.color.white else R.color.validin_primary))
+            background = if (filled) {
+                roundedDrawable(getColor(R.color.validin_primary), 14)
+            } else {
+                roundedDrawable(Color.TRANSPARENT, 14, getColor(R.color.validin_border), dp(1))
+            }
+            isClickable = true
+            isFocusable = true
+            setOnClickListener { onClick() }
+        }
+    }
+
+    private fun roundedDrawable(
+        fillColor: Int,
+        radiusDp: Int,
+        strokeColor: Int? = null,
+        strokeWidthPx: Int = 0
+    ): GradientDrawable {
+        return GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            color = ColorStateList.valueOf(fillColor)
+            cornerRadius = dp(radiusDp).toFloat()
+            if (strokeColor != null && strokeWidthPx > 0) {
+                setStroke(strokeWidthPx, strokeColor)
+            }
+        }
     }
 
     private fun selectRole(role: String) {
