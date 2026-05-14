@@ -193,6 +193,7 @@ class MainActivity : ComponentActivity() {
     )
 
     private companion object {
+        const val SEPOLIA_ETHERSCAN_ADDRESS_URL = "https://sepolia.etherscan.io/address/"
         const val VALID_NIM = "231011402890"
         const val VALID_PASSWORD = "Rahmat123"
         const val VALID_NAME = "Rahmat Zeka"
@@ -355,6 +356,9 @@ class MainActivity : ComponentActivity() {
         aiFlagsText = findViewById(R.id.aiFlagsText)
         extractedText = findViewById(R.id.extractedText)
         resultText = findViewById(R.id.resultText)
+        resultText.setTextIsSelectable(false)
+        resultText.movementMethod = LinkMovementMethod.getInstance()
+        resultText.highlightColor = getColor(android.R.color.transparent)
         progressBar = findViewById(R.id.progressBar)
         historyListText = findViewById(R.id.historyListText)
         profilePhotoImage = findViewById(R.id.profilePhotoImage)
@@ -1119,7 +1123,7 @@ class MainActivity : ComponentActivity() {
                 )
                 runOnUiThread {
                     val formatted = formatVerificationResult(result)
-                    resultText.text = formatted
+                    resultText.text = formatVerificationResultForDisplay(result)
                     recordHistory(result, formatted)
                     updateProfileUi()
                     retryVerifyButton.visibility = View.VISIBLE
@@ -1229,10 +1233,50 @@ class MainActivity : ComponentActivity() {
         return listOf(
             "Status: $status",
             "Issuer kampus: ${shortAddress(result.issuer)}",
+            "Kontrak registry: ${shortAddress(BuildConfig.VALIDIN_CONTRACT_ADDRESS)}",
             "Dicatat pada: ${formatTimestamp(result.issuedAtEpochSeconds)}",
             "Metadata: ${result.metadataHash.take(14)}...${result.metadataHash.takeLast(10)}",
             "Pemilik: ${result.subjectHash.take(14)}...${result.subjectHash.takeLast(10)}"
         ).joinToString("\n")
+    }
+
+    private fun formatVerificationResultForDisplay(result: VerificationResult): CharSequence {
+        val text = formatVerificationResult(result)
+        if (!result.exists) return text
+
+        val span = SpannableString(text)
+        addExplorerLink(span, text, shortAddress(result.issuer), result.issuer)
+        addExplorerLink(
+            span,
+            text,
+            shortAddress(BuildConfig.VALIDIN_CONTRACT_ADDRESS),
+            BuildConfig.VALIDIN_CONTRACT_ADDRESS
+        )
+        return span
+    }
+
+    private fun addExplorerLink(span: SpannableString, text: String, label: String, address: String) {
+        val start = text.indexOf(label)
+        if (start < 0 || !address.matches(Regex("^0x[0-9a-fA-F]{40}$"))) return
+
+        val url = "$SEPOLIA_ETHERSCAN_ADDRESS_URL$address"
+        span.setSpan(
+            object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.color = getColor(R.color.validin_primary)
+                    ds.isUnderlineText = true
+                    ds.isFakeBoldText = true
+                }
+            },
+            start,
+            start + label.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
     }
 
     private fun updateHome() {
