@@ -63,6 +63,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var mainTitleText: TextView
     private lateinit var mainSubtitleText: TextView
     private lateinit var userBadgeText: TextView
+    private lateinit var topBackButton: TextView
     private lateinit var profileSettingsButton: TextView
     private lateinit var profileEditButton: TextView
     private lateinit var bottomNavigation: BottomNavigationView
@@ -125,8 +126,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var registryStatusText: TextView
     private lateinit var profileSettingsInfoText: TextView
     private lateinit var aboutAppText: TextView
-    private lateinit var settingsBackButton: TextView
-    private lateinit var editProfileBackButton: TextView
     private lateinit var profileGoVerifyButton: TextView
     private lateinit var profileGoHistoryButton: TextView
     private lateinit var profileTotalChecksText: TextView
@@ -303,6 +302,7 @@ class MainActivity : ComponentActivity() {
         mainTitleText = findViewById(R.id.mainTitleText)
         mainSubtitleText = findViewById(R.id.mainSubtitleText)
         userBadgeText = findViewById(R.id.userBadgeText)
+        topBackButton = findViewById(R.id.topBackButton)
         profileSettingsButton = findViewById(R.id.profileSettingsButton)
         profileEditButton = findViewById(R.id.profileEditButton)
         bottomNavigation = findViewById(R.id.bottomNavigation)
@@ -365,8 +365,6 @@ class MainActivity : ComponentActivity() {
         registryStatusText = findViewById(R.id.registryStatusText)
         profileSettingsInfoText = findViewById(R.id.profileSettingsInfoText)
         aboutAppText = findViewById(R.id.aboutAppText)
-        settingsBackButton = findViewById(R.id.settingsBackButton)
-        editProfileBackButton = findViewById(R.id.editProfileBackButton)
         profileGoVerifyButton = findViewById(R.id.profileGoVerifyButton)
         profileGoHistoryButton = findViewById(R.id.profileGoHistoryButton)
         profileTotalChecksText = findViewById(R.id.profileTotalChecksText)
@@ -410,8 +408,7 @@ class MainActivity : ComponentActivity() {
         loginIdInput.setOnFocusChangeListener { view, hasFocus -> if (hasFocus) scrollLoginTo(view) }
         loginPasswordInput.setOnFocusChangeListener { view, hasFocus -> if (hasFocus) scrollLoginTo(view) }
         loginButton.setOnClickListener { login() }
-        settingsBackButton.setOnClickListener { showPage(R.id.nav_profile) }
-        editProfileBackButton.setOnClickListener { showPage(R.id.nav_profile) }
+        topBackButton.setOnClickListener { showPage(R.id.nav_profile) }
         profileSettingsButton.setOnClickListener { showProfileSettingsPanel() }
         profileEditButton.setOnClickListener { showProfileEditPanel() }
         profilePhotoImage.setOnClickListener { pickProfilePhoto() }
@@ -815,11 +812,13 @@ class MainActivity : ComponentActivity() {
         editProfilePage.visibility = if (itemId == PAGE_EDIT_PROFILE) View.VISIBLE else View.GONE
         val isProfileArea = itemId == R.id.nav_profile || itemId == PAGE_SETTINGS || itemId == PAGE_EDIT_PROFILE
         val isProfileRoot = itemId == R.id.nav_profile
+        val isNestedProfilePage = itemId == PAGE_SETTINGS || itemId == PAGE_EDIT_PROFILE
         topLogoText.visibility = if (isProfileArea) View.GONE else View.VISIBLE
         userBadgeText.visibility = if (isProfileArea) View.GONE else View.VISIBLE
         mainSubtitleText.visibility = if (isProfileArea) View.GONE else View.VISIBLE
         profileSettingsButton.visibility = if (isProfileRoot) View.VISIBLE else View.GONE
         profileEditButton.visibility = if (isProfileRoot) View.VISIBLE else View.GONE
+        topBackButton.visibility = if (isNestedProfilePage) View.VISIBLE else View.GONE
         mainTitleText.textSize = if (isProfileArea) 26f else 22f
 
         when (itemId) {

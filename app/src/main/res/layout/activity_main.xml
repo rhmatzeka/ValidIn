@@ -252,6 +252,18 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/topBackButton"
+                android:layout_width="76dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_modern_chip"
+                android:gravity="center"
+                android:text="&lt; Back"
+                android:textColor="@color/validin_text"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/profileSettingsButton"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
@@ -984,25 +996,25 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_verify_hero_card"
                         android:orientation="vertical"
-                        android:padding="18dp">
+                        android:padding="20dp">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="54dp"
+                            android:layout_height="46dp"
                             android:background="@drawable/bg_login_panel"
                             android:gravity="center"
-                            android:text="AI"
+                            android:text="OCR"
                             android:textColor="@color/validin_primary"
-                            android:textSize="23sp"
+                            android:textSize="15sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="14dp"
                             android:text="Upload atau scan dokumen"
                             android:textColor="@color/white"
-                            android:textSize="25sp"
+                            android:textSize="24sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -1010,13 +1022,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="Validasi OCR, fingerprint, dan status blockchain dalam satu alur."
-                            android:textColor="#DDE6FF"
+                            android:textColor="#CBD6E7"
                             android:textSize="13sp" />
 
                         <Button
                             android:id="@+id/pickDocumentButton"
                             android:layout_width="match_parent"
-                            android:layout_height="56dp"
+                            android:layout_height="52dp"
                             android:layout_marginTop="16dp"
                             android:background="@drawable/bg_primary_button"
                             android:backgroundTint="@color/validin_yellow"
@@ -1030,7 +1042,7 @@
                         <Button
                             android:id="@+id/scanDocumentButton"
                             android:layout_width="match_parent"
-                            android:layout_height="56dp"
+                            android:layout_height="52dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/bg_outline_card"
                             android:elevation="0dp"
@@ -1776,42 +1788,10 @@
                     android:orientation="vertical"
                     android:padding="18dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/bg_outline_card"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="14dp"
-                        android:paddingRight="16dp">
-
-                        <TextView
-                            android:id="@+id/settingsBackButton"
-                            android:layout_width="88dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/bg_modern_chip"
-                            android:gravity="center"
-                            android:text="&lt; Back"
-                            android:textColor="@color/validin_text"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_weight="1"
-                            android:text="Pengaturan"
-                            android:textColor="@color/validin_text"
-                            android:textSize="17sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
                     <TextView
                         android:id="@+id/profileSettingsInfoText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
                         android:background="@drawable/bg_modern_card"
                         android:elevation="0dp"
                         android:padding="18dp"
@@ -1863,39 +1843,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/bg_outline_card"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="14dp"
-                        android:paddingRight="16dp">
-
-                        <TextView
-                            android:id="@+id/editProfileBackButton"
-                            android:layout_width="88dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/bg_modern_chip"
-                            android:gravity="center"
-                            android:text="&lt; Back"
-                            android:textColor="@color/validin_text"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_weight="1"
-                            android:text="Edit Profil"
-                            android:textColor="@color/validin_text"
-                            android:textSize="17sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
                         android:background="@drawable/bg_modern_card"
                         android:elevation="0dp"
                         android:orientation="vertical"
