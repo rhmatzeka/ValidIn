@@ -2,6 +2,7 @@ package id.rahmat.newsin
 
 import android.graphics.Bitmap
 import android.content.res.ColorStateList
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -21,6 +22,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.imageview.ShapeableImageView
 import id.rahmat.newsin.ai.AiDocumentInspector
@@ -253,9 +256,11 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        applySystemBarStyle()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -723,7 +728,7 @@ class MainActivity : ComponentActivity() {
 
     private fun updateRoleButtons() {
         val selectedColor = ColorStateList.valueOf(getColor(R.color.validin_primary))
-        val unselectedColor = ColorStateList.valueOf(getColor(R.color.white))
+        val unselectedColor = ColorStateList.valueOf(getColor(R.color.validin_surface))
 
         roleStudentButton.backgroundTintList =
             if (selectedRole == ROLE_STUDENT) selectedColor else unselectedColor
@@ -1225,6 +1230,17 @@ class MainActivity : ComponentActivity() {
         loginContainer.postDelayed({
             loginContainer.smoothScrollTo(0, view.bottom + dp(132))
         }, 180)
+    }
+
+    private fun applySystemBarStyle() {
+        val nightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        val isNight = nightMode == Configuration.UI_MODE_NIGHT_YES
+        window.statusBarColor = getColor(R.color.validin_background)
+        window.navigationBarColor = getColor(R.color.validin_background)
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = !isNight
+            isAppearanceLightNavigationBars = !isNight
+        }
     }
 
     private fun dp(value: Int): Int {

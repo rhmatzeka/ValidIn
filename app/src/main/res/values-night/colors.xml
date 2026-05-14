@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="validin_background">#090B12</color>
+    <color name="validin_login_background">#080A14</color>
+    <color name="validin_surface">#141721</color>
+    <color name="validin_primary">#8176FF</color>
+    <color name="validin_primary_dark">#B8B1FF</color>
+    <color name="validin_accent">#52B8FF</color>
+    <color name="validin_yellow">#EAFE35</color>
+    <color name="validin_soft_green">#132A21</color>
+    <color name="validin_soft_blue">#14243A</color>
+    <color name="validin_soft_orange">#2C2614</color>
+    <color name="validin_text">#F2F5FF</color>
+    <color name="validin_muted">#A8B0C2</color>
+    <color name="validin_border">#2B3344</color>
+    <color name="validin_success">#5FE093</color>
+    <color name="validin_warning">#F2C94C</color>
+    <color name="validin_danger">#FF6F88</color>
+</resources>

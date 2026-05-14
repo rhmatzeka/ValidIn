@@ -95,7 +95,7 @@
                         android:layout_marginLeft="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
-                        android:backgroundTint="@color/white"
+                        android:backgroundTint="@color/validin_surface"
                         android:elevation="0dp"
                         android:stateListAnimator="@null"
                         android:text="Admin"

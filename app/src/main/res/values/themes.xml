@@ -4,9 +4,13 @@
         <item name="android:fontFamily">sans</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/validin_background</item>
+        <item name="android:navigationBarColor">@color/validin_background</item>
+        <item name="android:windowLightNavigationBar">true</item>
         <item name="colorPrimary">@color/validin_primary</item>
         <item name="colorPrimaryDark">@color/validin_primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="android:colorAccent">@color/validin_accent</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="Theme.NewsIn" parent="Base.Theme.NewsIn" />
