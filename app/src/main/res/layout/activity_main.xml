@@ -642,7 +642,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="332dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
                         android:background="@drawable/bg_palette_hero"
                         android:elevation="0dp"
@@ -703,12 +703,14 @@
                         <TextView
                             android:id="@+id/homeLastStatusText"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="68dp"
                             android:layout_marginTop="14dp"
-                            android:layout_weight="1"
                             android:background="@drawable/bg_login_panel"
                             android:gravity="center_vertical"
-                            android:padding="18dp"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:paddingLeft="18dp"
+                            android:paddingRight="18dp"
                             android:text="Belum ada dokumen yang diverifikasi."
                             android:textColor="@color/validin_text"
                             android:textSize="15sp" />
@@ -783,7 +785,7 @@
                                 android:background="@drawable/bg_modern_chip"
                                 android:gravity="center"
                                 android:text="Scan"
-                                android:textColor="@color/validin_primary"
+                                android:textColor="@color/validin_muted"
                                 android:textSize="13sp"
                                 android:textStyle="bold" />
 
@@ -797,7 +799,7 @@
                                 android:background="@drawable/bg_modern_chip"
                                 android:gravity="center"
                                 android:text="Pilih File"
-                                android:textColor="@color/validin_primary"
+                                android:textColor="@color/validin_muted"
                                 android:textSize="13sp"
                                 android:textStyle="bold" />
 
@@ -810,7 +812,7 @@
                                 android:background="@drawable/bg_modern_chip"
                                 android:gravity="center"
                                 android:text="Riwayat"
-                                android:textColor="@color/validin_primary"
+                                android:textColor="@color/validin_muted"
                                 android:textSize="13sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
