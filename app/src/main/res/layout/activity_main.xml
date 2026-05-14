@@ -15,17 +15,17 @@
         android:background="@drawable/bg_login_palette_full"
         android:clipToPadding="false"
         android:fillViewport="true"
-        android:paddingBottom="24dp">
+        android:paddingBottom="28dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingLeft="20dp"
-            android:paddingTop="28dp"
+            android:paddingTop="96dp"
             android:paddingRight="20dp"
-            android:paddingBottom="28dp">
+            android:paddingBottom="36dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,30 +33,28 @@
                 android:background="@drawable/bg_login_glass_card"
                 android:elevation="0dp"
                 android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:paddingTop="24dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="22dp">
+                android:paddingLeft="16dp"
+                android:paddingTop="18dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="18dp">
 
-                <TextView
+                <ImageView
                     android:layout_width="54dp"
                     android:layout_height="54dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/bg_avatar_circle"
-                    android:gravity="center"
-                    android:text="VI"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:contentDescription="@string/app_name"
+                    android:elevation="3dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/ic_launcher_round" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="Masuk"
                     android:textColor="@color/validin_text"
-                    android:textSize="24sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -70,14 +68,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:layout_marginTop="14dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/roleStudentButton"
                         android:layout_width="0dp"
-                        android:layout_height="42dp"
+                        android:layout_height="40dp"
                         android:layout_marginRight="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
@@ -93,7 +91,7 @@
                     <Button
                         android:id="@+id/roleAdminButton"
                         android:layout_width="0dp"
-                        android:layout_height="42dp"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="6dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_primary_button"
@@ -110,7 +108,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="10dp"
                     android:text="NIM"
                     android:textColor="@color/validin_muted"
                     android:textSize="12sp"
@@ -119,8 +117,8 @@
                 <EditText
                     android:id="@+id/loginIdInput"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="5dp"
                     android:autofillHints="username"
                     android:background="@drawable/bg_input_modern"
                     android:hint="231011402890"
@@ -134,7 +132,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:text="Password"
                     android:textColor="@color/validin_muted"
                     android:textSize="12sp"
@@ -143,8 +141,8 @@
                 <EditText
                     android:id="@+id/loginPasswordInput"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="5dp"
                     android:autofillHints="password"
                     android:background="@drawable/bg_input_modern"
                     android:hint="Rahmat123"
@@ -167,8 +165,8 @@
                 <Button
                     android:id="@+id/loginButton"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="14dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/bg_login_yellow_button"
                     android:backgroundTint="@color/validin_yellow"
                     android:elevation="0dp"

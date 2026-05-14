@@ -259,11 +259,12 @@ class MainActivity : ComponentActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
             view.setPadding(
                 systemBars.left,
                 systemBars.top,
                 systemBars.right,
-                systemBars.bottom
+                maxOf(systemBars.bottom, ime.bottom)
             )
             insets
         }
@@ -1222,8 +1223,12 @@ class MainActivity : ComponentActivity() {
 
     private fun scrollLoginTo(view: View) {
         loginContainer.postDelayed({
-            loginContainer.smoothScrollTo(0, view.bottom)
+            loginContainer.smoothScrollTo(0, view.bottom + dp(132))
         }, 180)
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 
     private fun displayName(uri: Uri): String {
