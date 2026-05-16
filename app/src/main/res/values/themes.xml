@@ -3,10 +3,10 @@
     <style name="Base.Theme.NewsIn" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:fontFamily">sans-serif</item>
         <item name="fontFamily">sans-serif</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="android:statusBarColor">@color/validin_background</item>
         <item name="android:navigationBarColor">@color/validin_background</item>
-        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowLightNavigationBar">false</item>
         <item name="colorPrimary">@color/validin_primary</item>
         <item name="colorPrimaryDark">@color/validin_primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>

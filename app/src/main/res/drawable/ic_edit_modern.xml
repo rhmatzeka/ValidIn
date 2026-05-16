@@ -7,14 +7,14 @@
     <path
         android:fillColor="@android:color/transparent"
         android:pathData="M4.5,16.8L4,20L7.2,19.5L18.8,7.9A2.2,2.2 0,0 0,15.7 4.8L4.5,16.8Z"
-        android:strokeColor="#202025"
+        android:strokeColor="@color/validin_text"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
         android:strokeWidth="1.7" />
     <path
         android:fillColor="@android:color/transparent"
         android:pathData="M14.7,5.8L17.8,8.9"
-        android:strokeColor="#2D21D9"
+        android:strokeColor="@color/validin_primary"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
         android:strokeWidth="1.7" />

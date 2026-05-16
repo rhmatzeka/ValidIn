@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Typeface
 import android.content.res.ColorStateList
-import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
@@ -19,6 +18,7 @@ import android.text.TextPaint
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.text.style.RelativeSizeSpan
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -286,7 +286,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
@@ -306,8 +306,52 @@ class MainActivity : ComponentActivity() {
 
         inspector = AiDocumentInspector(this)
         bindViews()
+        applyDesignSystem()
         bindActions()
         restoreSession()
+    }
+
+    private fun applyDesignSystem() {
+        val buttons = listOf(
+            loginButton,
+            roleStudentButton,
+            roleAdminButton,
+            quickVerifyButton,
+            pickDocumentButton,
+            scanDocumentButton,
+            verifyButton,
+            retryVerifyButton,
+            profileSaveButton,
+            logoutButton,
+            pickAdminDocumentButton,
+            scanAdminDocumentButton,
+            registerAdminButton
+        )
+        buttons.forEach { button ->
+            button.setAllCaps(true)
+            button.letterSpacing = 0.12f
+            button.typeface = Typeface.DEFAULT_BOLD
+        }
+
+        listOf(
+            homeSearchActionButton,
+            homeShortcutScanButton,
+            homeShortcutPickButton,
+            homeShortcutHistoryButton,
+            profileGoVerifyButton,
+            profileGoHistoryButton,
+            profilePickPhotoButton,
+            profileRemovePhotoButton
+        ).forEach { action ->
+            action.letterSpacing = 0.08f
+            action.typeface = Typeface.DEFAULT_BOLD
+        }
+
+        val greenTint = ColorStateList.valueOf(getColor(R.color.validin_primary))
+        progressBar.indeterminateTintList = greenTint
+        progressBar.progressTintList = greenTint
+        adminProgressBar.indeterminateTintList = greenTint
+        adminProgressBar.progressTintList = greenTint
     }
 
     private fun bindViews() {
@@ -664,7 +708,7 @@ class MainActivity : ComponentActivity() {
         val dialog = Dialog(this)
         val card = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            background = roundedDrawable(getColor(R.color.validin_surface), 24)
+            background = roundedDrawable(getColor(R.color.validin_surface), 8)
             setPadding(dp(20), dp(18), dp(20), dp(18))
         }
         val container = FrameLayout(this).apply {
@@ -682,7 +726,7 @@ class MainActivity : ComponentActivity() {
             textSize = 14f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(getColor(R.color.validin_muted))
-            background = roundedDrawable(getColor(R.color.validin_background), 18)
+            background = roundedDrawable(getColor(R.color.validin_background), 500)
             setOnClickListener { dialog.dismiss() }
         }
         container.addView(closeButton, FrameLayout.LayoutParams(dp(38), dp(38), Gravity.TOP or Gravity.RIGHT).apply {
@@ -708,7 +752,7 @@ class MainActivity : ComponentActivity() {
             getColor(R.color.validin_text),
             false
         ).apply {
-            background = roundedDrawable(getColor(R.color.validin_background), 14)
+            background = roundedDrawable(getColor(R.color.validin_background), 8)
             setPadding(dp(12), dp(12), dp(12), dp(12))
             (layoutParams as? LinearLayout.LayoutParams)?.topMargin = dp(14)
         })
@@ -786,7 +830,7 @@ class MainActivity : ComponentActivity() {
         val targetHeight = target.height + padding * 2
 
         val highlight = FrameLayout(this).apply {
-            background = roundedDrawable(Color.TRANSPARENT, 18, getColor(R.color.validin_yellow), dp(3))
+            background = roundedDrawable(Color.TRANSPARENT, 8, getColor(R.color.validin_primary), dp(3))
         }
         overlay.addView(highlight, FrameLayout.LayoutParams(targetWidth, targetHeight).apply {
             leftMargin = targetLeft
@@ -828,7 +872,7 @@ class MainActivity : ComponentActivity() {
     private fun tutorialCard(index: Int, total: Int, step: TutorialStep): LinearLayout {
         return LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            background = roundedDrawable(getColor(R.color.validin_surface), 20)
+            background = roundedDrawable(getColor(R.color.validin_surface), 8)
             setPadding(dp(16), dp(14), dp(16), dp(16))
 
             val header = LinearLayout(this@MainActivity).apply {
@@ -850,7 +894,7 @@ class MainActivity : ComponentActivity() {
                 setPadding(0, dp(8), 0, 0)
             })
             addView(labelText("Cara pakai: ${step.actionHint}", 14f, getColor(R.color.validin_primary_dark), true).apply {
-                background = roundedDrawable(getColor(R.color.validin_background), 14)
+                background = roundedDrawable(getColor(R.color.validin_background), 8)
                 setPadding(dp(12), dp(10), dp(12), dp(10))
             }, LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -1043,11 +1087,12 @@ class MainActivity : ComponentActivity() {
             gravity = Gravity.CENTER
             textSize = 14f
             typeface = Typeface.DEFAULT_BOLD
-            setTextColor(getColor(if (filled) R.color.white else R.color.validin_primary))
+            letterSpacing = 0.12f
+            setTextColor(getColor(if (filled) R.color.validin_primary_dark else R.color.validin_primary))
             background = if (filled) {
-                roundedDrawable(getColor(R.color.validin_primary), 14)
+                roundedDrawable(getColor(R.color.validin_primary), 500)
             } else {
-                roundedDrawable(Color.TRANSPARENT, 14, getColor(R.color.validin_border), dp(1))
+                roundedDrawable(Color.TRANSPARENT, 500, getColor(R.color.validin_border), dp(1))
             }
             isClickable = true
             isFocusable = true
@@ -1077,7 +1122,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun selectHomeCategory(category: HomeCategory) {
-        val activeColor = getColor(R.color.validin_text)
+        val activeColor = getColor(R.color.validin_primary)
         val inactiveColor = getColor(R.color.validin_muted)
 
         val items = listOf(
@@ -1091,6 +1136,7 @@ class MainActivity : ComponentActivity() {
             val selected = itemCategory == category
             views.first.setColorFilter(if (selected) activeColor else inactiveColor)
             views.second.setTextColor(if (selected) activeColor else inactiveColor)
+            views.third.setBackgroundColor(activeColor)
             views.third.visibility = if (selected) View.VISIBLE else View.INVISIBLE
         }
 
@@ -1239,13 +1285,13 @@ class MainActivity : ComponentActivity() {
         roleStudentButton.backgroundTintList =
             if (selectedRole == ROLE_STUDENT) selectedColor else unselectedColor
         roleStudentButton.setTextColor(
-            getColor(if (selectedRole == ROLE_STUDENT) R.color.white else R.color.validin_text)
+            getColor(if (selectedRole == ROLE_STUDENT) R.color.validin_primary_dark else R.color.validin_text)
         )
 
         roleAdminButton.backgroundTintList =
             if (selectedRole == ROLE_ADMIN) selectedColor else unselectedColor
         roleAdminButton.setTextColor(
-            getColor(if (selectedRole == ROLE_ADMIN) R.color.white else R.color.validin_text)
+            getColor(if (selectedRole == ROLE_ADMIN) R.color.validin_primary_dark else R.color.validin_text)
         )
     }
 
@@ -1266,7 +1312,7 @@ class MainActivity : ComponentActivity() {
         profileSettingsButton.visibility = if (isProfileRoot) View.VISIBLE else View.GONE
         profileEditButton.visibility = if (isProfileRoot) View.VISIBLE else View.GONE
         topBackButton.visibility = if (isNestedProfilePage) View.VISIBLE else View.GONE
-        mainTitleText.textSize = if (isProfileArea) 26f else 22f
+        mainTitleText.textSize = if (isProfileArea) 24f else 22f
 
         when (itemId) {
             PAGE_SETTINGS -> {
@@ -1727,9 +1773,9 @@ class MainActivity : ComponentActivity() {
         statVerifiedText.text = "$validCount Valid"
         statReviewText.text = "${reviewCount + notFoundCount} Review"
         homeTotalChecksText.text = "$totalCount pemeriksaan"
-        homeValidMetricText.text = "$validCount\nValid"
-        homeReviewMetricText.text = "$reviewCount\nReview"
-        homeMissingMetricText.text = "$notFoundCount\nTidak ada"
+        homeValidMetricText.text = metricText(validCount, "Valid")
+        homeReviewMetricText.text = metricText(reviewCount, "Review")
+        homeMissingMetricText.text = metricText(notFoundCount, "Tidak ada")
 
         if (registryConfigured()) {
             homeRegistryStatusText.setBackgroundResource(R.drawable.bg_pill_green)
@@ -1774,6 +1820,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun metricText(value: Int, label: String): CharSequence {
+        val text = "$value\n$label"
+        return SpannableString(text).apply {
+            setSpan(RelativeSizeSpan(1.18f), 0, value.toString().length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            setSpan(RelativeSizeSpan(0.9f), value.toString().length + 1, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+    }
+
     private fun scrollLoginTo(view: View) {
         loginContainer.postDelayed({
             loginContainer.smoothScrollTo(0, view.bottom + dp(132))
@@ -1781,13 +1835,11 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun applySystemBarStyle() {
-        val nightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        val isNight = nightMode == Configuration.UI_MODE_NIGHT_YES
         window.statusBarColor = getColor(R.color.validin_background)
         window.navigationBarColor = getColor(R.color.validin_background)
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = !isNight
-            isAppearanceLightNavigationBars = !isNight
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = false
         }
     }
 

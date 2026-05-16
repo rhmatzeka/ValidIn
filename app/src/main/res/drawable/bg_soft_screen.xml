@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient
-        android:angle="270"
-        android:startColor="#F4FAFF"
-        android:centerColor="#F7FBFF"
-        android:endColor="#EEF8F3" />
+    <solid android:color="@color/validin_background" />
 </shape>

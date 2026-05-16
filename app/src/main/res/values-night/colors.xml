@@ -2,20 +2,20 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="validin_background">#080B10</color>
-    <color name="validin_login_background">#080B10</color>
-    <color name="validin_surface">#111821</color>
-    <color name="validin_primary">#756BFF</color>
-    <color name="validin_primary_dark">#17112F</color>
-    <color name="validin_accent">#39A6D8</color>
-    <color name="validin_yellow">#D7F52D</color>
-    <color name="validin_soft_green">#10261D</color>
-    <color name="validin_soft_blue">#101C2A</color>
-    <color name="validin_soft_orange">#27230E</color>
-    <color name="validin_text">#F4F6FA</color>
-    <color name="validin_muted">#A0A8B8</color>
-    <color name="validin_border">#263241</color>
-    <color name="validin_success">#6EDC98</color>
-    <color name="validin_warning">#E4C84B</color>
-    <color name="validin_danger">#FF6F88</color>
+    <color name="validin_background">#121212</color>
+    <color name="validin_login_background">#121212</color>
+    <color name="validin_surface">#181818</color>
+    <color name="validin_primary">#1ED760</color>
+    <color name="validin_primary_dark">#000000</color>
+    <color name="validin_accent">#1DB954</color>
+    <color name="validin_yellow">#1ED760</color>
+    <color name="validin_soft_green">#10251A</color>
+    <color name="validin_soft_blue">#1F1F1F</color>
+    <color name="validin_soft_orange">#2A2116</color>
+    <color name="validin_text">#FFFFFF</color>
+    <color name="validin_muted">#B3B3B3</color>
+    <color name="validin_border">#4D4D4D</color>
+    <color name="validin_success">#1ED760</color>
+    <color name="validin_warning">#FFA42B</color>
+    <color name="validin_danger">#F3727F</color>
 </resources>

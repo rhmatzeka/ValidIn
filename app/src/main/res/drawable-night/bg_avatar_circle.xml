@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
-    <gradient
-        android:type="radial"
-        android:centerX="50%"
-        android:centerY="50%"
-        android:gradientRadius="90dp"
-        android:startColor="#2E3650"
-        android:centerColor="#222B43"
-        android:endColor="#151B2A" />
+    <solid android:color="@color/validin_primary" />
 </shape>
