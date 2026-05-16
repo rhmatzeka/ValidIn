@@ -1382,9 +1382,9 @@ class MainActivity : ComponentActivity() {
             registryStatusText.text = "Registry belum dikonfigurasi"
         }
         val totalCount = validCount + reviewCount + notFoundCount
-        profileTotalChecksText.text = "$totalCount\nTotal"
-        profileValidChecksText.text = "$validCount\nValid"
-        profileReviewChecksText.text = "${reviewCount + notFoundCount}\nReview"
+        profileTotalChecksText.text = metricText(totalCount, "Total")
+        profileValidChecksText.text = metricText(validCount, "Valid")
+        profileReviewChecksText.text = metricText(reviewCount + notFoundCount, "Review")
         profileSettingsInfoText.text = listOf(
             "Akun: $userName",
             "Role: ${if (activeRole == ROLE_ADMIN) "Admin kampus" else "Mahasiswa"}",
