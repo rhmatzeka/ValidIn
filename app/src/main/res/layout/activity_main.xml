@@ -1128,17 +1128,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:background="@drawable/bg_login_dark_chip"
+                            android:background="@drawable/bg_file_preview_panel"
                             android:orientation="vertical"
-                            android:padding="14dp"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="14dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="14dp"
                             android:visibility="gone">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
                                 android:text="Preview dokumen"
                                 android:textColor="@color/white"
-                                android:textSize="13sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -1146,9 +1150,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
+                                android:ellipsize="middle"
+                                android:includeFontPadding="false"
+                                android:lineSpacingExtra="2dp"
+                                android:maxLines="2"
                                 android:text="Nama file: -"
                                 android:textColor="@color/white"
-                                android:textSize="14sp"
+                                android:textSize="13sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -1156,8 +1164,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
+                                android:includeFontPadding="false"
                                 android:text="Ukuran: - | Jenis: -"
-                                android:textColor="@color/white"
+                                android:textColor="@color/validin_muted"
                                 android:textSize="12sp" />
 
                             <TextView
@@ -1165,8 +1174,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
+                                android:ellipsize="middle"
+                                android:includeFontPadding="false"
+                                android:maxLines="1"
                                 android:text="Hash: -"
-                                android:textColor="@color/white"
+                                android:textColor="@color/validin_muted"
                                 android:textIsSelectable="true"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -1188,23 +1200,29 @@
                         android:background="@drawable/bg_modern_card"
                         android:elevation="6dp"
                         android:orientation="vertical"
-                        android:padding="22dp">
+                        android:paddingLeft="18dp"
+                        android:paddingTop="18dp"
+                        android:paddingRight="18dp"
+                        android:paddingBottom="18dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="76dp"
                             android:gravity="center_vertical"
+                            android:baselineAligned="false"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/aiScoreText"
-                                android:layout_width="74dp"
-                                android:layout_height="74dp"
+                                android:layout_width="68dp"
+                                android:layout_height="68dp"
                                 android:background="@drawable/bg_modern_chip"
                                 android:gravity="center"
+                                android:includeFontPadding="false"
+                                android:lineSpacingExtra="0dp"
                                 android:text="--"
                                 android:textColor="@color/validin_primary"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -1217,9 +1235,10 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
                                     android:text="AI Inspector"
                                     android:textColor="@color/validin_text"
-                                    android:textSize="24sp"
+                                    android:textSize="22sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -1227,9 +1246,11 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="6dp"
+                                    android:includeFontPadding="false"
+                                    android:lineSpacingExtra="1dp"
                                     android:text="AI akan membaca nama, nomor induk, tanggal, dan penerbit dokumen."
                                     android:textColor="@color/validin_muted"
-                                    android:textSize="14sp" />
+                                    android:textSize="13sp" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -1238,11 +1259,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:background="@drawable/bg_modern_chip"
-                            android:padding="12dp"
+                            android:background="@drawable/bg_ai_doc_field"
+                            android:includeFontPadding="false"
+                            android:paddingLeft="14dp"
+                            android:paddingTop="12dp"
+                            android:paddingRight="14dp"
+                            android:paddingBottom="12dp"
                             android:text="Jenis dokumen: -"
                             android:textColor="@color/validin_text"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -1251,10 +1276,15 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:background="@drawable/bg_outline_card"
-                            android:padding="12dp"
+                            android:includeFontPadding="false"
+                            android:lineSpacingExtra="3dp"
+                            android:paddingLeft="14dp"
+                            android:paddingTop="12dp"
+                            android:paddingRight="14dp"
+                            android:paddingBottom="12dp"
                             android:text="Pemilik: -\nNIM/NPM/ID: -"
                             android:textColor="@color/validin_text"
-                            android:textSize="14sp" />
+                            android:textSize="13sp" />
 
                         <TextView
                             android:id="@+id/aiDateIssuerText"
@@ -1262,10 +1292,15 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:background="@drawable/bg_outline_card"
-                            android:padding="12dp"
+                            android:includeFontPadding="false"
+                            android:lineSpacingExtra="3dp"
+                            android:paddingLeft="14dp"
+                            android:paddingTop="12dp"
+                            android:paddingRight="14dp"
+                            android:paddingBottom="12dp"
                             android:text="Tanggal: -\nPenerbit: -"
                             android:textColor="@color/validin_text"
-                            android:textSize="14sp" />
+                            android:textSize="13sp" />
 
                         <TextView
                             android:id="@+id/aiFlagsText"
